@@ -1,0 +1,188 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color:rgb(12, 11, 25);
+    color: white;
+}
+
+
+.head {
+    background-image: url('../slike/voda\ \(9\).jpg');
+    background-blend-mode: darken;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center; 
+    background-attachment: fixed;
+    padding-top: 50px;
+}
+    .navbar {
+        position: fixed;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        top: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.76);
+        color: white;
+        height: 50px;
+        padding: 1em;
+    }
+        .menu {
+            display: flex;
+            flex-direction: row;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }  
+        #menu-toggle {
+            display: none;   
+        }
+        .menu li {
+            margin: 0 1rem;
+            overflow: hidden;
+        } 
+
+        @media (max-width: 800px) {
+            .menu-button-container {
+                display: flex;
+                height: 100%;
+                width: 25px;
+                cursor: pointer;
+                align-items: center;
+            }
+            .menu-button,
+            .menu-button::before,
+            .menu-button::after {
+                display: block;
+                background-color: #fff;
+                position: absolute;
+                height: 4px;
+                width: 25px;
+                transition: transform 500ms cubic-bezier(0.25, 0.95, 0.99, 1);
+                border-radius: 5px;
+            }
+            .menu-button::before {
+                content: '';
+                margin-top: -8px;
+            }
+            .menu-button::after {
+                content: '';
+                margin-top: 8px;
+            }
+            #menu-toggle:checked + .menu-button-container .menu-button::before {
+                margin-top: 0;
+                transform: rotate(225deg);
+            }
+            #menu-toggle:checked + .menu-button-container .menu-button {
+                background: rgba(255, 255, 255, 0);
+            }    
+            #menu-toggle:checked + .menu-button-container .menu-button::after {
+                margin-top: 0;
+                transform: rotate(-225deg);
+            }    
+            #menu-toggle ~ .menu li {
+                height: 0;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                transition: height 600ms cubic-bezier(0, 1, 0, 1);
+            }
+            #menu-toggle:checked ~ .menu li {
+                border: 1px solid #000000;
+                height: 2.5em;
+                padding: 0.7em;
+                transition: height 600ms cubic-bezier(0, 1, 0, 1);
+            }
+            #menu-toggle:checked ~ .menu li:not(:first-child) {
+                border-top: none;
+            }    
+
+            .menu {
+                position: absolute;
+                top: 0;
+                margin-top: 49px;
+                left: 0;
+                flex-direction: column;
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+            }
+            .menu > li {
+                display: flex;
+                justify-content: center;
+                margin: 0;
+                padding: 0.5em 0;
+                width: 100%;
+                color: white;
+                background-color: #222;
+            }
+        }
+
+    #header1 {
+        font-size: 10vw;
+        text-align: center;
+        padding-top: 12vh;
+        padding-bottom: 10vh;
+    }
+    #citat {
+        font-size: 3vw;
+        text-align: center;
+        padding-bottom: 23vh;   
+    }
+
+
+
+.boxes {
+    display: flex;
+    flex-wrap: wrap;       
+    background-color: rgb(255, 253, 211);
+    box-sizing: border-box;
+}
+    .box {
+        display: flex;
+        flex: 0 0 33.333333%;
+        justify-content: center;
+        padding: 20px;
+        border: 1px solid black;
+        box-sizing: border-box;
+    }
+    /* TABLET */
+    @media only screen and (max-width: 1024px) and (min-width: 768px){
+        .box {
+            flex: 0 0 50%;
+        }
+    }
+    /* TELEFONI */
+    @media only screen and (max-width: 768px) and (min-width: 1px){
+        .box {
+            flex: 0 0 100%;
+            /*padding: 5%;*/
+        }
+    }
+
+
+ 
+
+
+/*
+<div class = "menu">
+            <div class = "navbox">
+                Pocetna
+            </div> 
+            <div class = "navbox">
+                Pocetna
+            </div>
+            <div class = "navbox">
+                Pocetna
+            </div>
+            <div class = "navbox">
+                Pocetna
+            </div>    
+        </div>*/
