@@ -1,12 +1,31 @@
 
-window.addEventListener('load', init);
+window.addEventListener('load', main);
+
+
 
 function main() {
+
+    // ***** CHANGING NAVBAR WHEN SCROLLED *****
+    document.addEventListener("scroll", () => {
+        let nav = document.querySelector(".navbar");
+        if (window.scrollY > 0) {
+            nav.classList.add("scrolled")
+        }
+        if (window.scrollY == 0) {
+            nav.classList.remove("scrolled")
+        }
+    });
+
     
 }
 
 
-var res = 0;    
+
+
+
+
+/*
+var res = 0;
 var okay = 0;
 
 function izracunajRezultat() {
@@ -31,3 +50,4 @@ function misNijeTu() {
 }
 
 
+*/
