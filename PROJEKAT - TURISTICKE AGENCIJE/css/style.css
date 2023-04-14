@@ -7,9 +7,31 @@
 
 body {
     margin: 0;
-    background-color:rgb(12, 11, 25);
+    background-color: rgb(12, 11, 25);
     color: white;
 }
+
+
+.go-up {
+    visibility: hidden;
+    position: fixed;
+	z-index: 1;
+    margin-left: 25px;
+	bottom: 0;
+	margin-bottom: 25px;
+	font-size: 41px;
+	color: white;
+    opacity: 0;
+    transition: visibility 1s, opacity 0.5s ease-in-out;
+    cursor: pointer;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.934);
+}
+.go-up.scrolled {
+    visibility: visible;
+    opacity: 1;
+    position: fixed;
+}
+
 
 .navbar {
     position: fixed;
@@ -24,18 +46,24 @@ body {
     padding: 1em;
     padding-left: 2em;
     padding-right: 2em;
+    background-color: #0000004a;
     transition: background-color 0.4s ease-in-out;
-    transition-delay: 0.07s;
+    transition-delay: 0.02s;
 }
 .navbar.scrolled {
     margin-top: 0px;
-    color: blue;
+    color: rgb(0, 0, 0);
     background-color: white;
     transition-delay: 0;
 }
 .navbar a {
-    /*color: white;*/
     text-decoration: none;
+}
+.nava {
+    color: white;
+}
+.nava.scrolled {
+    color: black;
 }
     .menu {
         display: flex;
@@ -50,6 +78,7 @@ body {
             z-index: 2;
         } 
         #login-button {
+            margin-left: 1vw;
             padding: 3px;
             padding-left: 7px;
             padding-right: 7px;
@@ -65,7 +94,7 @@ body {
 
     @media (max-width: 850px) {
         .navbar {
-            background-color: rgb(59, 92, 84);
+            /*background-color: rgb(59, 92, 84);*/
             z-index: 2;
         }
         .menu-button-container {
@@ -79,7 +108,7 @@ body {
         .menu-button::before,
         .menu-button::after {
             display: block;
-            background-color: #fff;
+            background-color: #999696;
             position: absolute;
             height: 4px;
             width: 25px;
@@ -143,16 +172,26 @@ body {
     }
 
 .head {
-    background-image: url('../slike/nature\ \(1\).jpg');
+    /* DOBRE SLIKE
+
+    background-image: url('../slike/nove\ slike\ \ \(17\).jpg'); - obala plava sa pijeskom
+    background-image: url('../slike/nove\ slike\ \ \(18\).jpg'); - neka pritamnjena obala
+    background-image: url('../slike/nove\ slike\ \ \(23\).jpg'); - SIVO PLAVA OBICNA (bazen)
+    background-image: url('../slike/nove\ slike\ \ \(28\).jpg'); - BALONI
+    background-image: url('../slike/nove\ slike\ \ \(30\).jpg'); - obala sa palmama
+    background-image: url('../slike/nove\ slike\ \ \(36\).jpg'); - *** obala fino gore je plavo - SVIDJA MI SE 10/10
+    */
+
+    background-image: url('../slike/nove\ slike\ \ \(36\).jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center; 
     background-attachment: fixed;
-    padding-top: 50px;
+    padding-top: 10px;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
 }
     @media (max-width: 850px) {
@@ -168,41 +207,60 @@ body {
         justify-content: center;
         align-items: center;
         height: 50%;
+        margin-top: -20px;
+        text-shadow: 2px 2px 1px rgba(1, 0, 10, 0.936);
     }
-        #header1 {
-            font-size: 11vw;
+        @media (max-width: 950px) {
+            .header {
+                margin-top: 0;
+            }
         }
-            @media (max-width: 850px) {
+        #header1 {
+            font-size: 10vw;
+        }
+            @media (max-width: 950px) {
                 #header1 {
                     font-size: 13vw;
                 }
             }
         #citat {
-            font-size: 2vw;
+            font-size: 1.5vw;
             text-align: center;
+            margin-top: -8px;
+            text-shadow: 1.5px 1.5px 1px rgba(1, 0, 10, 0.936);
         }
-            @media (max-width: 850px) {
+            @media (max-width: 950px) {
                 #citat {
+                    margin-top: 5px;
                     font-size: 4vw;     
                 }
             }
         .searchbar {
             display: flex;
             overflow: hidden;
+            margin-top: 10px;
+            box-shadow: 0 0 4px 1px rgba(1, 0, 10, 0.68);
         }
+            @media (max-width: 950px) and (min-height: 500px) {
+                .searchbar {
+                    margin-top: 35px;     
+                }
+            }
         .searchbar input {
-            padding: 0.8vw;
-            width: 50vw;
+            padding: 0.6vw;
+            width: 45vw;
             border: none;
         }
         .searchbar button {
-            padding: 0.8vw;       
+            padding: 0.6vw;   
+            padding-left: 0.8vw;
+            padding-right: 0.8vw;   
             border: none;
             background:rgb(155, 155, 155);
         }
-            @media (max-width: 850px) {
+            @media (max-width: 950px) {
                 .searchbar input, .searchbar button {
-                    padding: 2vw; 
+                    padding: 1.7vw; 
                 }
                 .searchbar input {
                     width: 65vw;
@@ -217,25 +275,33 @@ body {
         justify-content: space-around;     
         /*background-color: rgb(255, 253, 211);*/
         box-sizing: border-box;
-        width: 80vw;
+        width: 70vw;
     }
+        @media (max-width: 950px) and (min-height: 500px) {
+            .head-logos {
+                margin-bottom: 60px;
+                margin-top: -10px;
+                width: 80vw;
+            }
+        }
         .head-logos-box {
             /*background-color: #355684;*/
             height: 10vh;
             margin-top: 5px;
             display: flex;
-            flex: 0 0 10%;
+            /*flex: 0 0 10%;*/
             justify-content: center;
             /*border: 1px solid black;*/
             box-sizing: border-box;
+            box-shadow: 0 0 3px 1px rgba(1, 0, 10, 0.674);
         }
         /* TELEFONI */
-        @media only screen and (max-width: 768px) and (min-width: 1px){
+        /*@media only screen and (max-width: 950px) and (min-width: 1px){
             .head-logos-box {
                 flex: 0 0 25%;
             }
-        }
-        @media (max-height: 400px) {
+        }*/
+        @media (max-height: 450px) {
             .head {
                 padding-top: 10px;
             }

@@ -1,0 +1,17 @@
+
+- Dodati About us
+	- osmisliti dizajn
+ 	- tu staviti poseban dio za Gallery (u sklopu te stranice), da bude slider
+
+- Dodati Footer
+	- email, br. tel, ime, logo
+
+- Napraviti Logo
+
+- Dodati partnership logos
+
+- Popraviti marquee
+
+- skinuti fa-fa ikonice (da se ocitaju)
+
+- 

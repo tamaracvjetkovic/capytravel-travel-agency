@@ -8,17 +8,40 @@ function main() {
     // ***** CHANGING NAVBAR WHEN SCROLLED *****
     document.addEventListener("scroll", () => {
         let nav = document.querySelector(".navbar");
+        let nava = document.querySelectorAll(".nava");
         if (window.scrollY > 0) {
-            nav.classList.add("scrolled")
+            nav.classList.add("scrolled");
+            for (let i = 0; i < nava.length; i++) {
+                nava[i].classList.add("scrolled");
+            }
         }
         if (window.scrollY == 0) {
-            nav.classList.remove("scrolled")
+            nav.classList.remove("scrolled");
+            for (let i = 0; i < nava.length; i++) {
+                nava[i].classList.remove("scrolled");
+            }
         }
     });
 
-    
+    // ***** GO-UP BUTTON *****
+    document.addEventListener("scroll", () => {
+        let goUp = document.querySelector(".go-up");
+        if (window.scrollY > 0) {
+            goUp.classList.add("scrolled");
+        }
+        if (window.scrollY == 0) {
+            goUp.classList.remove("scrolled");
+        }
+    });
 }
 
+function scrollToTop() {
+    var position = document.body.scrollTop || document.documentElement.scrollTop;
+    if (position) {
+      window.scrollBy(0, -Math.max(1, Math.floor(position / 10)));
+      scrollAnimation = setTimeout("scrollToTop()", 12);
+    } else clearTimeout(scrollAnimation);
+  }
 
 
 

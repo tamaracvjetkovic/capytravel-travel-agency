@@ -1,0 +1,36 @@
+
+.head {
+    background-image: url('../slike/nove\ slike\ \ \(28\).jpg');
+    background-color: rgb(135, 72, 13);
+    /*background-image: none;*/
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+    margin-top: -20px;
+    text-shadow: 2px 2px 1px rgba(1, 0, 10, 0.936);
+}
+    @media (max-width: 950px) {
+        .header {
+            margin-top: 0;
+        }
+    }
+    #header1 {
+        margin-top: 10vh;
+        font-size: 8vw;
+        text-align: center;
+    }
+        @media (max-width: 950px) {
+            #header1 {
+                margin-top: 5vh;
+                font-size: 9.4vw;
+            }
+        }
