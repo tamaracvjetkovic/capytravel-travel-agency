@@ -2,6 +2,7 @@
 - Dodati About us
 	- osmisliti dizajn
  	- tu staviti poseban dio za Gallery (u sklopu te stranice), da bude slider
+	- dodati buttone za tekst, galeriju, kontakt
 
 - Dodati Footer
 	- email, br. tel, ime, logo

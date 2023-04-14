@@ -15,7 +15,7 @@ body {
 .go-up {
     visibility: hidden;
     position: fixed;
-	z-index: 1;
+	z-index: 2;
     margin-left: 25px;
 	bottom: 0;
 	margin-bottom: 25px;
@@ -49,6 +49,7 @@ body {
     background-color: #0000004a;
     transition: background-color 0.4s ease-in-out;
     transition-delay: 0.02s;
+    z-index: 2;
 }
 .navbar.scrolled {
     margin-top: 0px;
@@ -174,11 +175,8 @@ body {
 .head {
     /* DOBRE SLIKE
 
-    background-image: url('../slike/nove\ slike\ \ \(17\).jpg'); - obala plava sa pijeskom
-    background-image: url('../slike/nove\ slike\ \ \(18\).jpg'); - neka pritamnjena obala
     background-image: url('../slike/nove\ slike\ \ \(23\).jpg'); - SIVO PLAVA OBICNA (bazen)
     background-image: url('../slike/nove\ slike\ \ \(28\).jpg'); - BALONI
-    background-image: url('../slike/nove\ slike\ \ \(30\).jpg'); - obala sa palmama
     background-image: url('../slike/nove\ slike\ \ \(36\).jpg'); - *** obala fino gore je plavo - SVIDJA MI SE 10/10
     */
 
@@ -360,6 +358,7 @@ body {
 }
     .box {
         display: flex;
+        color: black;
         flex: 0 0 33.333333%;
         justify-content: center;
         padding: 20px;
