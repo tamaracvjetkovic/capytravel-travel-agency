@@ -138,7 +138,7 @@ function loadDestinations(cur, dest) {
                     var destination = destinations[id];
                     if (id === dest) {
                         for (let i in destination) {
-                            appendMainBox2(".boxes", br, destination[i]);
+                            appendMainBox2(".boxes", br, destination[i], cur);
                         }
                         const boxes = document.querySelectorAll('.box');
                         boxes.forEach(box => {
@@ -184,10 +184,10 @@ function loadDestination(cur) {
 */
 
 
-function appendMainBox2(position, dest, destination) {
+function appendMainBox2(position, dest, destination, curAgency) {
 
     let newMainBox = document.createElement('div');
-    newMainBox.setAttribute('id', (dest + "-" + curBox));
+    newMainBox.setAttribute('id', (dest + "-" + curBox + "-" + curAgency));
     newMainBox.classList.add("box");
     curBox++;
    

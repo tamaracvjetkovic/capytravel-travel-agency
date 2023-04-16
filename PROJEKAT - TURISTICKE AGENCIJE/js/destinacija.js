@@ -65,7 +65,7 @@ function main() {
 
     let pageId = window.location.hash.substr(1);
     pageId = pageId.split("-");
-    loadAgencies(pageId[0], pageId[1]);
+    loadAgencies(pageId[0], pageId[1], pageId[2]);
 
     /*
     let body = document.querySelector("body");
@@ -76,7 +76,7 @@ function main() {
 }
 
 
-function loadAgencies(cur, br) {
+function loadAgencies(cur, br, curAgency) {
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -90,13 +90,13 @@ function loadAgencies(cur, br) {
             } else {
                 alert('Error occurred. Car could not be loaded.')
             }
-            loadAgency(cur, br); 
+            loadAgency(cur, br, curAgency); 
         }
     }
     request.open('GET', firebaseUrl + '/agencjie.json');
     request.send();
 }
-function loadAgency(cur, br) {
+function loadAgency(cur, br, curAgency) {
     // GET by id    
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -110,7 +110,7 @@ function loadAgency(cur, br) {
             loadDestinations(cur, br, agency);
         }
     }
-    request.open('GET', firebaseUrl + '/agencjie/' + agenciesID[cur] + '.json');
+    request.open('GET', firebaseUrl + '/agencjie/' + agenciesID[curAgency] + '.json');
     request.send();
 }
 
