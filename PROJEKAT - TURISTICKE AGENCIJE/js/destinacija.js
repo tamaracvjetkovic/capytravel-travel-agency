@@ -62,14 +62,16 @@ function main() {
         }
     });
 
+
+    let pageId = window.location.hash.substr(1);
+    pageId = pageId.split("-");
+    loadAgencies(pageId[0], pageId[1]);
+
+    /*
     let body = document.querySelector("body");
     let bodyID = (body.getAttribute('id')).split("-");
-
     loadAgencies(bodyID[0], bodyID[1]);
-
-    
-
-    bodyID.appendChild(newp);
+    bodyID.appendChild(newp);*/
 
 }
 

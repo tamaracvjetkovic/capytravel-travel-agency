@@ -1,19 +1,8 @@
 
 window.addEventListener('load', main);
 
-/*
 
-***** RANDOM STUFF *****
-
-//alert("Pravite novo dugme!");
-
-for (let i = 0; i < 8; i++) {
-    createMainBox();
-}
-
-*/
-
-var curBox = 0;
+var curBox = 0;/*
 function createMainBox() {
     let newMainBox = document.createElement('div');
     newMainBox.classList.add("box");
@@ -21,7 +10,7 @@ function createMainBox() {
     let mainBoxes = document.querySelector(".boxes");
     mainBoxes.appendChild(newMainBox);
     curBox++;
-};
+};*/
 
 function scrollToTop() {
     var position = document.body.scrollTop || document.documentElement.scrollTop;
@@ -81,7 +70,6 @@ function loadBoxes() {
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
             if (this.status == 200) {
-                //removeMainBoxes(".box");
                 agenciesID = [];
                 curBox = 0;
                 agencies = JSON.parse(request.responseText);
@@ -90,6 +78,13 @@ function loadBoxes() {
                     appendMainBox(".boxes", agency);
                     agenciesID.push(id);
                 }
+                const boxes = document.querySelectorAll('.box');
+                boxes.forEach(box => {
+                    box.addEventListener('click', () => {
+                    const boxId = box.getAttribute('id');
+                    window.location.href = `agencija.html#${boxId}`;
+                    });
+                });
             } else {
                 alert('Error occurred. Car could not be loaded.')
             }
@@ -102,8 +97,7 @@ function loadBoxes() {
 
 function appendMainBox(position, agency) {
 
-    let newMainBox = document.createElement('a');
-    newMainBox.setAttribute('href', "agencija" + curBox + ".html");
+    let newMainBox = document.createElement('div');
     newMainBox.setAttribute('id', curBox);
     newMainBox.classList.add("box");
     curBox++;

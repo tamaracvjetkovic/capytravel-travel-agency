@@ -1,16 +1,18 @@
 
-window.addEventListener('load', main);
+window.addEventListener('load', main2);
 
 
-var curBox = 1;
-function createMainBox() {
-    let newMainBox = document.createElement('div');
-    newMainBox.classList.add("box");
-    newMainBox.innerHTML = " " + curBox + " ";
-    let mainBoxes = document.querySelector(".boxes");
-    mainBoxes.appendChild(newMainBox);
-    curBox++;
-};
+
+var firebaseUrl = 'https://turistickaagencijaprojekattaca-default-rtdb.europe-west1.firebasedatabase.app';
+var agenciesID = [];
+var agencies = {};
+var destinationsID = [];
+var destinations = {};
+var destinationsInDestinationsID = [];
+var destinationsInDestinations = {};
+var curBox = 0;
+
+
 
 function scrollToTop() {
     var position = document.body.scrollTop || document.documentElement.scrollTop;
@@ -21,17 +23,7 @@ function scrollToTop() {
 }
 
 
-var firebaseUrl = 'https://turistickaagencijaprojekattaca-default-rtdb.europe-west1.firebasedatabase.app';
-
-var agenciesID = [];
-var agencies = {};
-var destinationsID = [];
-var destinations = {};
-var destinationsInDestinationsID = [];
-var destinationsInDestinations = {};
-
-
-function main() {
+function main2() {
 
     // ***** CHANGING NAVBAR WHEN SCROLLED *****
     document.addEventListener("scroll", () => {
@@ -62,17 +54,19 @@ function main() {
         }
     });
 
-    let body = document.querySelector("body");
-    let id = body.getAttribute('id');
 
-    loadAgencies(id);
+    let pageId = window.location.hash.substr(1);
+    loadAgencies(pageId);
 
-    let bodyID = document.getElementById(id);
-    let newp = document.createElement('p');
-    newp.innerHTML = id;
 
-    bodyID.appendChild(newp);
-
+    /*
+    OVO RADI
+    const boxContent = document.getElementById('header1');
+    boxContent.innerHTML = "Taacadsaaa";
+    const content = document.createElement('p');
+    content.innerHTM = `You clicked on box ${pageId}`;
+    boxContent.appendChild(content);
+    */
 }
 
 
@@ -115,7 +109,6 @@ function loadAgency(cur) {
 }
 
 
-
 function appendAgencyBody(cur, agency) {
     /*
     let mainBoxes = document.querySelector(position);
@@ -143,23 +136,21 @@ function loadDestinations(cur, dest) {
                 destinations = JSON.parse(request.responseText);
                 for (let id in destinations) {
                     var destination = destinations[id];
-                    /*console.log("\n");
-                    console.log("id: " + id);*/
                     if (id === dest) {
-                        for (let wtf in destination) {
-                            appendMainBox2(".boxes", br, destination[wtf]);
-                            /*console.log("WTF: " + wtf);
-                            console.log("destinacijaWTF: " + );*/
+                        for (let i in destination) {
+                            appendMainBox2(".boxes", br, destination[i]);
                         }
+                        const boxes = document.querySelectorAll('.box');
+                        boxes.forEach(box => {
+                            box.addEventListener('click', () => {
+                            const boxId = box.getAttribute('id');
+                            window.location.href = `destinacija.html#${boxId}`;
+                            });
+                        }); 
                     }
-                    /*console.log("destinacija: " + destinations[id]);
-                    console.log("\n");*/
                     br++;
                     destinationsID.push(id);
                 }
-                /*console.log("ids: " + destinationsID);
-                console.log("id 0: " + destinationsID[0]);*/
-                
             } else {
                 alert('Error occurred. Car could not be loaded.')
             }
@@ -169,6 +160,7 @@ function loadDestinations(cur, dest) {
     request.open('GET', firebaseUrl + '/destinacije.json');
     request.send();
 }
+/*
 function loadDestination(cur) {
     // GET by id
     var request = new XMLHttpRequest();
@@ -189,15 +181,13 @@ function loadDestination(cur) {
     request.open('GET', firebaseUrl + '/destinacije/' + destinationsID[cur] + '.json');
     request.send();
 }
-
+*/
 
 
 function appendMainBox2(position, dest, destination) {
 
-    console.log(destination);
-    let newMainBox = document.createElement('a');
-    newMainBox.setAttribute('href', "destinacija" + dest + "-" + (curBox - 1) + ".html");
-    newMainBox.setAttribute('id', curBox);
+    let newMainBox = document.createElement('div');
+    newMainBox.setAttribute('id', (dest + "-" + curBox));
     newMainBox.classList.add("box");
     curBox++;
    
