@@ -291,6 +291,7 @@ body {
     .box img {
         width: 100%;
         height: 100%;
+        transition: 0.3s;
     }
     .box img:hover {
         box-shadow: 0 0 5px rgb(255, 255, 255);

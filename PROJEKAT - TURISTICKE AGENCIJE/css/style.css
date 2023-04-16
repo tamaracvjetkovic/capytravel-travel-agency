@@ -7,7 +7,7 @@
 
 body {
     margin: 0;
-    background-color: rgb(43, 52, 57);
+    background-color: rgb(24, 28, 50);
     color: white;
 }
 
@@ -258,7 +258,7 @@ body {
         }
             @media (max-width: 950px) {
                 .searchbar input, .searchbar button {
-                    padding: 1.7vw; 
+                    padding: 1.5vw; 
                 }
                 .searchbar input {
                     width: 65vw;
@@ -270,36 +270,46 @@ body {
     .head-logos {
         display: flex;
         flex-wrap: wrap;  
-        justify-content: space-around;     
+        justify-content: space-around;    
         /*background-color: rgb(255, 253, 211);*/
         box-sizing: border-box;
         width: 70vw;
     }
         @media (max-width: 950px) and (min-height: 500px) {
             .head-logos {
-                margin-bottom: 60px;
+                margin-bottom: 10px;
                 margin-top: -10px;
                 width: 80vw;
             }
         }
         .head-logos-box {
             /*background-color: #355684;*/
-            height: 10vh;
+            height: 13vh;
             margin-top: 5px;
             display: flex;
             /*flex: 0 0 10%;*/
             justify-content: center;
             /*border: 1px solid black;*/
             box-sizing: border-box;
+            margin-left: 0;
+        }
+        .head-logos-box img {
             box-shadow: 0 0 3px 1px rgba(1, 0, 10, 0.674);
         }
         /* TELEFONI */
-        /*@media only screen and (max-width: 950px) and (min-width: 1px){
+        @media only screen and (max-width: 950px) and (min-width: 768px){
             .head-logos-box {
                 flex: 0 0 25%;
             }
-        }*/
-        @media (max-height: 450px) {
+        }
+        @media only screen and (max-width: 767px) and (min-width: 1px){
+            .head-logos-box {
+                height: 10vh;
+                flex: 0 0 50%;
+                
+            }
+        }
+        @media (max-height: 500px) {
             .head {
                 padding-top: 10px;
             }
@@ -365,12 +375,12 @@ body {
         color: black;
         flex: 0 0 33.333333%;
         justify-content: center;
-        padding: 20px;
+        padding: 23px;
         cursor: pointer;
         /*border: 1px solid black;*/
         box-sizing: border-box;
     }
-    .box a {
+    .box {
         color: black;
         text-decoration: none;
     }

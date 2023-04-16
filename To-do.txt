@@ -15,4 +15,4 @@
 
 - skinuti fa-fa ikonice (da se ocitaju)
 
-- 
+- dodati alt na sve slike

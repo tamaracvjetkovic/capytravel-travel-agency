@@ -103,12 +103,12 @@ function loadBoxes() {
 
 function appendMainBox(position, agency) {
 
-    let newMainBox = document.createElement('div');
+    let newMainBox = document.createElement('a');
+    newMainBox.setAttribute('href', "agencija" + curBox + ".html");
+    newMainBox.setAttribute('id', curBox);
     newMainBox.classList.add("box");
     curBox++;
-    newMainBox.setAttribute('onclick', 'ocitajStranicu(this.id)');
-    newMainBox.setAttribute('id', curBox);
-
+   
     let newBoxCard = document.createElement('div');
     newBoxCard.classList.add("card");  
 
@@ -144,34 +144,9 @@ function appendMainBox(position, agency) {
 
     let mainBoxes = document.querySelector(position);
     mainBoxes.appendChild(newMainBox);
-    //document.querySelector(position).appendChild(carRow);
 }
 
-function ocitajStranicu(curPage) {
-    console.log(curPage);
-    window.location = "agencija.html";
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                //removeMainBoxes(".box");
-                agenciesID = [];
-                curBox = 0;
-                agencies = JSON.parse(request.responseText);
-                for (var id in agencies) {
-                    var agency = agencies[id];
-                    appendMainBox(".boxes", agency);
-                    agenciesID.push(id);
-                }
-            } else {
-                alert('Error occurred. Car could not be loaded.')
-            }
-        }
-    }
-    request.open('GET', firebaseUrl + '/agencjie.json');
-    request.send();
-    
-}
+
 
 
 /*
@@ -187,36 +162,3 @@ function removeMainBoxes(position) {
 
 
 
-
-
-
-
-
-
-/*
-var res = 0;
-var okay = 0;
-
-function izracunajRezultat() {
-    let br1 = document.querySelector('#br1');
-    let br2 = document.querySelector('#br2');
-    res = Number(br1.value) + Number(br2.value);
-    document.querySelector('#rezultat').innerHTML = `Rezultat je <b> ${res} </b>!`;
-    okay = 1;
-}
-
-function promijeniParagraf() {
-    let p1 = document.querySelector('#paragraf1');
-    let vr = res;
-    if (okay == 1) {
-        p1.innerHTML = `<b> Vrijednost prethodne racunice je ${vr}! </b>`;
-    } else {
-        p1.innerHTML = `<b> Prvo unesite neki broj! </b>`; 
-    }
-}
-function misNijeTu() {
-    document.querySelector('#paragraf1').innerHTML = `Racunica za prethodno!`;
-}
-
-
-*/
