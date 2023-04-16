@@ -76,7 +76,6 @@ function main() {
 }
 
 
-
 function loadBoxes() {
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -114,8 +113,8 @@ function appendMainBox(position, agency) {
 
     let newAgencyImage = document.createElement('div');
     newAgencyImage.classList.add("agency-image");
-
     newAgencyImage.innerHTML = '<img src = "' + agency.logo + '">';
+    
     let newAgencyDesc = document.createElement('div');
     newAgencyDesc.style.textDecoration = "none";
     newAgencyDesc.classList.add("opis-agencije");

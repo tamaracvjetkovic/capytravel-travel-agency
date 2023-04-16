@@ -27,8 +27,8 @@ var agenciesID = [];
 var agencies = {};
 var destinationsID = [];
 var destinations = {};
-var destinationsInDestinationsID = [];
-var destinationsInDestinations = {};
+var destinationsInDestinationID = [];
+var destinationsInDestination = {};
 
 
 function main() {
@@ -63,20 +63,18 @@ function main() {
     });
 
     let body = document.querySelector("body");
-    let id = body.getAttribute('id');
+    let bodyID = (body.getAttribute('id')).split("-");
 
-    loadAgencies(id);
+    loadAgencies(bodyID[0], bodyID[1]);
 
-    let bodyID = document.getElementById(id);
-    let newp = document.createElement('p');
-    newp.innerHTML = id;
+    
 
     bodyID.appendChild(newp);
 
 }
 
 
-function loadAgencies(cur) {
+function loadAgencies(cur, br) {
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -90,13 +88,13 @@ function loadAgencies(cur) {
             } else {
                 alert('Error occurred. Car could not be loaded.')
             }
-            loadAgency(cur); 
+            loadAgency(cur, br); 
         }
     }
     request.open('GET', firebaseUrl + '/agencjie.json');
     request.send();
 }
-function loadAgency(cur) {
+function loadAgency(cur, br) {
     // GET by id    
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -107,59 +105,41 @@ function loadAgency(cur) {
             } else {
                 alert('Error occurred. Car could not be loaded.')
             }
-            appendAgencyBody(cur, agency);
+            loadDestinations(cur, br, agency);
         }
     }
     request.open('GET', firebaseUrl + '/agencjie/' + agenciesID[cur] + '.json');
     request.send();
 }
 
-
-
-function appendAgencyBody(cur, agency) {
-    /*
-    let mainBoxes = document.querySelector(position);
-    //console.log(agency);
-    let newp= document.createElement('p');
-    newp.innerHTML = agency.naziv;
-    mainBoxes.appendChild(newp);*/
-
-    let newTitle = document.getElementById("header1");
-    newTitle.innerHTML = agency.naziv;
-    let newHead = document.querySelector(".head");
-    newHead.style.backgroundImage = "url(" + agency.logo + ")";
-
-    loadDestinations(cur, agency.destinacije);
-}
-
-
-function loadDestinations(cur, dest) {
+/*
+var destinationsInDestinationID = []
+var destinationInDestination = {};
+*/
+function loadDestinations(cur, br, agency) {
+    let dest = agency.destinacije;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
             if (this.status == 200) {
+                let b = 0;
                 destinationsID = [];
-                let br = 0;
+                destinationsInDestinationID = [];
                 destinations = JSON.parse(request.responseText);
                 for (let id in destinations) {
                     var destination = destinations[id];
-                    /*console.log("\n");
-                    console.log("id: " + id);*/
-                    if (id === dest) {
-                        for (let wtf in destination) {
-                            appendMainBox2(".boxes", br, destination[wtf]);
-                            /*console.log("WTF: " + wtf);
-                            console.log("destinacijaWTF: " + );*/
-                        }
-                    }
-                    /*console.log("destinacija: " + destinations[id]);
-                    console.log("\n");*/
-                    br++;
                     destinationsID.push(id);
-                }
-                /*console.log("ids: " + destinationsID);
-                console.log("id 0: " + destinationsID[0]);*/
-                
+                    if (id === dest) {
+                        for (let i in destination) {
+                            var destinationInDestination = destination[i];
+                            destinationsInDestinationID.push(i);
+                            if (b == br) {
+                                loadDestination(cur, br, agency);
+                            }
+                            b++;
+                        }
+                    }      
+                }           
             } else {
                 alert('Error occurred. Car could not be loaded.')
             }
@@ -169,30 +149,37 @@ function loadDestinations(cur, dest) {
     request.open('GET', firebaseUrl + '/destinacije.json');
     request.send();
 }
-function loadDestination(cur) {
+function loadDestination(cur, br, agency) {
     // GET by id
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
             if (this.status == 200) {
-                destinationsInDestinationsID = [];
-                for (let id in destinationsID) {
-                    var destination = destinations[id]; 
-                    appendMainBox2(".boxes", destination);
-                }   
+                var destination = JSON.parse(request.responseText);
             } else {
                 alert('Error occurred. Car could not be loaded.')
             }
-            //appendDestinationBody(cur, destination);
+            appendDestinationBody(cur, br, agency, destination);
         }
     }
-    request.open('GET', firebaseUrl + '/destinacije/' + destinationsID[cur] + '.json');
+    request.open('GET', firebaseUrl + '/destinacije/' + destinationsID[cur] + "/" + destinationsInDestinationID[br] + '.json');
     request.send();
 }
 
 
+function appendDestinationBody(cur, br, agency, destinacija) {
+   
+    let newTitle = document.getElementById("header1");
+    newTitle.innerHTML = destinacija.naziv;
+    let newHead = document.querySelector(".head");
+    newHead.style.backgroundImage = "url(" + agency.logo + ")";
 
-function appendMainBox2(position, dest, destination) {
+    //appendMainBox2(".boxes",)
+}
+
+
+
+function appendMainBox2(position, destination, agency) {
 
     console.log(destination);
     let newMainBox = document.createElement('a');
