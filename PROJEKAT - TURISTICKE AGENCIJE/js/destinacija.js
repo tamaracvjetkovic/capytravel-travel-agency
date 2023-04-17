@@ -176,16 +176,41 @@ function appendDestinationBody(cur, br, agency, destinacija) {
     let newHead = document.querySelector(".head");
     newHead.style.backgroundImage = "url(" + agency.logo + ")";
 
+    let newDestinationDesc = document.getElementById("opis-trenutne-destinacije");
+   
+    newDestinationDesc.innerHTML = destinacija.opis;
+
+    let newDestinationPrice = document.getElementById("maks-osoba-trenutne-destinacije");
+    let number = destinacija.maxOsoba; // Change this number to the desired value
+    number.trim();
+    number = parseInt(number);
+    let interval = 20; // Change this value to control the speed of the loading effect
+    if (number < 60) {
+        interval = 30; 
+    }
+    if (number < 40) {
+        interval = 35;
+    }
+    if (number < 20) {
+        interval = 40;
+    }
+	let count = 0;
+    let intervalId = setInterval(function() {
+        document.getElementById("maks-osoba-trenutne-destinacije").innerHTML = count++;
+        if (count > number) {
+            clearInterval(intervalId);
+        }
+    }, interval);
+
+    
     //appendMainBox2(".boxes",)
 }
-
 
 
 function appendMainBox2(position, destination, agency) {
 
     console.log(destination);
-    let newMainBox = document.createElement('a');
-    newMainBox.setAttribute('href', "destinacija" + dest + "-" + (curBox - 1) + ".html");
+    let newMainBox = document.createElement('div');
     newMainBox.setAttribute('id', curBox);
     newMainBox.classList.add("box");
     curBox++;

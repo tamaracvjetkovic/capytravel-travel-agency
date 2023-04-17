@@ -1,0 +1,382 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: rgb(37, 37, 37);
+    color: white;
+}
+
+
+.go-up {
+    visibility: hidden;
+    position: fixed;
+	z-index: 2;
+    margin-left: 25px;
+	bottom: 0;
+	margin-bottom: 25px;
+	font-size: 41px;
+	color: white;
+    opacity: 0;
+    transition: visibility 1s, opacity 0.5s ease-in-out;
+    cursor: pointer;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.934);
+}
+.go-up.scrolled {
+    visibility: visible;
+    opacity: 1;
+    position: fixed;
+}
+
+
+.navbar {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    font-size: 19px;
+    padding: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+    background-color: #0000004a;
+    transition: background-color 0.4s ease-in-out;
+    transition-delay: 0.02s;
+    z-index: 2;
+}
+.navbar.scrolled {
+    margin-top: 0px;
+    color: rgb(0, 0, 0);
+    background-color: white;
+    transition-delay: 0;
+}
+.navbar a {
+    text-decoration: none;
+}
+.nava {
+    color: white;
+}
+.nava.scrolled {
+    color: black;
+}
+    .menu {
+        display: flex;
+        flex-direction: row;
+        list-style-type: none;
+        padding: 0;
+        align-items: center;
+    }  
+        .menu li {
+            margin: 0 1rem;
+            overflow: hidden;
+            z-index: 2;
+        } 
+        #login-button {
+            margin-left: 1vw;
+            padding: 3px;
+            padding-left: 7px;
+            padding-right: 7px;
+        }
+        #register-button {
+            padding: 3px;
+            padding-left: 7px;
+            padding-right: 7px;
+        }
+    #menu-toggle {
+        display: none;   
+    }
+
+    @media (max-width: 850px) {
+        .navbar {
+            /*background-color: rgb(59, 92, 84);*/
+            z-index: 2;
+        }
+        .menu-button-container {
+            display: flex;
+            height: 100%;
+            width: 25px;
+            cursor: pointer;
+            align-items: center;
+        }
+        .menu-button,
+        .menu-button::before,
+        .menu-button::after {
+            display: block;
+            background-color: #999696;
+            position: absolute;
+            height: 4px;
+            width: 25px;
+            transition: transform 500ms cubic-bezier(0.25, 0.95, 0.99, 1);
+            border-radius: 5px;
+        }
+        .menu-button::before {
+            content: '';
+            margin-top: -8px;
+        }
+        .menu-button::after {
+            content: '';
+            margin-top: 8px;
+        }
+        #menu-toggle:checked + .menu-button-container .menu-button::before {
+            margin-top: 0;
+            transform: rotate(225deg);
+        }
+        #menu-toggle:checked + .menu-button-container .menu-button {
+            background: rgba(255, 255, 255, 0);
+        }    
+        #menu-toggle:checked + .menu-button-container .menu-button::after {
+            margin-top: 0;
+            transform: rotate(-225deg);
+        }    
+        #menu-toggle ~ .menu li {
+            height: 0;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            transition: height 600ms cubic-bezier(0, 1, 0, 1);
+        }
+        #menu-toggle:checked ~ .menu li {
+            border: 1px solid #000000;
+            height: 2.5em;
+            padding: 0.7em;
+            transition: height 600ms cubic-bezier(0, 1, 0, 1);
+        }
+        #menu-toggle:checked ~ .menu li:not(:first-child) {
+            border-top: none;
+        }    
+        .menu {
+            position: absolute;
+            top: 0;
+            margin-top: 49px;
+            left: 0;
+            flex-direction: column;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+            .menu > li {
+                display: flex;
+                justify-content: center;
+                margin: 0;
+                padding: 0.5em 0;
+                width: 100%;
+                color: white;
+                background-color: #222;
+            }
+    }
+
+.head {
+    /* DOBRE SLIKE
+    background-image: url('../slike/nove\ slike\ \ \(23\).jpg'); - SIVO PLAVA OBICNA (bazen)
+    background-image: url('../slike/nove\ slike\ \ \(28\).jpg'); - BALONI
+    background-image: url('../slike/nove\ slike\ \ \(36\).jpg'); - *** obala fino gore je plavo - SVIDJA MI SE 10/10
+    */
+    /*background-image: url('../slike/agencija/prva\ agencija.jpeg');*/
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: cover;
+    /*background-attachment: fixed;*/
+    padding-top: 100px;
+    padding-bottom: 100px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+   
+    .header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 50%;
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: -20px;
+        padding: 20px;
+        text-shadow: 2px 2px 1px rgba(1, 0, 10, 0.936);
+    }
+        #header1 {
+            font-size: 10vw;
+        }
+            @media (max-width: 950px) {
+                #header1 {
+                    font-size: 13vw;
+                }
+            }
+        #citat {
+            font-size: 1.5vw;
+            text-align: center;
+            margin-top: -8px;
+            text-shadow: 1.5px 1.5px 1px rgba(1, 0, 10, 0.936);
+        }
+            @media (max-width: 950px) {
+                #citat {
+                    margin-top: 5px;
+                    font-size: 4vw;     
+                }
+            }
+        .searchbar {
+            display: flex;
+            overflow: hidden;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 4px 1px rgba(1, 0, 10, 0.68);
+        }
+            @media (max-width: 950px) and (min-height: 500px) {
+                .searchbar {
+                    margin-top: 35px;     
+                }
+            }
+        .searchbar input {
+            padding: 0.6vw;
+            width: 45vw;
+            border: none;
+        }
+        .searchbar button {
+            padding: 0.6vw;   
+            padding-left: 0.8vw;
+            padding-right: 0.8vw;   
+            border: none;
+            background:rgb(155, 155, 155);
+        }
+            @media (max-width: 950px) {
+                .searchbar input, .searchbar button {
+                    padding: 1.7vw; 
+                }
+                .searchbar input {
+                    width: 65vw;
+                }
+            }
+        .searchbar button:hover {
+            background:rgb(118, 117, 117);
+        }
+    .head-logos {
+        display: flex;
+        flex-wrap: wrap;  
+        justify-content: space-around;     
+        /*background-color: rgb(255, 253, 211);*/
+        box-sizing: border-box;
+        width: 70vw;
+    }
+        @media (max-width: 950px) and (min-height: 500px) {
+            .head-logos {
+                margin-bottom: 60px;
+                margin-top: -10px;
+                width: 80vw;
+            }
+        }
+        .head-logos-box {
+            /*background-color: #355684;*/
+            height: 10vh;
+            margin-top: 5px;
+            display: flex;
+            /*flex: 0 0 10%;*/
+            justify-content: center;
+            /*border: 1px solid black;*/
+            box-sizing: border-box;
+            box-shadow: 0 0 3px 1px rgba(1, 0, 10, 0.674);
+        }
+        /* TELEFONI */
+        /*@media only screen and (max-width: 950px) and (min-width: 1px){
+            .head-logos-box {
+                flex: 0 0 25%;
+            }
+        }*/
+        @media (max-height: 450px) {
+            .head {
+                padding-top: 10px;
+            }
+            .head-logos {
+                display: none;
+            }
+        }
+        
+
+
+
+.boxes {
+    display: flex;
+    flex-wrap: wrap;     
+    padding: 10px;  
+    padding-left: 3px;
+    padding-right: 3px;
+    background-color: rgb(255, 253, 211);
+    box-sizing: border-box;
+}
+    .box { 
+        display: flex;
+        flex-direction: column;
+        color: black;
+        flex: 0 0 33.333333%;
+        justify-content: center;
+        padding: 20px;
+        cursor: pointer;
+        /*border: 1px solid black;*/
+        box-sizing: border-box;
+    }
+    .box a {
+        color: black;
+        text-decoration: none;
+    }
+    /* TABLET */
+    @media only screen and (max-width: 1024px) and (min-width: 768px) {
+        .box {
+            flex: 0 0 50%;
+        }
+    }
+    /* TELEFONI */
+    @media only screen and (max-width: 767px) and (min-width: 1px) {
+        .box {
+            flex: 0 0 100%;
+            /*padding: 5%;*/
+        }
+    }
+        .card {
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.349);
+            transition: 0.3s;
+        }
+        .card:hover {
+            box-shadow: 0 0 11px 0 rgba(0, 0, 0, 0.61);
+        }
+            .destination-image img {
+                width: 100%;
+                height: 20vw;
+            }
+                @media only screen and (max-width: 1024px) and (min-width: 768px) {
+                    .destination-image img {
+                        min-height: 33vw;
+                    }
+                } 
+                @media only screen and (max-width: 767px) and (min-width: 1px) {
+                    .destination-image img {
+                        height: 60vw;
+                    }
+                }
+            .opis-destinacije {
+                padding: 10px;
+                font-size: 17px;
+                text-align: center;
+            }
+            .ime-destinacije {
+                text-align:center;
+                margin-bottom: 10px;
+                font-size: 22px;
+                text-decoration: underline 1px black;
+                text-underline-offset: 2.5px;
+            }
+            .tip-destinacije {
+                text-align:center;
+                margin-bottom: 10px;
+                font-size: 19px;
+            }
+
+ 

@@ -13,6 +13,8 @@
 
 - Popraviti marquee
 
-- skinuti fa-fa ikonice (da se ocitaju)
+- skinuti fa-fa ikonice (da se ocitaju) - pitati za go-up strelicu 
 
 - dodati alt na sve slike
+
+- ispod destinacije odmah da se ocitaju maks osobe, cijena i prevoz u boxu nekom 
