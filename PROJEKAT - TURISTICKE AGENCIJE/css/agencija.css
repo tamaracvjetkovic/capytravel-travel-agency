@@ -3,12 +3,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
     margin: 0;
-    background-color: rgb(37, 37, 37);
+    background-color: rgb(36, 36, 36);
     color: white;
+    display: block;
 }
 
 
@@ -49,8 +51,18 @@ body {
     background-color: #0000004a;
     transition: background-color 0.4s ease-in-out;
     transition-delay: 0.02s;
+    animation: 1s slideInFromAbove;
+    /*box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.345);*/
     z-index: 2;
 }
+@keyframes slideInFromAbove {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
 .navbar.scrolled {
     margin-top: 0px;
     color: rgb(0, 0, 0);
@@ -178,11 +190,11 @@ body {
     background-image: url('../slike/nove\ slike\ \ \(28\).jpg'); - BALONI
     background-image: url('../slike/nove\ slike\ \ \(36\).jpg'); - *** obala fino gore je plavo - SVIDJA MI SE 10/10
     */
-    background-image: url('../slike/agencija/prva\ agencija.jpeg');
+   /* background-image: url('../slike/agencija/prva\ agencija.jpeg');*/
     background-repeat: no-repeat;
     background-position: center; 
     background-size: cover;
-    /*background-attachment: fixed;*/
+    background-attachment: fixed;
     padding-top: 100px;
     padding-bottom: 100px;
     height: 100%;
@@ -201,11 +213,19 @@ body {
         width: 100%;
         box-sizing: border-box;
         margin-top: -20px;
-        padding: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
         text-shadow: 2px 2px 1px rgba(1, 0, 10, 0.936);
     }
         #header1 {
             font-size: 10vw;
+            background-color: #00000062;
+            width: 100%;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
         }
             @media (max-width: 950px) {
                 #header1 {
@@ -246,7 +266,7 @@ body {
             padding-left: 0.8vw;
             padding-right: 0.8vw;   
             border: none;
-            background:rgb(155, 155, 155);
+            background:rgb(190, 190, 190);
         }
             @media (max-width: 950px) {
                 .searchbar input, .searchbar button {
@@ -257,51 +277,27 @@ body {
                 }
             }
         .searchbar button:hover {
-            background:rgb(118, 117, 117);
+            background:rgb(146, 146, 146);
         }
-    .head-logos {
-        display: flex;
-        flex-wrap: wrap;  
-        justify-content: space-around;     
-        /*background-color: rgb(255, 253, 211);*/
-        box-sizing: border-box;
-        width: 70vw;
-    }
-        @media (max-width: 950px) and (min-height: 500px) {
-            .head-logos {
-                margin-bottom: 60px;
-                margin-top: -10px;
-                width: 80vw;
-            }
-        }
-        .head-logos-box {
-            /*background-color: #355684;*/
-            height: 10vh;
-            margin-top: 5px;
-            display: flex;
-            /*flex: 0 0 10%;*/
-            justify-content: center;
-            /*border: 1px solid black;*/
-            box-sizing: border-box;
-            box-shadow: 0 0 3px 1px rgba(1, 0, 10, 0.674);
-        }
-        /* TELEFONI */
-        /*@media only screen and (max-width: 950px) and (min-width: 1px){
-            .head-logos-box {
-                flex: 0 0 25%;
-            }
-        }*/
-        @media (max-height: 450px) {
-            .head {
-                padding-top: 10px;
-            }
-            .head-logos {
-                display: none;
-            }
-        }
-        
+      
+.opis-agencije-main {
+    width: 90vw;
+    padding-top: 40px;
+    padding-bottom: 40px;    
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 18px;
+}       
 
-
+.ponude {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    font-size: 5vw;
+    background-color: rgb(251, 251, 251);
+    color: black;
+    text-decoration: underline 1px rgb(0, 0, 0);
+    text-underline-offset: 6px;
+}
 
 .boxes {
     display: flex;
@@ -309,7 +305,7 @@ body {
     padding: 10px;  
     padding-left: 3px;
     padding-right: 3px;
-    background-color: rgb(255, 253, 211);
+    background-color: rgb(251, 251, 251);
     box-sizing: border-box;
 }
     .box { 
@@ -343,6 +339,7 @@ body {
         .card {
             box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.349);
             transition: 0.3s;
+            background-color: white;
         }
         .card:hover {
             box-shadow: 0 0 11px 0 rgba(0, 0, 0, 0.61);
@@ -378,5 +375,110 @@ body {
                 margin-bottom: 10px;
                 font-size: 19px;
             }
-
+            .cena-destinacije {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: relative; 
+                top: 30px;
+                margin-top: -15px;
+                z-index: 1;
+                text-align: center;
+                margin-left: 8%;
+                border: 3px solid #f4c86e;
+                width: 68px;
+                height: 67px;
+                border-radius: 30px;
+                background-color: #f4c86e;
+            }
  
+.opis2-agencije-main {
+    width: 100%;
+    padding-top: 40px;
+    padding-bottom: 30px;    
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}       
+    .googleMap {
+        float: left;
+        width: 45%;
+        height: 400px;
+    }
+    .opis2-agencije-tekstovi {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 45%;
+    }
+
+@media only screen and (max-width: 768px) and (min-width: 1px){
+    .opis2-agencije-main {
+        flex-direction: column;
+        /*margin-top: 20px;*/
+    }
+    .googleMap {
+        float: left;
+        width: 100%;
+        height: 350px;
+    }
+    .opis2-agencije-tekstovi {
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-top: 30px;
+        text-align: center;
+        width: 100%; 
+    }
+    
+}
+    
+    
+
+.footer {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    width: 100%;
+}
+    .footer-content {
+        display: flex;  
+        flex: 0 0 100%;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 8px;
+        margin-bottom: 15px;
+        padding-bottom: 30px;
+        font-size: 1.2em;
+    }
+    .footer a {
+        margin-left: 10px;
+        margin-right: 10px;
+        text-decoration: none;
+        color: black;
+    }
+    .footer a:hover {
+        margin-left: 10px;
+        margin-right: 10px;
+        text-decoration: underline 1px solid black;
+        text-underline-offset: 2.5px;
+    }
+    @media only screen and (max-width: 1024px) and (min-width: 768px){
+        .footer-content {
+            flex: 0 0 50%;
+            font-size: 1.3em;
+        }
+    }
+    @media only screen and (max-width: 767px) and (min-width: 1px){
+        .footer-content {
+            flex: 0 0 25%;
+            font-size: 1.1em;
+            padding-bottom: 0;  
+            margin-bottom: 15px;
+        }
+    }

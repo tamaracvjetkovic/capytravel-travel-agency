@@ -122,7 +122,35 @@ function appendAgencyBody(cur, agency) {
     let newHead = document.querySelector(".head");
     newHead.style.backgroundImage = "url(" + agency.logo + ")";
 
+    let documentTitle = document.querySelector("title");
+    documentTitle.innerText = "CapyTravel | " + agency.naziv;
+    
     loadDestinations(cur, agency.destinacije);
+
+    let opis2Agencije = document.querySelector(".opis2-agencije-tekstovi");
+    let opis2AgencijeInfo = document.createElement("div");
+    opis2AgencijeInfo.classList.add("opis2-agencije-info");
+    
+
+    let opis2AgencijeTekst1 = document.createElement("p");
+    opis2AgencijeTekst1.innerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lobortis sem vel ligula sodales vulputate. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Suspendisse malesuada libero vitae arcu lobortis efficitur. Etiam imperdiet auctor ipsum. Mauris magna ante, ullamcorper nec aliquet non, pellentesque eget metus. Integer sit amet suscipit quam. Nunc ipsum sapien, hendrerit at erat in, placerat venenatis dolor. ";
+    
+    let opis2AgencijeTekst2 = document.createElement("p");
+    opis2AgencijeTekst2.innerText = "Lokacija agencije: " + agency.adresa;
+    opis2AgencijeTekst2.style.marginTop = "30px";
+    let opis2AgencijeTekst3 = document.createElement("p");
+    opis2AgencijeTekst3.innerText = "E-mail: " + agency.email;
+    opis2AgencijeTekst3.style.marginTop = "10px";
+
+
+    opis2Agencije.append(opis2AgencijeTekst1);
+    opis2AgencijeInfo.append(opis2AgencijeTekst2);
+    opis2AgencijeInfo.append(opis2AgencijeTekst3);
+    opis2Agencije.append(opis2AgencijeInfo);
+    /*let opis2AgencijeMapa = document.createElement("div");
+    opis2AgencijeMapa.classList.add("googleMap");*/
+    
+
 }
 
 
@@ -214,14 +242,19 @@ function appendMainBox2(position, dest, destination, curAgency) {
 
     let newDestinationTransport = document.createElement('p');
     newDestinationTransport.classList.add("prevoz-destinacije");
-    newDestinationTransport.innerHTML = destination.prevoz;
+    newDestinationTransport.innerHTML = "Prevoz: " + destination.prevoz;
     newDestinationDesc.appendChild(newDestinationTransport);
+
+    let newDestinationMaxPerson = document.createElement('p');
+    newDestinationMaxPerson.classList.add("maks-osoba-destinacije");
+    newDestinationMaxPerson.innerHTML = "Broj mesta: " + destination.maxOsoba;
+    newDestinationDesc.appendChild(newDestinationMaxPerson);
 
     let newDestinationCost = document.createElement('p');
     newDestinationCost.classList.add("cena-destinacije");
-    newDestinationCost.innerHTML = destination.cena;
-    newDestinationDesc.appendChild(newDestinationCost);
+    newDestinationCost.innerHTML = "<b>" + destination.cena + " RSD </b>";
 
+    newBoxCard.appendChild(newDestinationCost);
     newBoxCard.appendChild(newDestinationImage);
     newBoxCard.appendChild(newDestinationDesc);
 

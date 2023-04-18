@@ -3,11 +3,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
     margin: 0;
-    background-color: rgb(24, 28, 50);
+    background-color: rgb(21, 35, 42);
     color: white;
 }
 
@@ -49,8 +50,18 @@ body {
     background-color: #0000004a;
     transition: background-color 0.4s ease-in-out;
     transition-delay: 0.02s;
+    animation: 1s slideInFromAbove;
+    /*box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.345);*/
     z-index: 2;
 }
+@keyframes slideInFromAbove {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
 .navbar.scrolled {
     margin-top: 0px;
     color: rgb(0, 0, 0);
@@ -203,8 +214,8 @@ body {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 50%;
-        text-shadow: 2px 2px 1px rgba(1, 0, 10, 0.936);
+        height: 50%;        
+        text-shadow: -10px 8px 1px rgba(15, 20, 50, 0.55);
     }
         @media (max-width: 950px) {
             .header {
@@ -212,7 +223,19 @@ body {
             }
         }
         #header1 {
-            font-size: 10vw;
+            font-family:'Times New Roman', Times, serif;
+            font-size: 9vw;
+            /*margin-bottom: 1111px;*/
+        }
+        @media (min-width: 1025px) {
+            #header1 {
+                margin-bottom: 5px;
+                transition: 450ms;    
+            }
+            #header1:hover {
+                font-size: 9.5vw;
+                text-shadow: 3px 2px 2px rgba(17, 51, 100, 0.936);
+            }
         }
             @media (max-width: 950px) {
                 #header1 {
@@ -225,6 +248,7 @@ body {
                 }
             }
         #citat {
+            font-family: 'Times New Roman', Times, serif;
             font-size: 2vw;
             text-align: center;
             margin-top: -8px;
@@ -263,7 +287,7 @@ body {
             padding-left: 0.8vw;
             padding-right: 0.8vw;   
             border: none;
-            background:rgb(155, 155, 155);
+            background:rgb(190, 190, 190);
         }
             @media (max-width: 950px) {
                 .searchbar input, .searchbar button {
@@ -274,8 +298,17 @@ body {
                 }
             }
         .searchbar button:hover {
-            background:rgb(118, 117, 117);
+            background:rgb(146, 146, 146);
         }
+        .opis-stranice-main {
+            width: 90vw;
+            padding-top: 40px;
+            padding-bottom: 40px;    
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 18px;
+        }
+      
     .head-logos {
         display: flex;
         flex-wrap: wrap;  
@@ -348,32 +381,28 @@ body {
 
 .top-marquee { 
 	font-size: 20px;
-	color: black;
-	font-family: Sofia;
+	color: rgb(21, 35, 42);
+	font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: italic;
-    color: #313131;
     font-weight: bold;
-    background: rgba(0, 0, 0, 0.699);
+    background: rgb(249, 249, 249);
 	line-height: 35px;   
     display: block;
     overflow: hidden;  
-    animation: color-change 5s infinite alternate;
+    /*animation: color-change 5s infinite alternate;*/
 }
     @keyframes color-change {
-        0% { color: #d8e8ff; }
-        20% { color: #a6cffe; }
-        40% { color: #8db0e8; }
-        60% { color: #ae9efe; }
-        80% { color: #e59eff; }
-        100% { color: #fbceff; }
+        0% { color: #396db5; }
+        100% { color: #16355f; }
     }
     .capy-travel-href {
         overflow: hidden;  
-        animation: color-change 5s infinite alternate;
+        color: rgb(21, 35, 42);
+        /*animation: color-change 2s infinite alternate;*/
     }
     .capy-travel-href:hover {
         overflow: hidden;  
-        color: rgb(255, 242, 211);
+        color: rgb(21, 73, 100);
         animation: none;
     }
     @media only screen and (max-width: 850px) and (min-width: 1px){
@@ -385,6 +414,27 @@ body {
 
 
 
+.ponude {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    font-size: 5vw;
+    background-color: rgb(251, 251, 251);
+    color: black;
+    text-decoration: underline 1px rgb(0, 0, 0);
+    text-underline-offset: 6px;
+}
+
+    @media (max-width: 950px) {
+        .ponude {
+            font-size: 9vw;
+        }
+    }
+    @media (max-width: 650px) {
+        .ponude {
+            font-size: 11vw;
+        }
+    }
+
 
 .boxes {
     display: flex;
@@ -392,7 +442,7 @@ body {
     padding: 10px;  
     padding-left: 3px;
     padding-right: 3px;
-    background-color: rgb(255, 253, 211);
+    background-color: rgb(251, 251, 251);
     box-sizing: border-box;
 }
     .box { 
@@ -401,7 +451,7 @@ body {
         color: black;
         flex: 0 0 33.333333%;
         justify-content: center;
-        padding: 23px;
+        padding: 20px;
         cursor: pointer;
         /*border: 1px solid black;*/
         box-sizing: border-box;
@@ -426,13 +476,14 @@ body {
         .card {
             box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.349);
             transition: 0.3s;
+            background-color: white;
         }
         .card:hover {
             box-shadow: 0 0 11px 0 rgba(0, 0, 0, 0.61);
         }
             .agency-image img {
                 width: 100%;
-                height: 20vw !important;
+                height: 20vw;
             }
                 @media only screen and (max-width: 1024px) and (min-width: 768px) {
                     .agency-image img {
@@ -453,31 +504,71 @@ body {
             .ime-agencije {
                 text-align:center;
                 margin-bottom: 10px;
-                font-size: 22px;
-                text-decoration: underline 1px black;
+                font-size: 21px;
+                text-decoration: underline 0.9px rgb(0, 0, 0);
                 text-underline-offset: 2.5px;
             }
             .adresa-agencije {
                 text-align:center;
                 margin-bottom: 10px;
-                font-size: 19px;
+                font-size: 17px;
             }
 
- 
+    .opis2-stranice-main {
+        width: 90vw;
+        padding-top: 40px;
+        padding-bottom: 40px;    
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 18px;
+    }
+
+.footer {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    width: 100%;
+}
+    .footer-content {
+        display: flex;  
+        flex: 0 0 100%;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 8px;
+        margin-bottom: 15px;
+        padding-bottom: 30px;
+        font-size: 1.2em;
+    }
+    .footer a {
+        margin-left: 10px;
+        margin-right: 10px;
+        text-decoration: none;
+        color: black;
+    }
+    .footer a:hover {
+        margin-left: 10px;
+        margin-right: 10px;
+        text-decoration: underline 1px solid black;
+        text-underline-offset: 2.5px;
+    }
+    @media only screen and (max-width: 1024px) and (min-width: 768px){
+        .footer-content {
+            flex: 0 0 50%;
+            font-size: 1.3em;
+        }
+    }
+    @media only screen and (max-width: 767px) and (min-width: 1px){
+        .footer-content {
+            flex: 0 0 25%;
+            font-size: 1.1em;
+            padding-bottom: 0;  
+            margin-bottom: 15px;
+        }
+    }
 
 
-/*
-<div class = "menu">
-            <div class = "navbox">
-                Pocetna
-            </div> 
-            <div class = "navbox">
-                Pocetna
-            </div>
-            <div class = "navbox">
-                Pocetna
-            </div>
-            <div class = "navbox">
-                Pocetna
-            </div>    
-        </div>*/
+
+  
