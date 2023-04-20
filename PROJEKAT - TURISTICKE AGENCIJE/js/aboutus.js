@@ -1,6 +1,7 @@
 
 window.addEventListener('load', main);
 
+var clicked = 0;
 
 function main() {
 
@@ -9,15 +10,27 @@ function main() {
         let nav = document.querySelector(".navbar");
         let nava = document.querySelectorAll(".nava");
         if (window.scrollY > 0) {
-            nav.classList.add("scrolled");
-            for (let i = 0; i < nava.length; i++) {
-                nava[i].classList.add("scrolled");
-            }
+            if (clicked === 0) {
+                nav.classList.add("scrolled");
+                for (let i = 0; i < nava.length; i++) {
+                    nava[i].classList.add("scrolled");
+                }
+            } 
+            let button1 = document.querySelector(".menu-button");
+            button1.style.setProperty('--button1Color','black');
+            let logo = document.getElementById("logo1");
+            logo.src = "../slike/logo/logo1/png/logo-no-background.png";
         }
         if (window.scrollY == 0) {
             nav.classList.remove("scrolled");
             for (let i = 0; i < nava.length; i++) {
                 nava[i].classList.remove("scrolled");
+            }
+            if (clicked === 0) {
+                let logo = document.getElementById("logo1");
+                logo.src = "../slike/logo/logo2/png/logo-no-background.png";
+                let button1 = document.querySelector(".menu-button");
+                button1.style.setProperty('--button1Color','white');
             }
         }
     });
@@ -32,6 +45,41 @@ function main() {
             goUp.classList.remove("scrolled");
         }
     });
+
+    document.getElementById('menu-toggle').onclick = function() {
+        if (clicked === 0) {
+            clicked = 1;
+            let nava = document.querySelectorAll(".nava");
+            for (let i = 0; i < nava.length; i++) {
+                nava[i].style.color = "white";
+            }
+            document.querySelector('.navbar').classList.toggle("navbarButtonClicked");
+            let logo = document.getElementById("logo1");
+            logo.src = "../slike/logo/logo1/png/logo-no-background.png";
+            let button1 = document.querySelector(".menu-button");
+            button1.style.setProperty('--button1Color','black');
+        } else {
+            clicked = 0;
+            let nava = document.querySelectorAll(".nava");
+            for (let i = 0; i < nava.length; i++) {
+                nava[i].style.color = "";
+            }
+            document.querySelector('.navbar').classList.toggle("navbarButtonClicked");
+            if (window.scrollY > 0) {
+                let button1 = document.querySelector(".menu-button");
+                button1.style.setProperty('--button1Color','black');
+                let logo = document.getElementById("logo1");
+                logo.src = "../slike/logo/logo1/png/logo-no-background.png";
+            } else {
+                let logo = document.getElementById("logo1");
+                logo.src = "../slike/logo/logo2/png/logo-no-background.png";
+                let button1 = document.querySelector(".menu-button");
+                button1.style.setProperty('--button1Color','white');
+            }
+        }
+    }
+
+
 }
 
 function scrollToTop() {

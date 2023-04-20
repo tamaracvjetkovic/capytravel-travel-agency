@@ -102,7 +102,6 @@ function main() {
                 let button1 = document.querySelector(".menu-button");
                 button1.style.setProperty('--button1Color','white');
             }
-            
         }
     }
     

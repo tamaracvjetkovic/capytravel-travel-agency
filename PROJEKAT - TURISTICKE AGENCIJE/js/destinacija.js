@@ -307,6 +307,30 @@ function appendDestinationBody(cur, br, agency, destinacija) {
         sliderContainer.appendChild(div);
     }
 
+    let opis2Agencije = document.querySelector(".opis2-agencije-tekstovi");
+    let opis2AgencijeInfo = document.createElement("div");
+    opis2AgencijeInfo.classList.add("opis2-agencije-info");
+    
+    let opis2AgencijeTekst1 = document.createElement("p");
+    let randomProcenat = Math.floor(Math.random() * (35 - 15 + 1)) + 15;
+    opis2AgencijeTekst1.innerHTML = "Agencija '" + agency.naziv + "' je turistička agencija u Srbiji, koja je osnovana " + agency.godina + ", a u poslednje 3 godine ima čak " + randomProcenat + "% godišnje više putnika o odnosu na druge turističke agencije iz Srbije! <br/> <br/> '" + agency.naziv + "' nudi najbolje destinacije za Vas, te smo tu da Vaše putovanje učinimo putovanjem iz snova!";
+    
+    let opis2AgencijeTekst2 = document.createElement("p");
+    opis2AgencijeTekst2.innerText = "E-mail: " + agency.email;
+    opis2AgencijeTekst2.style.marginTop = "50px";
+    let opis2AgencijeTekst3 = document.createElement("p");
+    opis2AgencijeTekst3.innerText = "Telefon: " + agency.brojTelefona;
+    opis2AgencijeTekst3.style.marginTop = "10px";
+    opis2AgencijeTekst3.style.marginBottom = "40px";
+    let opis2AgencijeTekst4 = document.createElement("p");
+    opis2AgencijeTekst4.innerText = "Lokacija agencije: " + agency.adresa;
+    opis2AgencijeTekst4.style.marginTop = "10px";
+
+    opis2Agencije.append(opis2AgencijeTekst1);
+    opis2AgencijeInfo.append(opis2AgencijeTekst2);
+    opis2AgencijeInfo.append(opis2AgencijeTekst3);
+    opis2AgencijeInfo.append(opis2AgencijeTekst4);
+    opis2Agencije.append(opis2AgencijeInfo);
 }
 
 
