@@ -12,6 +12,9 @@
 
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel = "stylesheet" type = "text/css" href = "../css/destinacija.css"/>
+
+    
+
     <script type = "text/javascript" src = "../js/destinacija.js"> </script>
 
     <title> CapyTravel | Travel Agencies </title>
@@ -24,9 +27,7 @@
     <a href = "#top" onclick = "scrollToTop(); return false" class = "go-up"> <i class = "fa fa-arrow-circle-up" aria-hidden = "true"> </i> </a>
     
     <div class = "navbar"> 
-        <div class = "logo">
-          Logo Here
-        </div>
+        <div class = "logo"> Logo here </div>
         
         <input id = "menu-toggle" type = "checkbox"/>
         <label class = 'menu-button-container' for = "menu-toggle">
@@ -46,30 +47,92 @@
 
     <div class = "head">
         <div class = "header">
-            <h1 id = "header1"> destinacija??? </h1>
             <h3 id = "citat"> </h3>
-            <br/> 
-            <form action = "#">
-                <div class = "searchbar">
-                    <input type = "text" placeholder = "Search.." name = "search" id = "barforsearch">
-                    <button type = "submit"> <i class = "fa fa-search"> </i> </button>
-                </div>
-            </form>
+            <h1 id = "header1"> </h1>
         </div>
-    </div>
-
-    <p id = "opis-trenutne-destinacije"> opis??? </p>
-
-    <label for = "maks-osoba-trenutne-destinacije"> maks. osoba: </label>
-    <p id = "maks-osoba-trenutne-destinacije" style = "display: inline"> brojOsoba??? </p>
-
-    <!-- SLIKE -->
-    <div class = "boxes">
-
+        
+            <div class = "destinacija-info">
+                <div class = "maks-osoba">
+                    <p id = "maks-osoba-destinacije"> Broj mesta: </p>
+                    <div id = "ispis-maks-osoba-destinacije"> </div>
+                </div>
+                <div class = "cena">
+                    <p id = "cijena-destinacije"> Cena (RSD): </p>
+                    <div id = "ispis-cijena-destinacije"> </div>
+                </div>
+                <div class = "prevoz">
+                    <p id = "prevoz-destinacije"> Prevoz: </p>
+                    <div id = "ispis-prevoz-destinacije"> </div>
+                </div>
+            </div>
+        
     </div>
 
     
+
+    <div class = "destinacija-utils">
+        <form action = "#">
+            <div class = "searchbar">
+                <input type = "text" placeholder = "Search.." name = "search" id = "barforsearch">
+                <button type = "submit"> <i class = "fa fa-search"> </i> </button>
+            </div>
+        </form>
+    </div>    
+
+
+    <p id = "opis-trenutne-destinacije"> </p>
+
+    
+    <!--
+    <div class = "slider">
+        <div class = "slider-container">
+            <div class = "slikemenu">
+              <label for = "slide-tackica-1"> </label>
+              <label for = "slide-tackica-2"> </label>
+              <label for = "slide-tackica-3"> </label>
+            </div>
+            <input id = "slide-tackica-1" type = "radio" name = "slides" checked>
+            <div class = "slide slide-1"> </div>
+            <input id = "slide-tackica-2" type = "radio" name = "slides">
+            <div class = "slide slide-2"> </div>
+            <input id = "slide-tackica-3" type = "radio" name = "slides">
+            <div class = "slide slide-3"> </div>
+        </div>
     </div>
+    -->
+
+     <!-- SLIKE -->
+    <div class = "slider">
+        <div class = "slider-container">
+            <div class = "slikemenu">
+              
+            </div>
+
+            
+        </div>
+    </div>
+    
+    <div class = "footer">
+        <hr style = "height: 1px; width: 70vw; background-color: rgba(0, 0, 0, 0.532); border: none; margin-top: 20px"> 
+        <div class = "footer-content">
+            <div class = "footer-contact"> 
+                <a href = "contact.html"> Kontakt </a>
+            </div>
+            <div class = "footer-email"> 
+                <a href = "contact.html"> travelwithus@capytravel.com </a>
+            </div>
+            <div class = "footer-terms&conditions"> 
+                <a href = "https://www.termsfeed.com/public/uploads/2021/12/sample-terms-conditions-agreement.pdf"> Terms & Conditions </a>
+            </div>
+            <div class = "footer-aboutus"> 
+                <a href = "aboutus.html"> O nama </a>
+            </div>
+        </div>
+    </div> 
+
+        
+    
+    
 
 
 </body>

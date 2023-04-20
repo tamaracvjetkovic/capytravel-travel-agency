@@ -11,8 +11,7 @@ var destinations = {};
 var destinationsInDestinationsID = [];
 var destinationsInDestinations = {};
 var curBox = 0;
-
-
+var clicked = 0;
 
 function scrollToTop() {
     var position = document.body.scrollTop || document.documentElement.scrollTop;
@@ -30,15 +29,27 @@ function main2() {
         let nav = document.querySelector(".navbar");
         let nava = document.querySelectorAll(".nava");
         if (window.scrollY > 0) {
-            nav.classList.add("scrolled");
-            for (let i = 0; i < nava.length; i++) {
-                nava[i].classList.add("scrolled");
-            }
+            if (clicked === 0) {
+                nav.classList.add("scrolled");
+                for (let i = 0; i < nava.length; i++) {
+                    nava[i].classList.add("scrolled");
+                }
+            } 
+            let button1 = document.querySelector(".menu-button");
+            button1.style.setProperty('--button1Color','black');
+            let logo = document.getElementById("logo1");
+            logo.src = "../slike/logo/logo1/png/logo-no-background.png";
         }
         if (window.scrollY == 0) {
             nav.classList.remove("scrolled");
             for (let i = 0; i < nava.length; i++) {
                 nava[i].classList.remove("scrolled");
+            }
+            if (clicked === 0) {
+                let logo = document.getElementById("logo1");
+                logo.src = "../slike/logo/logo2/png/logo-no-background.png";
+                let button1 = document.querySelector(".menu-button");
+                button1.style.setProperty('--button1Color','white');
             }
         }
     });
@@ -54,6 +65,38 @@ function main2() {
         }
     });
 
+    document.getElementById('menu-toggle').onclick = function() {
+        if (clicked === 0) {
+            clicked = 1;
+            let nava = document.querySelectorAll(".nava");
+            for (let i = 0; i < nava.length; i++) {
+                nava[i].style.color = "white";
+            }
+            document.querySelector('.navbar').classList.toggle("navbarButtonClicked");
+            let logo = document.getElementById("logo1");
+            logo.src = "../slike/logo/logo1/png/logo-no-background.png";
+            let button1 = document.querySelector(".menu-button");
+            button1.style.setProperty('--button1Color','black');
+        } else {
+            clicked = 0;
+            let nava = document.querySelectorAll(".nava");
+            for (let i = 0; i < nava.length; i++) {
+                nava[i].style.color = "";
+            }
+            document.querySelector('.navbar').classList.toggle("navbarButtonClicked");
+            if (window.scrollY > 0) {
+                let button1 = document.querySelector(".menu-button");
+                button1.style.setProperty('--button1Color','black');
+                let logo = document.getElementById("logo1");
+                logo.src = "../slike/logo/logo1/png/logo-no-background.png";
+            } else {
+                let logo = document.getElementById("logo1");
+                logo.src = "../slike/logo/logo2/png/logo-no-background.png";
+                let button1 = document.querySelector(".menu-button");
+                button1.style.setProperty('--button1Color','white');
+            }
+        }
+    }
 
     let pageId = window.location.hash.substr(1);
     loadAgencies(pageId);
@@ -69,7 +112,6 @@ function main2() {
     */
 }
 
-
 function loadAgencies(cur) {
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -79,11 +121,13 @@ function loadAgencies(cur) {
                 agencies = JSON.parse(request.responseText);
                 for (let id in agencies) {
                     var agency = agencies[id];
+
                     agenciesID.push(id);
                 }
             } else {
                 alert('Error occurred. Car could not be loaded.')
             }
+            
             loadAgency(cur); 
         }
     }
@@ -125,6 +169,7 @@ function appendAgencyBody(cur, agency) {
     let documentTitle = document.querySelector("title");
     documentTitle.innerText = "CapyTravel | " + agency.naziv;
     
+
     loadDestinations(cur, agency.destinacije);
 
     let opis2Agencije = document.querySelector(".opis2-agencije-tekstovi");
@@ -133,19 +178,25 @@ function appendAgencyBody(cur, agency) {
     
 
     let opis2AgencijeTekst1 = document.createElement("p");
-    opis2AgencijeTekst1.innerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lobortis sem vel ligula sodales vulputate. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Suspendisse malesuada libero vitae arcu lobortis efficitur. Etiam imperdiet auctor ipsum. Mauris magna ante, ullamcorper nec aliquet non, pellentesque eget metus. Integer sit amet suscipit quam. Nunc ipsum sapien, hendrerit at erat in, placerat venenatis dolor. ";
+    let randomProcenat = Math.floor(Math.random() * (35 - 15 + 1)) + 15;
+    opis2AgencijeTekst1.innerHTML = "Agencija '" + agency.naziv + "' je turistička agencija u Srbiji, koja je osnovana " + agency.godina + ", a u poslednje 3 godine ima čak " + randomProcenat + "% godišnje više putnika o odnosu na druge turističke agencije iz Srbije! <br/> <br/> '" + agency.naziv + "' nudi najbolje destinacije za Vas, te smo tu da Vaše putovanje učinimo putovanjem iz snova!";
     
     let opis2AgencijeTekst2 = document.createElement("p");
-    opis2AgencijeTekst2.innerText = "Lokacija agencije: " + agency.adresa;
-    opis2AgencijeTekst2.style.marginTop = "30px";
+    opis2AgencijeTekst2.innerText = "E-mail: " + agency.email;
+    opis2AgencijeTekst2.style.marginTop = "50px";
     let opis2AgencijeTekst3 = document.createElement("p");
-    opis2AgencijeTekst3.innerText = "E-mail: " + agency.email;
+    opis2AgencijeTekst3.innerText = "Telefon: " + agency.brojTelefona;
     opis2AgencijeTekst3.style.marginTop = "10px";
-
+    opis2AgencijeTekst3.style.marginBottom = "40px";
+    let opis2AgencijeTekst4 = document.createElement("p");
+    opis2AgencijeTekst4.innerText = "Lokacija agencije: " + agency.adresa;
+    opis2AgencijeTekst4.style.marginTop = "10px";
+    
 
     opis2Agencije.append(opis2AgencijeTekst1);
     opis2AgencijeInfo.append(opis2AgencijeTekst2);
     opis2AgencijeInfo.append(opis2AgencijeTekst3);
+    opis2AgencijeInfo.append(opis2AgencijeTekst4);
     opis2Agencije.append(opis2AgencijeInfo);
     /*let opis2AgencijeMapa = document.createElement("div");
     opis2AgencijeMapa.classList.add("googleMap");*/
@@ -217,9 +268,11 @@ function appendMainBox2(position, dest, destination, curAgency) {
     let newMainBox = document.createElement('div');
     newMainBox.setAttribute('id', (dest + "-" + curBox + "-" + curAgency));
     newMainBox.classList.add("box");
+    
     curBox++;
    
     let newBoxCard = document.createElement('div');
+    newBoxCard.setAttribute('id', ("card" + dest + "-" + curBox + "-" + curAgency));
     newBoxCard.classList.add("card");  
 
     let newDestinationImage = document.createElement('div');
