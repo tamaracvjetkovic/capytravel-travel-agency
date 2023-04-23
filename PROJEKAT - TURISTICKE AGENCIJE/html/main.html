@@ -10,6 +10,8 @@
     <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
     <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
 
+    <link href = 'https://fonts.googleapis.com/css?family=Muli' rel = 'stylesheet'>
+
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel = "stylesheet" type = "text/css" href = "../css/main.css"/>
     <script type = "text/javascript" src = "../js/main.js"> </script>
@@ -19,7 +21,7 @@
 </head>
 
 
-<body style = "display: flex; flex-direction: column">
+<body>
 
     <a href = "#top" onclick = "scrollToTop(); return false" class = "go-up"> <i class = "fa fa-arrow-circle-up" aria-hidden = "true"> </i> </a>
     
@@ -34,12 +36,12 @@
         </label>
         
         <ul class = "menu">
-          <li> <a href = "main.html"> <div class = "nava"> Početna </div> </a> </li>
-          <li> <a href = "aboutus.html"> <div class = "nava"> O nama </div> </a> </li>
-          <li> <a href = "contact.html"> <div class = "nava"> Kontakt </div> </a> </li>
-          <li> <a href = "admin.html"> <div class = "nava"> Admin </div> </a> </li>
-          <li> <button id = "login-button"> Login </button> </li>
-          <li> <button id = "register-button"> Register </button> </li>
+          <li> <a href = "main.html" class = "nava"> Početna </a> </li>
+          <li> <a href = "aboutus.html" class = "nava"> O nama </a> </li>
+          <li> <a href = "contact.html" class = "nava"> Kontakt  </a> </li>
+          <li> <a href = "admin.html" class = "nava">  Admin </a> </li>
+          <li> <p id = "login-button" class = "nava"> Login </p> </li>
+          <li> <p id = "register-button" class = "nava"> Register </p> </li>
         </ul>
     </div>
 
@@ -47,53 +49,17 @@
 
         <div class = "header">
             <h1 id = "header1"> CAPYTRAVEL </h1>
-            <h3 id = "citat"> "Life is a journey, not a destination." </h3>
-            <br/> 
-            <form action = "#">
-                <div class = "searchbar">
-                    <input type = "text" placeholder = "Search.." name = "search" id = "barforsearch">
-                    <button type = "submit"> <i class = "fa fa-search"> </i> </button>
-                </div>
-            </form>
-        </div>
-
-        <div class = "head-logos">
-            <div class = "head-logos-box">
-                <img src = "../slike/partnerLogoDukley.png">
-            </div>
-            <div class = "head-logos-box">
-                <img src = "../slike/partnerLogoDukley.png">
-            </div>
-            <div class = "head-logos-box">
-                <img src = "../slike/partnerLogoDukley.png">
-            </div>
-            <div class = "head-logos-box">
-                <img src = "../slike/partnerLogoDukley.png">
-            </div>
-            <div class = "head-logos-box">
-                <img src = "../slike/partnerLogoDukley.png">
-            </div>
-            <div class = "head-logos-box">
-                <img src = "../slike/partnerLogoDukley.png">
-            </div>
-            <div class = "head-logos-box">
-                <img src = "../slike/partnerLogoDukley.png">
-            </div>
-            <div class = "head-logos-box">
-                <img src = "../slike/partnerLogoDukley.png">
-            </div>
         </div>
 
     </div>
 
-    
-    <marquee scrollamount = "15" class = "top-marquee"> Istražite sve prirodne lepote sa najpoznatijim agencijama u Srbiji! &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <a href = "aboutus.html" class = "capy-travel-href">  CapyTravel </a> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Egzotične destinacije Vas čekaju ! &nbsp Rezervišite Vaša mesta na vreme . . </marquee>
-
    
-    <div class = "main">
-
+    <div class = "main" style = "box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.418);">
         <div class = "opis-stranice-main">
-            <p> Organizujete odmor i potrebna Vam je pomoć?
+            <p style = "text-align: center; font-size: 23px; margin-bottom: 10px; font-weight: 600; color:rgba(33, 33, 33, 0.886)">
+                Organizujete odmor i potrebna Vam je pomoć?
+            </p> <br/>
+            <p>
                 Turističke agencije iz cele Srbija stoje na raspolaganju svakome ko se odluči na
                 turistička putovanja širom sveta. Na turističkom portalu CapyTravel,
                 nalazi se lista turističkih agencija u Srbiji sa poslovnim podacima o svakoj
@@ -105,155 +71,38 @@
                 turističke agencije, U Srbiji ima dosta gradova sa velikim brojem registrovanih
                 agencija, pa je važno da pronađete najbolju za sebe. Zato smo mi tu.
             </p>
+            <p style = "font-size: 23px; margin-top: 45px; font-weight: 600; color:rgba(33, 33, 33, 0.886)">
+                PUTUJTE SIGURNO UZ VAŠ 'CAPYTRAVEL'
+            </p>
         </div>  
         
-        <center>
-            <div class = "ponude"> Turističke agencije </div>
-        </center>
-        
-
+    
         <div class = "boxes">
-            <!--
-            <div class = "box" id = "55">
-                <a href = "#" class = "card">
-                    <div class = "agency-image"> 
-                        <img src = "../slike/agency (0).jpg">
+            <div class = "pretraga-main"> 
+                <form action = "#">
+                    <div class = "searchbar">
+                        <div class = "search1"> 
+                            <p id = "search-label"> Pretražite agencije: </p>
+                        </div>
+                        <div class = "search2"> 
+                            <input type = "text" placeholder = "Search.." name = "search">
+                            <button type = "submit"> <i class = "fa fa-search"> </i> </button>
+                        </div>    
                     </div>
-                    <div class = "opis-agencije">
-                        <p class = "ime-agencije"> 
-                            Kusadasi
-                        </p>
-                        <p class = "adresa-agencije"> 
-                            2023
-                        </p>
-                        <p class = "broj-telefona-agencije"> 
-                            2023
-                        </p>
-                        <p class = "email-agencije"> 
-                            2023
-                        </p>
-                    </div>
-                </a>  
+                </form>
             </div>
-            
-            <div class = "box" id = "54">
-                <a href = "#" class = "card">
-                    <div class = "agency-image"> 
-                        <img src = "../slike/agency (0).jpg">
-                    </div>
-                    <div class = "opis-agencije">
-                        <p class = "ime-agencije"> 
-                            Kusadasi
-                        </p>
-                        <p class = "adresa-agencije"> 
-                            2023
-                        </p>
-                        <p class = "broj-telefona-agencije"> 
-                            2023
-                        </p>
-                        <p class = "email-agencije"> 
-                            2023
-                        </p>
-                    </div>
-                </as>  
-            </div>
-            
-            <div class = "box" id = "53">
-                <a href = "#" class = "card">
-                    <div class = "agency-image"> 
-                        <img src = "../slike/agency (0).jpg">
-                    </div>
-                    <div class = "opis-agencije">
-                        <p class = "ime-agencije"> 
-                            Kusadasi
-                        </p>
-                        <p class = "adresa-agencije"> 
-                            2023
-                        </p>
-                        <p class = "broj-telefona-agencije"> 
-                            2023
-                        </p>
-                        <p class = "email-agencije"> 
-                            2023
-                        </p>
-                    </div>
-                </a>  
-            </div>
-            
-            <div class = "box" id = "53">
-                <a href = "#" class = "card">
-                    <div class = "agency-image"> 
-                        <img src = "../slike/agency (0).jpg">
-                    </div>
-                    <div class = "opis-agencije">
-                        <p class = "ime-agencije"> 
-                            Kusadasi
-                        </p>
-                        <p class = "adresa-agencije"> 
-                            2023
-                        </p>
-                        <p class = "broj-telefona-agencije"> 
-                            2023
-                        </p>
-                        <p class = "email-agencije"> 
-                            2023
-                        </p>
-                    </div>
-                </a>  
-            </div>
-
-            <div class = "box" id = "53">
-                <a href = "#" class = "card">
-                    <div class = "agency-image"> 
-                        <img src = "../slike/agency (0).jpg">
-                    </div>
-                    <div class = "opis-agencije">
-                        <p class = "ime-agencije"> 
-                            Kusadasi
-                        </p>
-                        <p class = "adresa-agencije"> 
-                            2023
-                        </p>
-                        <p class = "broj-telefona-agencije"> 
-                            2023
-                        </p>
-                        <p class = "email-agencije"> 
-                            2023
-                        </p>
-                    </div>
-                </a>  
-            </div>
-
-            <div class = "box" id = "53">
-                <a href = "#" class = "card">
-                    <div class = "agency-image"> 
-                        <img src = "../slike/agency (0).jpg">
-                    </div>
-                    <div class = "opis-agencije">
-                        <p class = "ime-agencije"> 
-                            Kusadasi
-                        </p>
-                        <p class = "adresa-agencije"> 
-                            2023
-                        </p>
-                        <p class = "broj-telefona-agencije"> 
-                            2023
-                        </p>
-                        <p class = "email-agencije"> 
-                            2023
-                        </p>
-                    </div>
-                </a>  
-            </div>
-            -->   
+            <!-- BOXOVI SA JS -->
         </div>
     
         <div class = "opis2-stranice-main">
+            <p style = "text-align: center; font-size: 23px; margin-bottom: 10px; font-weight: 600; color:rgba(33, 33, 33, 0.886)">
+                ZAŠTO BAŠ MI?
+            </p> <br/>
             <p> Kada su u pitanju turističke agencije u Novom Sadu, sve informacije o njihovom
                 poslovanju možete pronaći na našoj turističkoj platformi. Ukoliko želite da
                 otputujete na zimovanje, letovanje ili želite da provedete produženi vikend u
-                nekoj evropskoj metropoli, na pravom ste mestu. Kada je u pitanju prestonica kulture
-                Novi Sad, turističke agencije su tu da svaku Vašu zamisao ispune po povoljnim cenama.
+                nekoj evropskoj metropoli, na pravom ste mestu. <b> CapyTravel </b> je tu da Vam predstavi turističke
+                agencije koje će svaku Vašu zamisao da ispune po povoljnim cenama.
             </p> <br/>
             <p> Kod nas možete pronaći turističke agencije u Novom Sadu koje nude veliki izbor
                 aranžmana za sve vrste odmora u brojnim gradovima sveta, pa ukoliko planirate 
@@ -263,7 +112,7 @@
             <p>
                 Ukoliko imate ideju da putujete, a ne znate gde, ukoliko Vam je potreban odmor ili
                 želite da obiđete gradove sveta i upoznate se sa kulturom drugih država i gradova,
-                turističke agencije Beograd će vam pomoći da se odlučite i da po što povoljnijoj
+                turističke agencije Novog Sada će vam pomoći da se odlučite i da po što povoljnijoj
                 ceni otputujete. Na Vama je samo da spakujete kofere i prepustite se nezaboravnoj
                 avanturi.
             </p>
@@ -271,7 +120,7 @@
         
         
         <div class = "footer">
-            <hr style = "height: 1px; width: 70vw; background-color: rgba(0, 0, 0, 0.532); border: none; margin-top: 20px"> 
+            <hr style = "height: 1px; width: 70vw; background-color: rgba(0, 0, 0, 0.559); border: none; margin-top: 20px"> 
             <div class = "footer-content">
                 <div class = "footer-contact"> 
                     <a href = "contact.html"> Kontakt </a>
@@ -296,26 +145,3 @@
 
 </html>
 
-
-
-
-<!--
-        <div class = "menu">
-            <div class = "navbox">
-                Pocetna
-            </div> 
-            <div class = "navbox">
-                Pocetna
-            </div>
-            <div class = "navbox">
-                Pocetna
-            </div>
-            <div class = "navbox">
-                Pocetna
-            </div>
-            <div class = "navbox">
-                Pocetna
-            </div>    
-            <input id = "navbutton" type = "checkbox"/>
-        </div>
--->

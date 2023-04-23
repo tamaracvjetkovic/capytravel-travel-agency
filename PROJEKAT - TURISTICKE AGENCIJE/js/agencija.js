@@ -22,6 +22,11 @@ function scrollToTop() {
 }
 
 
+function ocitaj() {
+    console.log("radi");
+}
+
+
 function main2() {
 
     // ***** CHANGING NAVBAR WHEN SCROLLED *****
@@ -69,8 +74,9 @@ function main2() {
         if (clicked === 0) {
             clicked = 1;
             let nava = document.querySelectorAll(".nava");
+            document.querySelector(".main").style.filter = "blur(1px)";
             for (let i = 0; i < nava.length; i++) {
-                nava[i].style.color = "white";
+                nava[i].style.color = "black";
             }
             document.querySelector('.navbar').classList.toggle("navbarButtonClicked");
             let logo = document.getElementById("logo1");
@@ -79,6 +85,7 @@ function main2() {
             button1.style.setProperty('--button1Color','black');
         } else {
             clicked = 0;
+            document.querySelector(".main").style.filter = "none";
             let nava = document.querySelectorAll(".nava");
             for (let i = 0; i < nava.length; i++) {
                 nava[i].style.color = "";
@@ -96,12 +103,19 @@ function main2() {
                 button1.style.setProperty('--button1Color','white');
             }
         }
+
+
     }
 
     let pageId = window.location.hash.substr(1);
     loadAgencies(pageId);
 
-
+    /*const saznajViseFormNovi = document.querySelector('.upit-saznaj-vise:last-child');
+        saznajViseFormNovi.addEventListener('click', () => {
+            const boxId = box.getAttribute('id');
+            window.location.href = `destinacija.html#${boxId}`;
+        });
+    }); */
     /*
     OVO RADI
     const boxContent = document.getElementById('header1');
@@ -162,9 +176,18 @@ function appendAgencyBody(cur, agency) {
     mainBoxes.appendChild(newp);*/
 
     let newTitle = document.getElementById("header1");
-    newTitle.innerHTML = agency.naziv;
+    newTitle.innerHTML = agency.naziv.toUpperCase();
     let newHead = document.querySelector(".head");
-    newHead.style.backgroundImage = "url(" + agency.logo + ")";
+    newHead.style.background = "linear-gradient(rgba(0, 0, 0, 0.383), rgba(0, 0, 0, 0.338)), url('" + agency.logo + "')";
+    newHead.style.backgroundRepeat = "no-repeat";
+    newHead.style.backgroundSize = "cover";
+    newHead.style.backgroundPosition = "center"
+    newHead.style.backgroundAttachment = "fixed"
+
+    document.querySelector(".boxes h1").innerHTML = "Destinacije '" + agency.naziv + "'";
+    /*background-size: cover;
+    background-position: center; 
+    background-attachment: fixed;*/
 
     let documentTitle = document.querySelector("title");
     documentTitle.innerText = "CapyTravel | " + agency.naziv;
@@ -263,6 +286,8 @@ function loadDestination(cur) {
 */
 
 
+
+
 function appendMainBox2(position, dest, destination, curAgency) {
 
     let newMainBox = document.createElement('div');
@@ -305,14 +330,37 @@ function appendMainBox2(position, dest, destination, curAgency) {
 
     let newDestinationCost = document.createElement('p');
     newDestinationCost.classList.add("cena-destinacije");
-    newDestinationCost.innerHTML = "<b>" + destination.cena + " RSD </b>";
+    newDestinationCost.innerHTML = "<div style = 'margin-top: -1px;'> <div style = 'font-size: 12px';> Od </div> <b>" + destination.cena + " </div> <div style = 'font-size: 13px'> RSD! </div> </b>";
 
+    
     newBoxCard.appendChild(newDestinationCost);
     newBoxCard.appendChild(newDestinationImage);
     newBoxCard.appendChild(newDestinationDesc);
 
     newMainBox.appendChild(newBoxCard);
 
+    let upitSaznajVise = document.createElement('div');
+    upitSaznajVise.classList.add("upit-saznaj-vise");
+    newBoxCard.appendChild(upitSaznajVise);
+
+    let posaljiUpitDiv = document.createElement('div');
+    let posaljiUpitForm = document.createElement('form');
+    posaljiUpitForm.setAttribute("action", "form.html");
+    let posaljiUpit = document.createElement('button');
+    posaljiUpit.classList.add("posalji-upit");
+    posaljiUpit.innerHTML = "Pošalji upit";
+    posaljiUpitForm.appendChild(posaljiUpit);
+    posaljiUpitDiv.appendChild(posaljiUpitForm);
+    upitSaznajVise.appendChild(posaljiUpitDiv);
+    
+    let saznajViseForm = document.createElement('div');
+    let saznajVise = document.createElement('button');
+    saznajVise.classList.add("saznaj-vise");
+    saznajVise.innerHTML = "Saznaj više";
+    saznajViseForm.appendChild(saznajVise);
+    upitSaznajVise.appendChild(saznajViseForm);
+
     let mainBoxes = document.querySelector(position);
     mainBoxes.appendChild(newMainBox);
 }
+

@@ -10,6 +10,8 @@
     <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
     <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
 
+    <link href = 'https://fonts.googleapis.com/css?family=Muli' rel = 'stylesheet'>
+    
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel = "stylesheet" type = "text/css" href = "../css/agencija.css"/>
     <script type = "text/javascript" src = "../js/agencija.js"> </script>
@@ -34,90 +36,87 @@
         </label>
         
         <ul class = "menu">
-          <li> <a href = "main.html"> <div class = "nava"> Početna </div> </a> </li>
-          <li> <a href = "aboutus.html"> <div class = "nava"> O nama </div> </a> </li>
-          <li> <a href = "contact.html"> <div class = "nava"> Kontakt </div> </a> </li>
-          <li> <a href = "admin.html"> <div class = "nava"> Admin </div> </a> </li>
-          <li> <button id = "login-button"> Login </button> </li>
-          <li> <button id = "register-button"> Register </button> </li>
+            <li> <a href = "main.html" class = "nava"> Početna </a> </li>
+            <li> <a href = "aboutus.html" class = "nava"> O nama </a> </li>
+            <li> <a href = "contact.html" class = "nava"> Kontakt  </a> </li>
+            <li> <a href = "admin.html" class = "nava">  Admin </a> </li>
+            <li> <p id = "login-button" class = "nava"> Login </p> </li>
+            <li> <p id = "register-button" class = "nava"> Register </p> </li>
         </ul>
     </div>
 
-
+    
     <div class = "head">
         <div class = "header">
             <h1 id = "header1"> </h1>
         </div>
     </div>
 
-    <div class = "agencija-utils">
-        <form action = "#">
-            <div class = "searchbar">
-                <input type = "text" placeholder = "Search.." name = "search" id = "barforsearch">
-                <button type = "submit"> <i class = "fa fa-search"> </i> </button>
+    <div class = "main"> 
+        <div class = "opis-agencije-main">
+            <p> Ukoliko želite da otputujete na zimovanje, letovanje ili želite da provedete produženi
+                vikend u nekoj evropskoj metropoli, na pravom ste mestu. Kada je u pitanju prestonica
+                kulture Novi Sad, turističke agencije su tu da svaku Vašu zamisao ispune po povoljnim
+                cenama.
+            </p> <br/>
+            <p> Kod nas možete pronaći turističke agencije u Novom Sadu koje nude veliki izbor
+                aranžmana za sve vrste odmora u brojnim gradovima sveta, pa ukoliko planirate 
+                odmor, svoje putovanje po želji možete pronaći u saradnji sa turističkim agencijama
+                iz Novog Sada koje su tu da odgovore na sva Vaša pitanja i nedoumice.
+            </p>
+        </div>
+
+        
+        <div class = "boxes">
+            <h1> </h1>
+            <div class = "pretraga-main">
+                <form action = "#">
+                    <div class = "searchbar">
+                        <div class = "search1"> 
+                            <p id = "search-label"> Pretražite destinacije: </p>
+                        </div>
+                        <div class = "search2"> 
+                            <input type = "text" placeholder = "Search.." name = "search">
+                            <button type = "submit"> <i class = "fa fa-search"> </i> </button>
+                        </div>    
+                    </div>
+                </form>
+            </div>    
+        </div>
+
+            <!--
+            <a class = "box" id = "55" onclick = "ocitajStranicu(this.id)">
+                <a href = "#" class = "card">
+                    <div class = "agency-image"> 
+                        <img src = "../slike/prva agencija.jpeg">
+                    </div>
+                    <div class = "opis-agencije">
+                        <p class = "ime-agencije"> 
+                            Kusadasi
+                        </p>
+                        <p class = "adresa-agencije"> 
+                            2023
+                        </p>
+                        <p class = "broj-telefona-agencije"> 
+                            2023
+                        </p>
+                        <p class = "email-agencije"> 
+                            2023
+                        </p>
+                    </div>
+                </div>  
             </div>
-        </form>
-    </div>    
-
-    <div class = "opis-agencije-main">
-        <p> Kada su u pitanju turističke agencije u Novom Sadu, sve informacije o njihovom
-            poslovanju možete pronaći na našoj turističkoj platformi. Ukoliko želite da
-            otputujete na zimovanje, letovanje ili želite da provedete produženi vikend u
-            nekoj evropskoj metropoli, na pravom ste mestu. Kada je u pitanju prestonica kulture
-            Novi Sad, turističke agencije su tu da svaku Vašu zamisao ispune po povoljnim cenama.
-        </p> <br/>
-        <p> Kod nas možete pronaći turističke agencije u Novom Sadu koje nude veliki izbor
-            aranžmana za sve vrste odmora u brojnim gradovima sveta, pa ukoliko planirate 
-            odmor, svoje putovanje po želji možete pronaći u saradnji sa turističkim agencijama
-            iz Novog Sada koje su tu da odgovore na sva Vaša pitanja i nedoumice.
-        </p>
-        <p>
-            Ukoliko imate ideju da putujete, a ne znate gde, ukoliko Vam je potreban odmor ili
-            želite da obiđete gradove sveta i upoznate se sa kulturom drugih država i gradova,
-            turističke agencije Beograd će vam pomoći da se odlučite i da po što povoljnijoj
-            ceni otputujete. Na Vama je samo da spakujete kofere i prepustite se nezaboravnoj
-            avanturi.
-        </p>
-    </div>
-
-
-    <center>
-        <div class = "ponude"> Naša putovanja </div>
-    </center>
-    
-    <div class = "boxes">
-        <!--
-        <a class = "box" id = "55" onclick = "ocitajStranicu(this.id)">
-            <a href = "#" class = "card">
-                <div class = "agency-image"> 
-                    <img src = "../slike/prva agencija.jpeg">
-                </div>
-                <div class = "opis-agencije">
-                    <p class = "ime-agencije"> 
-                        Kusadasi
-                    </p>
-                    <p class = "adresa-agencije"> 
-                        2023
-                    </p>
-                    <p class = "broj-telefona-agencije"> 
-                        2023
-                    </p>
-                    <p class = "email-agencije"> 
-                        2023
-                    </p>
-                </div>
-            </div>  
+            -->
         </div>
-        -->
-    </div>
 
-    <div class = "opis2-agencije-main">
-        <iframe class = "googleMap" src = "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2808.7354765769046!2d19.837353128791282!3d45.25314159308776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDXCsDE1JzEwLjkiTiAxOcKwNTAnMTcuOSJF!5e0!3m2!1sen!2srs!4v1682002816673!5m2!1sen!2srs" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"> </iframe>
-        <div class = "opis2-agencije-tekstovi">
-            
+        <div class = "opis2-agencije-main">
+            <iframe class = "googleMap" src = "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2808.7354765769046!2d19.837353128791282!3d45.25314159308776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDXCsDE1JzEwLjkiTiAxOcKwNTAnMTcuOSJF!5e0!3m2!1sen!2srs!4v1682002816673!5m2!1sen!2srs" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"> </iframe>
+            <div class = "opis2-agencije-tekstovi">
+                
+            </div>
         </div>
+        
     </div>
-
 
     <div class = "footer">
         <hr style = "height: 1px; width: 70vw; background-color: rgba(0, 0, 0, 0.532); border: none; margin-top: 20px"> 

@@ -32,6 +32,8 @@ var destinationsInDestinationID = [];
 var destinationsInDestination = {};
 
 var picturesNum = 0;
+var clicked = 0;
+
 
 function main() {
 
@@ -80,8 +82,9 @@ function main() {
         if (clicked === 0) {
             clicked = 1;
             let nava = document.querySelectorAll(".nava");
+            document.querySelector(".main").style.filter = "blur(1px)";
             for (let i = 0; i < nava.length; i++) {
-                nava[i].style.color = "white";
+                nava[i].style.color = "black";
             }
             document.querySelector('.navbar').classList.toggle("navbarButtonClicked");
             let logo = document.querySelector(".logo");
@@ -90,6 +93,7 @@ function main() {
             button1.style.setProperty('--button1Color','black');
         } else {
             clicked = 0;
+            document.querySelector(".main").style.filter = "none";
             let nava = document.querySelectorAll(".nava");
             for (let i = 0; i < nava.length; i++) {
                 nava[i].style.color = "";
@@ -219,6 +223,13 @@ function promijeniBroj(id) {
     ids = id.split("-");
     let p = document.querySelector(".numberSlide");
     p.innerHTML = ids[2] + " / " + picturesNum;
+    let labels = document.querySelectorAll(".slikemenu label");
+    for (let i = 0; i < labels.length; i++) {
+        labels[i].style.backgroundColor = "white";
+        if ((i + 1) == ids[2]) {
+            labels[i].style.backgroundColor = "#989898";
+        }
+    }
 }
 
 
@@ -227,16 +238,16 @@ function appendDestinationBody(cur, br, agency, destinacija) {
     let newTitle = document.getElementById("header1");
     newTitle.innerHTML = destinacija.naziv;
     let newHead = document.querySelector(".head");
-    newHead.style.backgroundImage = "url(" + destinacija.slike[0] + ")";
+    newHead.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.353), rgba(0, 0, 0, 0.288)), url('" + destinacija.slike[0] + "')";
 
-    let newDestinationDesc = document.getElementById("opis-trenutne-destinacije");
+    let newDestinationDesc = document.querySelector(".moj-opis-destinacije2");
     newDestinationDesc.innerHTML = destinacija.opis;
 
     let citat = document.getElementById("citat");
     citat.innerHTML = destinacija.tip;
 
     let logo = document.querySelector(".logo");
-    logo.innerHTML = "<i> Agencija: " + agency.naziv + "</i>";
+    logo.innerHTML = "<i>" + agency.naziv + "</i>";
 
     let number = destinacija.maxOsoba; // Change this number to the desired value
     number.trim();
@@ -259,13 +270,46 @@ function appendDestinationBody(cur, br, agency, destinacija) {
         }
     }, interval);
  
+    let mojOpisDestinacije = document.querySelector(".moj-opis-destinacije");
+    let prevoz = "";
+    if (destinacija.prevoz === "sopstveni") {
+        prevoz = "Prevoz ne spada u aranžman, te morate organizovati svoj <b> sopstveni </b> prevoz. "
+    } else { 
+        prevoz = "Prevoz je <b> organizovan</b>, te se do naše destinacije putuje <b>" + destinacija.prevoz + "om</b>. ";
+    }
+    let cuveno = "";
+    let n = destinacija.naziv.length;
+    if (destinacija.naziv[n - 1] === 'a') {
+        cuveno = "čuvena";
+    } else {
+        cuveno = "čuveni";
+    }
+    mojOpisDestinacije.innerHTML = "Turistička agencija '" + agency.naziv + "' nudi veliki broj destinacija. Jedna od njih je " + cuveno + " <b>" + destinacija.naziv + "</b>, čiji aranžman putovanja iznosi <b>" + destinacija.cena + " RSD. </b>" + prevoz + " Broj putnika je ograničen, a maksimalni broj slobodnih mesta je <b>" + destinacija.maxOsoba + "</b>, tako da požurite i rezervišite Vaše mesto!";
+
     let cost = destinacija.cena; // Change this number to the desired value
     cost.trim();
     cost = parseInt(cost);
     let interval1 = 1; // Change this value to control the speed of the loading effect
 	let count1 = 0;
     let intervalId1 = setInterval(function() {
-        document.getElementById("ispis-cijena-destinacije").innerHTML = (count1 += 100);
+        if (cost <= 20000) {
+            document.getElementById("ispis-cijena-destinacije").innerHTML = (count1 += 83);
+        }
+        if (cost > 20000 && cost <= 40000) {
+            document.getElementById("ispis-cijena-destinacije").innerHTML = (count1 += 113);
+        }
+        if (cost > 40000 && cost <= 60000) {
+            document.getElementById("ispis-cijena-destinacije").innerHTML = (count1 += 147);
+        }
+        if (cost > 60000 && cost <= 80000) {
+            document.getElementById("ispis-cijena-destinacije").innerHTML = (count1 += 239);
+        }
+        if (cost > 80000 && cost <= 100000) {
+            document.getElementById("ispis-cijena-destinacije").innerHTML = (count1 += 297);
+        }
+        if (cost >= 100000) {
+            document.getElementById("ispis-cijena-destinacije").innerHTML = (count1 += 323);
+        }
         if (count1 > cost) {
             clearInterval(intervalId1);
         }
@@ -286,7 +330,7 @@ function appendDestinationBody(cur, br, agency, destinacija) {
     sliderContainer.append(slikemenu);
 
     let p = document.createElement("div");
-    p.innerHTML = sveSlike.length + " / " + sveSlike.length;
+    p.innerHTML =  "1 / " + sveSlike.length;
     p.classList.add("numberSlide")
     sliderContainer.append(p);
 
@@ -296,16 +340,17 @@ function appendDestinationBody(cur, br, agency, destinacija) {
         input.setAttribute("name", "slides");
         input.setAttribute("type", "radio");
         input.setAttribute("onclick", "promijeniBroj(this.id)");
-        if (i == sveSlike.length - 1) {
+        if (i == 0) {
             input.setAttribute("checked", "true");
         }
         let div = document.createElement("div");
         div.classList.add("slide");
         div.style.backgroundImage = "url(" + sveSlike[i] + ")";
-
         sliderContainer.appendChild(input);
         sliderContainer.appendChild(div);
     }
+    let labels = document.querySelectorAll(".slikemenu label");
+    labels[0].style.backgroundColor = "#989898";
 
     let opis2Agencije = document.querySelector(".opis2-agencije-tekstovi");
     let opis2AgencijeInfo = document.createElement("div");
@@ -313,7 +358,7 @@ function appendDestinationBody(cur, br, agency, destinacija) {
     
     let opis2AgencijeTekst1 = document.createElement("p");
     let randomProcenat = Math.floor(Math.random() * (35 - 15 + 1)) + 15;
-    opis2AgencijeTekst1.innerHTML = "Agencija '" + agency.naziv + "' je turistička agencija u Srbiji, koja je osnovana " + agency.godina + ", a u poslednje 3 godine ima čak " + randomProcenat + "% godišnje više putnika o odnosu na druge turističke agencije iz Srbije! <br/> <br/> '" + agency.naziv + "' nudi najbolje destinacije za Vas, te smo tu da Vaše putovanje učinimo putovanjem iz snova!";
+    opis2AgencijeTekst1.innerHTML = "Agencija <b>'" + agency.naziv + "'</b> je turistička agencija u Srbiji, koja je osnovana " + agency.godina + ", a u poslednje 3 godine ima čak " + randomProcenat + "% godišnje više putnika o odnosu na druge turističke agencije iz Srbije! <br/> <br/> <i>" + agency.naziv + "</i> nudi najbolje destinacije za Vas, te smo tu da Vaše putovanje učinimo putovanjem iz snova!";
     
     let opis2AgencijeTekst2 = document.createElement("p");
     opis2AgencijeTekst2.innerText = "E-mail: " + agency.email;

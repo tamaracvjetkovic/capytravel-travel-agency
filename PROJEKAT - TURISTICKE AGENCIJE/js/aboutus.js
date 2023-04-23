@@ -50,8 +50,9 @@ function main() {
         if (clicked === 0) {
             clicked = 1;
             let nava = document.querySelectorAll(".nava");
+            document.querySelector(".main").style.filter = "blur(1px)";
             for (let i = 0; i < nava.length; i++) {
-                nava[i].style.color = "white";
+                nava[i].style.color = "black";
             }
             document.querySelector('.navbar').classList.toggle("navbarButtonClicked");
             let logo = document.getElementById("logo1");
@@ -60,6 +61,7 @@ function main() {
             button1.style.setProperty('--button1Color','black');
         } else {
             clicked = 0;
+            document.querySelector(".main").style.filter = "none";
             let nava = document.querySelectorAll(".nava");
             for (let i = 0; i < nava.length; i++) {
                 nava[i].style.color = "";
