@@ -250,8 +250,8 @@ body {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        padding: 10px;
-        padding-top: 9px;
+        padding: 12px;
+        padding-top: 11px;
         /*   
         padding: 6px;  
         padding-left: 3px;
@@ -331,9 +331,10 @@ body {
     }
         #header1 {
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            font-size: 9vw;
+            font-size: 8vw;
             transition: 450ms;
             margin-top: -5px;
+            text-align: center;
         }
         #citat {
             font-size: 2.5vw;
@@ -354,6 +355,7 @@ body {
             }
             @media (max-width: 650px) {
                 #header1 {
+                    margin-top: 5px;
                     font-size: 11vw;
                 }
                 #citat {

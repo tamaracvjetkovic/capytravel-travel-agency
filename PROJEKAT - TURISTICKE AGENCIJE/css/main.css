@@ -12,10 +12,6 @@ body {
     color: rgb(0, 0, 0);
 }
 
-.main {
-    transition: filter 600ms;
-}
-
 .go-up {
     visibility: hidden;
     position: fixed;
@@ -38,7 +34,6 @@ body {
     opacity: 1;
     position: fixed;
 }
-
 
 .navbar {
     position: fixed;
@@ -366,6 +361,12 @@ body {
                 width: 60vw;
             }
         }
+
+
+.main {
+    transition: filter 600ms;
+}
+
 
 .boxes {
     display: flex;
