@@ -1,20 +1,26 @@
 
-- Dodati About us
-	- osmisliti dizajn
- 	- tu staviti poseban dio za Gallery (u sklopu te stranice), da bude slider
-	- dodati buttone za tekst, galeriju, kontakt
 
-- Dodati Footer
-	- email, br. tel, ime, logo
+- napraviti valid search
 
-- Napraviti Logo
-
-- Dodati partnership logos
-
-- Popraviti marquee
+- napraviti kontakt stranicu
 
 - skinuti fa-fa ikonice (da se ocitaju) - pitati za go-up strelicu 
 
 - dodati alt na sve slike
 
-- ispod destinacije odmah da se ocitaju maks osobe, cijena i prevoz u boxu nekom 
+
+
+
+DONE:
+
+//dodati About us
+	//- osmisliti dizajn
+ 	//- tu staviti poseban dio za Gallery (u sklopu te stranice), da bude slider
+	//- dodati buttone za tekst, galeriju, kontakt
+
+//dodati Footer
+	//- email, br. tel, ime, logo  
+
+//- napraviti Logo
+
+//- ispod destinacije odmah da se ocitaju maks osobe, cijena i prevoz u boxu nekom 

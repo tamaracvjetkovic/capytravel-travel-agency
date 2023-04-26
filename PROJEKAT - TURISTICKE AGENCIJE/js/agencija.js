@@ -47,6 +47,7 @@ function tryToLogin() {
                             errorLozinka.innerText = "";
                             let btnClose = document.querySelector(".btn-login-cancel");
                             btnClose.click();
+                            location.reload();
                             return;
                         } else {
                             errorLozinka.innerText = "Pogresna šifra!"; 
@@ -159,6 +160,7 @@ function isRegisterValid() {
         alert("Registracija USPEŠNA!");
         let btnClose = document.querySelector(".btn-register-cancel");
         btnClose.click();
+        location.reload();
         return true;
     } else {
         alert("GREŠKA! Popunite pravilno podatke!");

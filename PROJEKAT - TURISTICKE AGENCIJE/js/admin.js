@@ -22,7 +22,7 @@ function scrollToTop() {
 }
 
 
-var firebaseUrl = 'https://turistickaagencijaprojekattaca-default-rtdb.europe-west1.firebasedatabase.app';
+var firebaseUrl = 'https://turistickaagencijaprojekattaca-default-rtdb.europe-west1.firebasedatabase.app/';
 
 var agenciesID = [];
 var agencies = {};
@@ -35,6 +35,108 @@ var destinationsInDestinationID = [];
 var destinationsInDestination = {};
 */
 var clicked = 0;
+
+
+function doYouWantToDeleteDestination(destID) {
+    //console.log(destID);
+}
+function doYouWantToDeleteAgency(agencyID) {
+    //console.log(agencyID);
+}
+
+var userDeleteID;
+var agencyDeleteID;
+var destinationDeleteID;
+
+
+function closeDeleteDestinationPopup() {
+    let popup = document.getElementById("delete-destination-popup");
+    popup.style.display = "none";
+}
+function closeDeleteAgencyPopup() {
+    let popup = document.getElementById("delete-agency-popup");
+    popup.style.display = "none";
+}
+function closeDeleteUserPopup() {
+    let popup = document.getElementById("delete-user-popup");
+    popup.style.display = "none";
+}
+
+
+//CEKACU DA APDEJTUJU JSON FILE
+function deleteDestination() {
+    let popup = document.getElementById("delete-destination-popup");
+    popup.style.display = "none";
+    /*var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                console.log('Destination deleted successfully!');
+                location.reload();
+            } else {
+                alert('Error occurred. Destination could not be deleted.')
+            }            
+        }
+    }
+    request.open('DELETE', firebaseUrl + '/destinacije/' + destinationDeleteID + '.json');
+    request.send(); */
+}
+
+
+function doYouWantToDeleteDestination(destinationID) {
+    destinationDeleteID = destinationID;
+    let popup = document.getElementById("delete-destination-popup");
+    popup.style.display = "block";
+}
+
+function deleteAgency() {
+    //  alert("Brisete user: " + userID);
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                console.log('Agency deleted successfully!');
+                location.reload();
+            } else {
+                alert('Error occurred. Agency could not be deleted.')
+            }            
+        }
+    }
+    request.open('DELETE', firebaseUrl + '/agencjie/' + agencyDeleteID + '.json');
+    request.send(); 
+}
+function doYouWantToDeleteAgency(agencyID) {
+    agencyDeleteID = agencyID;
+    //console.log(agencyDeleteID);
+    let popup = document.getElementById("delete-agency-popup");
+    popup.style.display = "block";
+}
+
+function deleteUser() {
+    //  alert("Brisete user: " + userID);
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                console.log('User deleted successfully!');
+                location.reload();
+            } else {
+                alert('Error occurred. User could not be deleted.')
+            }            
+        }
+    }
+    request.open('DELETE', firebaseUrl + '/korisnici/' + userDeleteID + '.json');
+    request.send(); 
+}
+function doYouWantToDeleteUser(userID) {
+    userDeleteID = userID;
+    console.log(userDeleteID);
+    let popup = document.getElementById("delete-user-popup");
+    popup.style.display = "block";
+}
+
+
+
 
 
 
@@ -61,6 +163,7 @@ function tryToLogin() {
                             errorLozinka.innerText = "";
                             let btnClose = document.querySelector(".btn-login-cancel");
                             btnClose.click();
+                            location.reload();
                             return;
                         } else {
                             errorLozinka.innerText = "Pogresna šifra!"; 
@@ -105,7 +208,6 @@ function registerNewUser() {
         prezime: prezime1,
         telefon: telefon1   
     };
-    usersID++;
 
     var userJson = JSON.stringify(newUser);
     console.log(userJson);
@@ -173,6 +275,7 @@ function isRegisterValid() {
         alert("Registracija USPEŠNA!");
         let btnClose = document.querySelector(".btn-register-cancel");
         btnClose.click();
+        location.reload();
         return true;
     } else {
         alert("GREŠKA! Popunite pravilno podatke!");
@@ -654,7 +757,8 @@ function loadDestinations() {
                         buttonEdit.setAttribute("id", ("edit,destinacija," + dest));
                         buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
                         let buttonDelete = document.createElement("button")
-                        buttonDelete.setAttribute("id", ("delete,destinacija," + dest));
+                        buttonDelete.setAttribute("id", (dest));
+                        buttonDelete.setAttribute("onclick", "doYouWantToDeleteDestination(this.id)");
                         buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
                     td.append(buttonEdit);
                     td.append(buttonDelete);
@@ -754,7 +858,8 @@ function loadAgencies(destinations) {
                         buttonEdit.setAttribute("id", ("edit,agencija," + id));
                         buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
                         let buttonDelete = document.createElement("button")
-                        buttonDelete.setAttribute("id", ("delete,agencija," + id));
+                        buttonDelete.setAttribute("id", (id));
+                        buttonDelete.setAttribute("onclick", "doYouWantToDeleteAgency(this.id)");
                         buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
                     div1.append(buttonEdit);   
                     div1.append(buttonDelete);  
@@ -850,7 +955,8 @@ function loadUsers() {
                         buttonEdit.setAttribute("id", ("edit,korisnik," + id));
                         buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
                         let buttonDelete = document.createElement("button")
-                        buttonDelete.setAttribute("id", ("delete,korisnik," + id));
+                        buttonDelete.setAttribute("id", (id));
+                        buttonDelete.setAttribute("onclick", "doYouWantToDeleteUser(this.id)");
                         buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
                     td.append(buttonEdit);
                     td.append(buttonDelete);

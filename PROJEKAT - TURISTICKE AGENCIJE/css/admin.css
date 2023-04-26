@@ -771,6 +771,98 @@ body {
     display: none;
 }
 
+.delete-popup {
+    color: black;
+    display: flex;
+    justify-content: center;
+    z-index: 1010;
+}
+    #delete-user-popup {
+        position: fixed; 
+        top: 0;
+        display: none;
+        text-align: center;
+        width: 280px;
+        border-radius: 0 0px 10px 10px;
+        background-color: white;
+        max-height: 100%;
+        z-index: 1010;
+        overflow: auto;
+        box-shadow: 0px 0px 15px rgb(104, 104, 104);
+    }
+    #delete-agency-popup {
+        position: fixed; 
+        top: 0;
+        display: none;
+        text-align: center;
+        width: 280px;
+        border-radius: 0 0px 10px 10px;
+        background-color: white;
+        max-height: 100%;
+        z-index: 1010;
+        overflow: auto;
+        box-shadow: 0px 0px 15px rgb(104, 104, 104);
+    }   
+    #delete-destination-popup {
+        position: fixed; 
+        top: 0;
+        display: none;
+        text-align: center;
+        width: 280px;
+        border-radius: 0 0px 10px 10px;
+        background-color: white;
+        max-height: 100%;
+        z-index: 1010;
+        overflow: auto;
+        box-shadow: 0px 0px 15px rgb(104, 104, 104);
+    }
+        .delete-popup h1 {
+            font-size: 20px;
+            color: rgb(255, 255, 255);
+            padding-top: 0;
+            margin-bottom: 10px;
+            background-color: red;
+            width: 100%;
+            padding: 15px;
+        }
+        .delete-popup h2 {
+            font-size: 17px;
+            color: rgb(0, 0, 0);
+            padding: 10px;
+        }
+        .delete-yes-no {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            padding: 10px;
+            padding-bottom: 20px;
+        }
+        .delete-yes-no button {
+            width: 30%;
+            padding: 9px;
+            cursor: pointer;
+        }
+            .btn-delete-yes {
+                background-color: red;  
+                border: none;
+                opacity: 0.6;
+            }
+            .btn-delete-yes:hover, 
+            .btn-delete-yes:focus {
+                opacity: 1;
+            }
+            .btn-delete-no {
+                background-color: rgb(156, 156, 156);
+                border: none;
+                opacity: 0.6;
+            }
+            .btn-delete-no:hover, 
+            .btn-delete-no:focus {
+                opacity: 1;
+            }
+
+    
+
 
 .footer {
     display: flex;
