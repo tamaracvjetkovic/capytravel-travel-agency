@@ -237,10 +237,12 @@ body {
     justify-content: center;
     display: none;
     z-index: 1010;
+    color: black;
 }
     #login-popup {
         position: fixed; 
         top: 7vh;
+        bottom: 7vh;
         z-index: 1010;
     }
         #login-form {
@@ -303,6 +305,7 @@ body {
       
 @media (min-width: 769px) {
     .register-div {
+        color: black;
         display: flex;
         justify-content: center;
         display: none;
@@ -311,11 +314,13 @@ body {
         #register-popup {
             position: fixed; 
             top: 5vh;
+            max-height: 100%;
             z-index: 1010;
             overflow: auto;
             box-shadow: 0px 0px 15px rgb(100, 100, 100);
         }
             #register-form {
+                max-height: 100%;
                 overflow: auto;
                 border-radius: 10px;
                 width: 550px;
@@ -460,12 +465,14 @@ body {
         #register-popup {
             position: fixed; 
             top: 5vh;
+            max-height: 100%;
             z-index: 1010;
             overflow: auto;
             box-shadow: 0px 0px 15px rgb(100, 100, 100);
         }
             #register-form {
                 overflow: auto;
+                max-height: 100%;
                 border-radius: 10px;
                 max-width: 340px;
                 padding: 23px;
@@ -593,7 +600,32 @@ body {
                     #register-form button:hover, .open-button:hover {
                         opacity: 1;
                     }
-}    
+}
+
+.pass-input-view {
+    position: relative;
+}
+    .psw-register-toggle {
+        position: absolute;
+        top: 29%;
+        right: 14px;
+        background: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    .psw-register-toggle i {
+        font-size: 16px;
+    }
+    .psw-register-toggle:focus i {
+        color: #007bff;
+    }
+
+
+.error-message {
+    color: red;
+    font-size: 11px;
+}
 
 
 
@@ -631,9 +663,6 @@ body {
             font-size: 9vw;
             transition: 450ms;
             text-align: center;
-        }
-        #header1:hover {
-            font-size: 9.5vw;
         }
         @media (min-width: 1025px) {
             #header1 {

@@ -485,6 +485,7 @@ body {
     #login-popup {
         position: fixed; 
         top: 7vh;
+        bottom: 7vh;
         z-index: 1010;
     }
         #login-form {
@@ -555,11 +556,13 @@ body {
         #register-popup {
             position: fixed; 
             top: 5vh;
+            max-height: 100%;
             z-index: 1010;
             overflow: auto;
             box-shadow: 0px 0px 15px rgb(100, 100, 100);
         }
             #register-form {
+                max-height: 100%;
                 overflow: auto;
                 border-radius: 10px;
                 width: 550px;
@@ -704,12 +707,14 @@ body {
         #register-popup {
             position: fixed; 
             top: 5vh;
+            max-height: 100%;
             z-index: 1010;
             overflow: auto;
             box-shadow: 0px 0px 15px rgb(100, 100, 100);
         }
             #register-form {
                 overflow: auto;
+                max-height: 100%;
                 border-radius: 10px;
                 max-width: 340px;
                 padding: 23px;

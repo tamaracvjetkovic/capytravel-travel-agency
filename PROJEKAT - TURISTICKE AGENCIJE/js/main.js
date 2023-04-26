@@ -55,7 +55,8 @@ function tryToLogin() {
                             alert("Dobrodošli, " + korisnicko1 + "!");  
                             errorKorisnicko.innerText = "";
                             errorLozinka.innerText = "";
-                            window.location.href = "main.html";
+                            let btnClose = document.querySelector(".btn-login-cancel");
+                            btnClose.click();
                             return;
                         } else {
                             errorLozinka.innerText = "Pogresna šifra!"; 
@@ -166,7 +167,8 @@ function isRegisterValid() {
         event.preventDefault();
         registerNewUser();
         alert("Registracija USPEŠNA!");
-        window.location.href = "main.html";
+        let btnClose = document.querySelector(".btn-register-cancel");
+        btnClose.click();
         return true;
     } else {
         alert("GREŠKA! Popunite pravilno podatke!");
