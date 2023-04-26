@@ -41,7 +41,7 @@
           <li> <a href = "contact.html" class = "nava"> Kontakt  </a> </li>
           <li> <a href = "admin.html" class = "nava">  Admin </a> </li>
           <li> <p id = "login-button" class = "nava"> Login </p> </li>
-          <li> <p id = "register-button" class = "nava"> Register </p> </li>
+          <li> <p id = "register-button" class = "nava"> Sign Up </p> </li>
         </ul>
     </div>
 
@@ -156,26 +156,99 @@
                 kao i da Vam pomognemo da Vaše iskustvo ostane zauvek Vama u sećanju.
                 Dostupni smo u svakom trenutku, te možete biti sigurni da smo najbolja opcija za Vas! </p>
         </div>
+
+        <div class = "footer">
+            <hr style = "height: 1px; width: 70vw; background-color: rgba(0, 0, 0, 0.559); border: none; margin-top: 20px"> 
+            <div class = "footer-content">
+                <div class = "footer-contact"> 
+                    <a href = "contact.html"> Kontakt </a>
+                </div>
+                <div class = "footer-email"> 
+                    <a href = "contact.html"> travelwithus@capytravel.com </a>
+                </div>
+                <div class = "footer-terms&conditions"> 
+                    <a href = "https://www.termsfeed.com/public/uploads/2021/12/sample-terms-conditions-agreement.pdf"> Terms & Conditions </a>
+                </div>
+                <div class = "footer-aboutus"> 
+                    <a href = "aboutus.html"> O nama </a>
+                </div>
+            </div>
+        </div> 
+        
     </div>
 
 
-    <div class = "footer">
-        <hr style = "height: 1px; width: 70vw; background-color: rgba(0, 0, 0, 0.559); border: none; margin-top: 20px"> 
-        <div class = "footer-content">
-            <div class = "footer-contact"> 
-                <a href = "contact.html"> Kontakt </a>
-            </div>
-            <div class = "footer-email"> 
-                <a href = "contact.html"> travelwithus@capytravel.com </a>
-            </div>
-            <div class = "footer-terms&conditions"> 
-                <a href = "https://www.termsfeed.com/public/uploads/2021/12/sample-terms-conditions-agreement.pdf"> Terms & Conditions </a>
-            </div>
-            <div class = "footer-aboutus"> 
-                <a href = "aboutus.html"> O nama </a>
-            </div>
+    <div class = "login-div"> 
+        <div class = "popup" id = "login-popup">
+            <form action = "/action_page.php" class = "form-container" id = "login-form">
+                <h1> Login </h1>
+                <label for = "email-login"> <b> E-mail </b> </label>
+                <input type = "text" placeholder = "E-mail.." name = "email-login" required>
+                <label for = "psw-login"> <b> Lozinka </b> </label>
+                <input type = "password" placeholder = "Password.." name = "psw-login" required>
+                <div class = "login-submit-cancel">
+                    <button type = "submit" class = "btn-submit-login"> Login </button>
+                    <button type = "button" class = "btn-login-cancel" onclick = "closeLogin()"> Close </button>
+                </div>
+                
+            </form>
         </div>
-    </div> 
+    </div>
+
+    <div class = "register-div"> 
+        <div class = "popup" id = "register-popup">
+            <form action = "/action_page.php" class = "form-container" id = "register-form">
+                <h1> Sign Up </h1>
+                <div class = "register-ime-i-prezime"> 
+                    <div class = "register-ime-input"> 
+                        <label for = "ime-register"> <b> Ime </b> </label>
+                        <input type = "text" placeholder = "Name.." name = "ime-register" required>
+                    </div>
+                    <div class = "register-prezime-input">
+                        <label for = "prezime-register"> <b> Prezime </b> </label>
+                        <input type = "text" placeholder = "Surname.." name = "prezime-register" required>
+                    </div>
+                </div>
+                <div class = "register-datum-i-email"> 
+                    <div class = "register-datum-input">
+                        <label for = "datum-register"> <b> Datum rođenja </b> </label>
+                        <input type = "date" name = "datum-register" required>
+                    </div>
+                    <div class = "register-email-input">
+                        <label for = "email-register"> <b> E-mail </b> </label>
+                        <input type = "text" placeholder = "E-mail.." name = "email-register" required>
+                    </div>
+                </div>
+
+                <div class = "register-korisnicko-i-psw"> 
+                    <div class = "register-korisnicko-input">
+                        <label for = "korisnicko-register"> <b> Korisničko ime </b> </label>
+                        <input type = "text" placeholder = "Username.." name = "korisnicko-register" required>
+                    </div>
+                    <div class = "register-psw-input">
+                        <label for = "psw-register"> <b> Lozinka </b> </label>
+                        <input type = "password" placeholder = "Password.." name = "psw-register" required>
+                    </div>
+                </div>
+                
+                <div class = "register-adresa-i-telefon"> 
+                    <div class = "register-adresa-input">
+                        <label for = "adresa-register"> <b> Adresa </b> </label>
+                        <input type = "text" placeholder = "Address.." name = "adresa-register" required>
+                    </div>
+                    <div class = "register-telefon-input">
+                        <label for = "telefon-register"> <b> Telefon</b> </label>
+                        <input type = "text" name = "telefon-register" placeholder = "06(1-6)1234123" pattern = "06[1-6]{1}[0-9]{7}" required>
+                    </div>
+                </div>
+                <div class = "register-submit-cancel">
+                    <button type = "submit" class = "btn-submit-register"> Register </button>
+                    <button type = "button" class = "btn-register-cancel" onclick = "closeRegister()"> Close </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
 </body>
 

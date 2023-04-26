@@ -35,6 +35,121 @@ var picturesNum = 0;
 var clicked = 0;
 
 
+
+function disableClicksOutsideLoginPopup(event) {
+    let logDiv = document.querySelector(".login-div");
+    if (!logDiv.contains(event.target)) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+}
+
+var mainFilterLogin;
+function showLogin() {
+    let logDiv = document.querySelector(".login-div");
+    logDiv.style.display = "flex";
+    let main = document.querySelector(".main");
+    main.style.opacity = "0.1";
+    mainFilterLogin = main.style.filter;
+    main.style.filter = "blur(4px)";
+
+    let navbar = document.querySelector(".navbar");
+    navbar.style.opacity = "0.1";
+    navbar.style.filter = "blur(4px)";
+    
+    let head = document.querySelector(".head");
+    head.style.opacity = "0.5";
+    head.style.filter = "blur(10px)";
+
+    let footer = document.querySelector(".footer");
+    footer.style.opacity = "0.5";
+    footer.style.filter = "blur(10px)";
+
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "0";
+    //goUp.style.filter = "blur(4px)";
+    document.body.style.overflow = "hidden";
+    document.body.addEventListener('click', disableClicksOutsideLoginPopup);
+}
+function closeLogin() {
+    let logDiv = document.querySelector(".login-div");
+    logDiv.style.display = "none";
+    let main = document.querySelector(".main");
+    main.style.filter = mainFilterLogin;
+    main.style.opacity = "1";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.filter = "none";
+    navbar.style.opacity = "1";
+    let head = document.querySelector(".head");
+    head.style.opacity = "1";
+    head.style.filter = "none";
+    let footer = document.querySelector(".footer");
+    footer.style.opacity = "1";
+    footer.style.filter = "none";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "1";
+    goUp.style.filter = "none";
+    document.body.style.overflow = "auto";
+    document.body.removeEventListener('click', disableClicksOutsideLoginPopup);
+}
+
+
+var mainFilterRegister;
+function disableClicksOutsideRegisterPopup(event) {
+    let regDiv = document.querySelector(".register-div");
+    if (!regDiv.contains(event.target)) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+}
+function showRegister() {
+    let regDiv = document.querySelector(".register-div");
+    regDiv.style.display = "flex";
+    let main = document.querySelector(".main");
+    mainFilterRegister = main.style.filter;
+    main.style.opacity = "0.1";
+    main.style.filter = "blur(4px)";
+
+    let navbar = document.querySelector(".navbar");
+    navbar.style.opacity = "0.1";
+    navbar.style.filter = "blur(4px)";
+    
+    let head = document.querySelector(".head");
+    head.style.opacity = "0.5";
+    head.style.filter = "blur(10px)";
+
+    let footer = document.querySelector(".footer");
+    footer.style.opacity = "0.5";
+    footer.style.filter = "blur(10px)";
+
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "0";
+    document.body.style.overflow = "hidden";
+    document.body.addEventListener('click', disableClicksOutsideRegisterPopup);
+}
+function closeRegister() {
+    let regDiv = document.querySelector(".register-div");
+    regDiv.style.display = "none";
+    let main = document.querySelector(".main");
+    main.style.filter = mainFilterRegister;
+    main.style.opacity = "1";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.filter = "none";
+    navbar.style.opacity = "1";
+    let head = document.querySelector(".head");
+    head.style.opacity = "1";
+    head.style.filter = "none";
+    let footer = document.querySelector(".footer");
+    footer.style.opacity = "1";
+    footer.style.filter = "none";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "1";
+    goUp.style.filter = "none";
+    document.body.style.overflow = "auto";
+    document.body.removeEventListener('click', disableClicksOutsideRegisterPopup);
+}
+
+
 function main() {
 
     document.addEventListener("load", () => {
@@ -128,6 +243,12 @@ function main() {
             }
         }
     }
+
+    let log = document.getElementById("login-button");
+    log.onclick = showLogin;
+
+    let reg = document.getElementById("register-button");
+    reg.onclick = showRegister;
 
     let pageId = window.location.hash.substr(1);
     pageId = pageId.split("-");

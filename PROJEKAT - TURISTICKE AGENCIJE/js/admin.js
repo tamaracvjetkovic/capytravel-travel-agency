@@ -37,6 +37,95 @@ var destinationsInDestination = {};
 var clicked = 0;
 
 
+
+function disableClicksOutsideLoginPopup(event) {
+    let logDiv = document.querySelector(".login-div");
+    if (!logDiv.contains(event.target)) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+}
+
+var mainFilterLogin;
+function showLogin() {
+    let logDiv = document.querySelector(".login-div");
+    logDiv.style.display = "flex";
+    let main = document.querySelector(".main");
+    main.style.opacity = "0.1";
+    mainFilterLogin = main.style.filter;
+    main.style.filter = "blur(4px)";
+
+    let navbar = document.querySelector(".navbar");
+    navbar.style.opacity = "0.1";
+    navbar.style.filter = "blur(4px)";
+    
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "0";
+    //goUp.style.filter = "blur(4px)";
+    document.body.style.overflow = "hidden";
+    document.body.addEventListener('click', disableClicksOutsideLoginPopup);
+}
+function closeLogin() {
+    let logDiv = document.querySelector(".login-div");
+    logDiv.style.display = "none";
+    let main = document.querySelector(".main");
+    main.style.filter = mainFilterLogin;
+    main.style.opacity = "1";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.filter = "none";
+    navbar.style.opacity = "1";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "1";
+    goUp.style.filter = "none";
+    document.body.style.overflow = "auto";
+    document.body.removeEventListener('click', disableClicksOutsideLoginPopup);
+}
+
+
+var mainFilterRegister;
+function disableClicksOutsideRegisterPopup(event) {
+    let regDiv = document.querySelector(".register-div");
+    if (!regDiv.contains(event.target)) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+}
+function showRegister() {
+    let regDiv = document.querySelector(".register-div");
+    regDiv.style.display = "flex";
+    let main = document.querySelector(".main");
+    mainFilterRegister = main.style.filter;
+    main.style.opacity = "0.1";
+    main.style.filter = "blur(4px)";
+
+    let navbar = document.querySelector(".navbar");
+    navbar.style.opacity = "0.1";
+    navbar.style.filter = "blur(4px)";
+    
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "0";
+    document.body.style.overflow = "hidden";
+    document.body.addEventListener('click', disableClicksOutsideRegisterPopup);
+}
+function closeRegister() {
+    let regDiv = document.querySelector(".register-div");
+    regDiv.style.display = "none";
+    let main = document.querySelector(".main");
+    main.style.filter = mainFilterRegister;
+    main.style.opacity = "1";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.filter = "none";
+    navbar.style.opacity = "1";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "1";
+    goUp.style.filter = "none";
+    document.body.style.overflow = "auto";
+    document.body.removeEventListener('click', disableClicksOutsideRegisterPopup);
+}
+
+
+
+
 function main() {
 
     document.addEventListener("load", () => {
@@ -146,13 +235,127 @@ function main() {
         let optionText = document.createTextNode(key);
         option.appendChild(optionText);
         dropdown.appendChild(option);
-      }
+    }
+    
+    let log = document.getElementById("login-button");
+    log.onclick = showLogin;
+
+    let reg = document.getElementById("register-button");
+    reg.onclick = showRegister;
+
+    //log.onclick = showLogin;
 
 
-    loadAgencies();
+    loadDestinations();
 }
 
-function loadAgencies() {
+
+function loadDestinations() {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                destinationsID = [];
+                destinations = JSON.parse(request.responseText);
+                let adminBody = document.querySelector(".admin-body");
+                let tableDestinations = document.createElement("table");
+                tableDestinations.classList.add("tabela-destinacije")
+                adminBody.append(tableDestinations);
+
+                for (let id in destinations) {
+                    let destination = destinations[id];
+                    for (let dest in destination) { 
+                        let tr = document.createElement("tr")
+                        tableDestinations.append(tr);
+                        let th = document.createElement("th")
+                        th.innerHTML = "EDIT";
+                        tr.append(th);
+                        for (i in destination[dest]) {
+                            
+                            let th = document.createElement("th")
+                            let s = i;
+                            let naziv = "";
+                            let br = 0;
+                            for (let j = 0; j < s.length; j++) {
+                                letter = s[j];
+                                let l = letter.toUpperCase();
+                                if (br === 0) {
+                                    naziv += l;
+                                } else {
+                                    if (letter === l) {
+                                        naziv += " ";
+                                        naziv += l;
+                                    } else {
+                                        naziv += l;
+                                    }
+                                }
+                                br++;
+                            }   
+                            th.innerHTML = naziv;
+                            tr.append(th);
+                        }
+                        break;
+                    }
+                    break;
+                }
+                for (let id in destinations) {
+                    let destination = destinations[id];
+
+                    for (let dest in destination) { 
+                        let tr = document.createElement("tr")
+                    tableDestinations.append(tr);  
+                    let td = document.createElement("td")
+                        let buttonEdit = document.createElement("button")
+                        buttonEdit.setAttribute("id", ("edit,destinacija," + dest));
+                        buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+                        let buttonDelete = document.createElement("button")
+                        buttonDelete.setAttribute("id", ("delete,destinacija," + dest));
+                        buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
+                    td.append(buttonEdit);
+                    td.append(buttonDelete);
+                    tr.append(td);
+                        for (let i in destination[dest]) {
+                            if (i === "opis") {
+                                let divOpis = document.createElement("div");
+                                divOpis.classList.add("destinacija-opis-url");
+                                let po = document.createElement("p");
+                                po.innerText = destination[dest][i];
+                                divOpis.append(po);
+                                let td = document.createElement("td")
+                                td.append(divOpis);
+                                tr.append(td);
+                                continue;
+                            }
+                            if (i === "slike") {
+                                let divSlike = document.createElement("div");
+                                divSlike.classList.add("destinacija-slike-url");
+                                for (let sl in destination[dest][i]) {
+                                    let ps = document.createElement("p");
+                                    ps.innerText = destination[dest][i][sl];
+                                    divSlike.append(ps);
+                                }
+                                let td = document.createElement("td")
+                                td.append(divSlike);
+                                tr.append(td);
+                                continue;
+                            }
+                            let td = document.createElement("td")
+                            td.append(destination[dest][i]);
+                            tr.append(td);
+                        }
+                    }
+                }
+            } else {
+                alert('Error occurred. Car could not be loaded.');
+            }
+            loadAgencies(destinations);
+        }
+    }
+    request.open('GET', firebaseUrl + '/destinacije.json');
+    request.send();
+}
+
+function loadAgencies(destinations) {
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -188,7 +391,6 @@ function loadAgencies() {
                                     naziv += l;
                                 }
                             }
-                            //console.log(naziv);
                             br++;
                         }
                         th.innerHTML = naziv;
@@ -202,16 +404,36 @@ function loadAgencies() {
                     let agency = agencies[id];
                     //console.log("Agencija: " + agency);
                     let td = document.createElement("td")
+                    let div1 = document.createElement("div");
                         let buttonEdit = document.createElement("button")
                         buttonEdit.setAttribute("id", ("edit,agencija," + id));
                         buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
                         let buttonDelete = document.createElement("button")
                         buttonDelete.setAttribute("id", ("delete,agencija," + id));
                         buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
-                    td.append(buttonEdit);
-                    td.append(buttonDelete);
+                    div1.append(buttonEdit);   
+                    div1.append(buttonDelete);  
+                    div1.classList.add("edit-delete-buttons");
+                    td.append(div1);
                     tr.append(td);
                     for (i in agency) {
+                        if (i === "destinacije") {
+                            let divDestinacijeNazivi = document.createElement("div");
+                            for (let dest in destinations) {
+                                if (dest === agency.destinacije) {
+                                    for (let d in destinations[dest]) {
+                                        let ps = document.createElement("p");
+                                        ps.innerText = destinations[dest][d].naziv;
+                                        divDestinacijeNazivi.append(ps);
+                                        //console.log("dest: " + destinations[dest][d].naziv);
+                                    }
+                                }  
+                            }
+                            let td = document.createElement("td")
+                            td.append(divDestinacijeNazivi);
+                            tr.append(td);
+                            continue;   
+                        }
                         let td = document.createElement("td")
                         td.append(agency[i]);
                         //console.log(i + " === " + agency[i]);
@@ -222,122 +444,10 @@ function loadAgencies() {
             } else {
                 alert('Error occurred. Car could not be loaded.')
             }
-            loadDestinations();
-        }
-    }
-    request.open('GET', firebaseUrl + '/agencjie.json');
-    request.send();
-}
-/*
-function loadAgency() {
-    // GET by id    
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                var agency = JSON.parse(request.responseText);
-            } else {
-                alert('Error occurred. Car could not be loaded.')
-            }
-        }
-    }
-    request.open('GET', firebaseUrl + '/agencjie/' + agenciesID[curAgency] + '.json');
-    request.send();
-}*/
-
-
-function loadDestinations() {
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                destinationsID = [];
-                destinations = JSON.parse(request.responseText);
-                let adminBody = document.querySelector(".admin-body");
-                let tableDestinations = document.createElement("table");
-                tableDestinations.classList.add("tabela-destinacije")
-                adminBody.append(tableDestinations);
-
-                for (let id in destinations) {
-                    let destination = destinations[id];
-                    for (let dest in destination) { 
-                        let tr = document.createElement("tr")
-                        tableDestinations.append(tr);
-                        let th = document.createElement("th")
-                        th.innerHTML = "EDIT";
-                        tr.append(th);
-                        for (i in destination[dest]) {
-                            if (i === "opis") {
-                                continue;
-                            }
-                            if (i === "slike") {
-                                continue;
-                            }
-                            let th = document.createElement("th")
-                            let s = i;
-                            let naziv = "";
-                            let br = 0;
-                            for (let j = 0; j < s.length; j++) {
-                                letter = s[j];
-                                let l = letter.toUpperCase();
-                                if (br === 0) {
-                                    naziv += l;
-                                } else {
-                                    if (letter === l) {
-                                        naziv += " ";
-                                        naziv += l;
-                                    } else {
-                                        naziv += l;
-                                    }
-                                }
-                                br++;
-                            }   
-                            th.innerHTML = naziv;
-                            tr.append(th);
-                        }
-                        break;
-                    }
-                    break;
-                }
-                for (let id in destinations) {
-                    let destination = destinations[id];
-
-                    for (let dest in destination) { 
-                        let tr = document.createElement("tr")
-                    tableDestinations.append(tr);
-                    
-                    //console.log("Agencija: " + agency);
-                    let td = document.createElement("td")
-                        let buttonEdit = document.createElement("button")
-                        buttonEdit.setAttribute("id", ("edit,destinacija," + dest));
-                        buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
-                        let buttonDelete = document.createElement("button")
-                        buttonDelete.setAttribute("id", ("delete,destinacija," + dest));
-                        buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
-                    td.append(buttonEdit);
-                    td.append(buttonDelete);
-                    tr.append(td);
-                        for (i in destination[dest]) {
-                            console.log(i);
-                            if (i === "opis") {
-                                continue;
-                            }
-                            if (i === "slike") {
-                                continue;
-                            }
-                            let td = document.createElement("td")
-                            td.append(destination[dest][i]);
-                            tr.append(td);
-                        }
-                    }
-                }
-            } else {
-                alert('Error occurred. Car could not be loaded.');
-            }
             loadUsers();
         }
     }
-    request.open('GET', firebaseUrl + '/destinacije.json');
+    request.open('GET', firebaseUrl + '/agencjie.json');
     request.send();
 }
 
@@ -434,25 +544,6 @@ function loadUsers() {
     request.open('GET', firebaseUrl + '/korisnici.json');
     request.send();
 }
-/*
-function loadDestination(cur, br, agency) {
-    // GET by id
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                var destination = JSON.parse(request.responseText);
-            } else {
-                alert('Error occurred. Car could not be loaded.')
-            }
-            //appendDestinationBody(cur, br, agency, destination);
-        }
-    }
-    request.open('GET', firebaseUrl + '/destinacije/' + destinationsID[cur] + "/" + destinationsInDestinationID[br] + '.json');
-    request.send();
-}
-*/
-
 
 
 function promijeniBroj(id) {
@@ -617,9 +708,6 @@ function appendDestinationBody(cur, br, agency, destinacija) {
 
     
 }
-
-
-
 
 
 function appendMainBox2(position, destination, agency) {
