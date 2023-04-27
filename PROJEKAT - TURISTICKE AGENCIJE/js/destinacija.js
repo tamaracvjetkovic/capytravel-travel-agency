@@ -475,6 +475,7 @@ function closeRegister() {
 }
 
 
+
 function appendDestinationBody(cur, br, agency, destinacija) {
    
     let title = document.querySelector("title");

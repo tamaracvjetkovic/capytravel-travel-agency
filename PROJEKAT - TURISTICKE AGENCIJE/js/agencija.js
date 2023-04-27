@@ -546,17 +546,31 @@ function appendMainBox(position, dest, destination, curAgency) {
     mainBoxes.appendChild(newMainBox);
 }
 
+/*
+function myFunction(x, agency) {
+    if (x.matches) { // If media query matches
+        let newHead = document.querySelector(".head");
+        newHead.style.background = "linear-gradient(rgba(0, 0, 0, 0.383), rgba(0, 0, 0, 0.338)), url('" + agency.logo + "')";
+        newHead.style.backgroundRepeat = "no-repeat";
+        newHead.style.backgroundSize = "cover";
+        newHead.style.backgroundPosition = "center"
+        newHead.style.backgroundAttachment = "none";
+    } 
+}*/
 
 function appendAgencyBody(cur, agency) {
 
     let newTitle = document.getElementById("header1");
     newTitle.innerHTML = agency.naziv.toUpperCase();
     let newHead = document.querySelector(".head");
-    newHead.style.background = "linear-gradient(rgba(0, 0, 0, 0.383), rgba(0, 0, 0, 0.338)), url('" + agency.logo + "')";
-    newHead.style.backgroundRepeat = "no-repeat";
+    newHead.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.383), rgba(0, 0, 0, 0.338)), url('" + agency.logo + "')";
+    /*newHead.style.backgroundRepeat = "no-repeat";
     newHead.style.backgroundSize = "cover";
     newHead.style.backgroundPosition = "center"
-    newHead.style.backgroundAttachment = "fixed"
+    newHead.style.backgroundAttachment = "fixed"*/
+    /*var x = window.matchMedia("(max-width: 768px)")
+    myFunction(x, agency) // Call listener function at run time
+    x.addListener(myFunction) // Attach listener function on state changes*/
 
     document.querySelector(".boxes h1").innerHTML = "Destinacije '" + agency.naziv + "'";
 

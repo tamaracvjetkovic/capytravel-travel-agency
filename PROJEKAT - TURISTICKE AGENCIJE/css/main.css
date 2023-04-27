@@ -414,6 +414,11 @@ body {
             flex: 0 0 100%;
             /*padding: 5%;*/
         }
+        .boxes {
+            padding-left: 12px;
+            padding-right: 12px;
+            padding-bottom: 25px;
+        }
     }
         .card {
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.272);
