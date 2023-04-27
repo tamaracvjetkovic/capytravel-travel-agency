@@ -1,72 +1,47 @@
 
-window.addEventListener('load', main);
+var firebaseUrl = 'https://turistickaagencijaprojekattaca-default-rtdb.europe-west1.firebasedatabase.app/';
+
+var usersID = [];
+var users = {};
 
 var clicked = 0;
 
-var firebaseUrl = 'https://turistickaagencijaprojekattaca-default-rtdb.europe-west1.firebasedatabase.app/';
 
-var agenciesID = [];
-var agencies = {};
+window.addEventListener('load', loadUsers());
 
-var korisnici = {};
-
-
-
-function scrollToTop() {
-    var position = document.body.scrollTop || document.documentElement.scrollTop;
-    if (position) {
-      window.scrollBy(0, -Math.max(1, Math.floor(position / 10)));
-      scrollAnimation = setTimeout("scrollToTop()", 12);
-    } else clearTimeout(scrollAnimation);
-}
 
 
 function tryToLogin() {
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                usersID = [];
-                users = JSON.parse(request.responseText);
-                let korisnickoValue = document.getElementById('korisnicko-login');
-                let korisnicko1 = korisnickoValue.value;
-                let pswValue = document.getElementById('psw-login');
-                let psw1 = pswValue.value; 
-                let errorKorisnicko = document.getElementById("error-login-korisnicko");
+    let korisnickoValue = document.getElementById('korisnicko-login');
+    let korisnicko1 = korisnickoValue.value;
+    let pswValue = document.getElementById('psw-login');
+    let psw1 = pswValue.value; 
+    let errorKorisnicko = document.getElementById("error-login-korisnicko");
+    errorKorisnicko.innerText = "";
+    let errorLozinka = document.getElementById("error-login-lozinka");
+    errorLozinka.innerText = "";
+    for (let i in users) { 
+        if (users[i].korisnickoIme === korisnicko1) {
+            if (users[i].lozinka === psw1) {
+                alert("Dobrodošli, " + korisnicko1 + "!");  
                 errorKorisnicko.innerText = "";
-                let errorLozinka = document.getElementById("error-login-lozinka");
                 errorLozinka.innerText = "";
-                for (let i in users) { 
-                    if (users[i].korisnickoIme === korisnicko1) {
-                        if (users[i].lozinka === psw1) {
-                            alert("Dobrodošli, " + korisnicko1 + "!");  
-                            errorKorisnicko.innerText = "";
-                            errorLozinka.innerText = "";
-                            let btnClose = document.querySelector(".btn-login-cancel");
-                            btnClose.click();
-                            location.reload();
-                            return;
-                        } else {
-                            errorLozinka.innerText = "Pogresna šifra!"; 
-                            return;
-                        }
-                    } 
-                }   
-                errorKorisnicko.innerText = "Ne postoji korisničko ime!";   
+                let btnClose = document.querySelector(".btn-login-cancel");
+                btnClose.click();
+                location.reload();
+                return;
             } else {
-                alert('Error occurred. Car could not be loaded.')
-            }   
-            return users;     
-        }
+                errorLozinka.innerText = "Pogresna šifra!"; 
+                return;
+            }
+        }      
     }
-    request.open('GET', firebaseUrl + '/korisnici.json');
-    request.send();
+    errorKorisnicko.innerText = "Ne postoji korisničko ime!";  
 }   
 function isLoginValid() {
     event.preventDefault();
     tryToLogin();
 }
-
 
 
 function registerNewUser() {
@@ -78,7 +53,6 @@ function registerNewUser() {
     let psw1 = document.getElementById('psw-register').value;
     let adresa1 = document.getElementById('adresa-register').value;
     let telefon1 = document.getElementById('telefon-register').value;
-
     var newUser = {
         adresa: adresa1,
         datumRodjenja: datum1,
@@ -89,8 +63,6 @@ function registerNewUser() {
         prezime: prezime1,
         telefon: telefon1   
     };
-    usersID++;
-
     var userJson = JSON.stringify(newUser);
     console.log(userJson);
     var request = new XMLHttpRequest();
@@ -149,7 +121,6 @@ function isRegisterValid() {
     if (isPhoneValid != true) {
         okForma = 0;
     }
-
     if (okForma === 1) {
         //alert("Registrovani ste!");
         event.preventDefault();
@@ -165,8 +136,6 @@ function isRegisterValid() {
         return false;
     }
 }
-
-
 function validateRegisterInputIme(elem) {
     let value = elem.value.trim();
     let ok = 1;
@@ -329,17 +298,7 @@ function validateRegisterInputPsw(elem) {
 }
 function validateRegisterInputAddress(elem) {
     let value = elem.value;
-    let ok = 1;/*
-    let errorMessage = document.getElementById("error-address");
-    let testing = /^[a-zA-Z0-9]+([ \t]+[a-zA-Z0-9]+)*$/.test(value);
-    if (testing === true) {
-        errorMessage.innerText = 'Pogrešna adresa!';
-        ok = 0;
-    } else {
-        errorMessage.innerText = '';
-        ok = 1;
-    }
-*/
+    let ok = 1;
     if (ok === 1) {
         return true;
     } else {
@@ -367,8 +326,7 @@ function validateRegisterInputPhone(elem) {
 }
 
 
-
-
+var mainFilterLogin;
 function disableClicksOutsideLoginPopup(event) {
     let logDiv = document.querySelector(".login-div");
     if (!logDiv.contains(event.target)) {
@@ -376,8 +334,6 @@ function disableClicksOutsideLoginPopup(event) {
       event.preventDefault();
     }
 }
-
-var mainFilterLogin;
 function showLogin() {
     let logDiv = document.querySelector(".login-div");
     logDiv.style.display = "flex";
@@ -400,7 +356,6 @@ function showLogin() {
 
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
-    //goUp.style.filter = "blur(4px)";
     document.body.style.overflow = "hidden";
     document.body.addEventListener('click', disableClicksOutsideLoginPopup);
 }
@@ -442,19 +397,15 @@ function showRegister() {
     mainFilterRegister = main.style.filter;
     main.style.opacity = "0.1";
     main.style.filter = "blur(4px)";
-
     let navbar = document.querySelector(".navbar");
     navbar.style.opacity = "0.1";
     navbar.style.filter = "blur(4px)";
-    
     let head = document.querySelector(".head");
     head.style.opacity = "0.5";
     head.style.filter = "blur(10px)";
-
     let footer = document.querySelector(".footer");
     footer.style.opacity = "0.5";
     footer.style.filter = "blur(10px)";
-
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
     document.body.style.overflow = "hidden";
@@ -483,6 +434,13 @@ function closeRegister() {
 }
 
 
+function scrollToTop() {
+    var position = document.body.scrollTop || document.documentElement.scrollTop;
+    if (position) {
+      window.scrollBy(0, -Math.max(1, Math.floor(position / 10)));
+      scrollAnimation = setTimeout("scrollToTop()", 12);
+    } else clearTimeout(scrollAnimation);
+}
 
 function main() {
 
@@ -587,5 +545,22 @@ function main() {
 }
 
 
-
-
+function loadUsers() {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                usersID = [];
+                users = JSON.parse(request.responseText);
+                for (let id in users) {
+                    usersID.push(id);
+                }       
+            } else {
+                alert('Error occurred. Car could not be loaded.')
+            }  
+            main();      
+        }
+    }
+    request.open('GET', firebaseUrl + '/korisnici.json');
+    request.send();
+}

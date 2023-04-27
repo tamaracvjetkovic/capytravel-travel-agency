@@ -80,7 +80,6 @@ function registerNewUser() {
         prezime: prezime1,
         telefon: telefon1   
     };
-    usersID++;
 
     var userJson = JSON.stringify(newUser);
     console.log(userJson);

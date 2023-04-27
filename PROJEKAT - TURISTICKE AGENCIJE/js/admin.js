@@ -8,12 +8,13 @@ var destinations = {};
 var usersID = []; 
 var users = {}; 
 
-var clicked = 0;
-var curBox = 1;
-
 var userDeleteID;
 var agencyDeleteID;
 var destinationDeleteID;
+
+var clicked = 0;
+var curBox = 1;
+
 
 
 window.addEventListener('load', loadAgencies);
