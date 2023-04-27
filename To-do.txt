@@ -1,4 +1,7 @@
 
+- napraviti stranicu za greske
+
+- staviti drugaciji alert za failed load json
 
 - napraviti valid search
 

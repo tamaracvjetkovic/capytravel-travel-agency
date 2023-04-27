@@ -1,27 +1,4 @@
 
-window.addEventListener('load', main);
-
-var clicked = 0;
-var curBox = 1;
-
-function createMainBox() {
-    let newMainBox = document.createElement('div');
-    newMainBox.classList.add("box");
-    newMainBox.innerHTML = " " + curBox + " ";
-    let mainBoxes = document.querySelector(".boxes");
-    mainBoxes.appendChild(newMainBox);
-    curBox++;
-};
-
-function scrollToTop() {
-    var position = document.body.scrollTop || document.documentElement.scrollTop;
-    if (position) {
-      window.scrollBy(0, -Math.max(1, Math.floor(position / 10)));
-      scrollAnimation = setTimeout("scrollToTop()", 12);
-    } else clearTimeout(scrollAnimation);
-}
-
-
 var firebaseUrl = 'https://turistickaagencijaprojekattaca-default-rtdb.europe-west1.firebasedatabase.app/';
 
 var agenciesID = [];
@@ -30,23 +7,17 @@ var destinationsID = [];
 var destinations = {};
 var usersID = []; 
 var users = {}; 
-/*
-var destinationsInDestinationID = [];
-var destinationsInDestination = {};
-*/
+
 var clicked = 0;
-
-
-function doYouWantToDeleteDestination(destID) {
-    //console.log(destID);
-}
-function doYouWantToDeleteAgency(agencyID) {
-    //console.log(agencyID);
-}
+var curBox = 1;
 
 var userDeleteID;
 var agencyDeleteID;
 var destinationDeleteID;
+
+
+window.addEventListener('load', loadAgencies);
+
 
 
 function closeDeleteDestinationPopup() {
@@ -81,8 +52,6 @@ function deleteDestination() {
     request.open('DELETE', firebaseUrl + '/destinacije/' + destinationDeleteID + '.json');
     request.send(); */
 }
-
-
 function doYouWantToDeleteDestination(destinationID) {
     destinationDeleteID = destinationID;
     let popup = document.getElementById("delete-destination-popup");
@@ -136,10 +105,6 @@ function doYouWantToDeleteUser(userID) {
 }
 
 
-
-
-
-
 function tryToLogin() {
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -187,7 +152,6 @@ function isLoginValid() {
 }
 
 
-
 function registerNewUser() {
     let ime1 = document.getElementById('ime-register').value;
     let prezime1 = document.getElementById('prezime-register').value;
@@ -197,7 +161,6 @@ function registerNewUser() {
     let psw1 = document.getElementById('psw-register').value;
     let adresa1 = document.getElementById('adresa-register').value;
     let telefon1 = document.getElementById('telefon-register').value;
-
     var newUser = {
         adresa: adresa1,
         datumRodjenja: datum1,
@@ -208,7 +171,6 @@ function registerNewUser() {
         prezime: prezime1,
         telefon: telefon1   
     };
-
     var userJson = JSON.stringify(newUser);
     console.log(userJson);
     var request = new XMLHttpRequest();
@@ -267,7 +229,6 @@ function isRegisterValid() {
     if (isPhoneValid != true) {
         okForma = 0;
     }
-
     if (okForma === 1) {
         //alert("Registrovani ste!");
         event.preventDefault();
@@ -485,7 +446,6 @@ function validateRegisterInputPhone(elem) {
 }
 
 
-
 function disableClicksOutsideLoginPopup(event) {
     let logDiv = document.querySelector(".login-div");
     if (!logDiv.contains(event.target)) {
@@ -493,7 +453,6 @@ function disableClicksOutsideLoginPopup(event) {
       event.preventDefault();
     }
 }
-
 var mainFilterLogin;
 function showLogin() {
     let logDiv = document.querySelector(".login-div");
@@ -509,7 +468,6 @@ function showLogin() {
     
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
-    //goUp.style.filter = "blur(4px)";
     document.body.style.overflow = "hidden";
     document.body.addEventListener('click', disableClicksOutsideLoginPopup);
 }
@@ -572,7 +530,240 @@ function closeRegister() {
 }
 
 
+function createUsersTable() {
+    let adminBody = document.querySelector(".admin-body");
+    let tableUsers = document.createElement("table");
+    tableUsers.classList.add("tabela-korisnici")
+    adminBody.append(tableUsers);
+    for (let id in users) {
+        let user = users[id];
+        let tr = document.createElement("tr")
+        tableUsers.append(tr);
+        let th = document.createElement("th")
+        th.innerHTML = "EDIT";
+        tr.append(th);
+        for (i in user) {
+            let th = document.createElement("th")
+            let s = i;
+            let naziv = "";
+            let br = 0;
+            for (let j = 0; j < s.length; j++) {
+                letter = s[j];
+                let l = letter.toUpperCase();
+                if (br === 0) {
+                    naziv += l;
+                } else {
+                    if (letter === l) {
+                        naziv += " ";
+                        naziv += l;
+                    } else {
+                        naziv += l;
+                    }
+                }
+                br++;
+            }
+            th.innerHTML = naziv;
+            tr.append(th);
+        }
+        break;
+    }
+    for (let id in users) {
+        let tr = document.createElement("tr")
+        tableUsers.append(tr);
+        let user = users[id];
+        let td = document.createElement("td")
+        let buttonEdit = document.createElement("button")
+        buttonEdit.setAttribute("id", ("edit,korisnik," + id));
+        buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+        let buttonDelete = document.createElement("button")
+        buttonDelete.setAttribute("id", (id));
+        buttonDelete.setAttribute("onclick", "doYouWantToDeleteUser(this.id)");
+        buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
+        td.append(buttonEdit);
+        td.append(buttonDelete);
+        tr.append(td);
+        for (i in user) {
+            let td = document.createElement("td")
+            td.append(user[i]);
+            tr.append(td);
+        }
+    }       
+}
+function createAgencyTable() {
+    let adminBody = document.querySelector(".admin-body");
+    let tableAgencies = document.createElement("table");
+    tableAgencies.classList.add("tabela-agencije")
+    adminBody.append(tableAgencies);
+    for (let id in agencies) {
+        let agency = agencies[id];
+        let tr = document.createElement("tr")
+        tableAgencies.append(tr);
+        let th = document.createElement("th")
+        th.innerHTML = "EDIT";
+        tr.append(th);
+        for (i in agency) {
+            let th = document.createElement("th")
+            let s = i;
+            let naziv = "";
+            let br = 0;
+            for (let j = 0; j < s.length; j++) {
+                letter = s[j];
+                let l = letter.toUpperCase();
+                if (br === 0) {
+                    naziv += l;
+                } else {
+                    if (letter === l) {
+                        naziv += " ";
+                        naziv += l;
+                    } else {
+                        naziv += l;
+                    }
+                }
+                br++;
+            }
+            th.innerHTML = naziv;
+            tr.append(th);
+        }
+        break;
+    }
+    for (let id in agencies) {
+        let tr = document.createElement("tr")
+        tableAgencies.append(tr);
+        let agency = agencies[id];
+        let td = document.createElement("td")
+        let div1 = document.createElement("div");
+        let buttonEdit = document.createElement("button")
+        buttonEdit.setAttribute("id", ("edit,agencija," + id));
+        buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+        let buttonDelete = document.createElement("button")
+        buttonDelete.setAttribute("id", (id));
+        buttonDelete.setAttribute("onclick", "doYouWantToDeleteAgency(this.id)");
+        buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
+        div1.append(buttonEdit);   
+        div1.append(buttonDelete);  
+        div1.classList.add("edit-delete-buttons");
+        td.append(div1);
+        tr.append(td);
+        for (i in agency) {
+            if (i === "destinacije") {
+                let divDestinacijeNazivi = document.createElement("div");
+                for (let dest in destinations) {
+                    if (dest === agency.destinacije) {
+                        for (let d in destinations[dest]) {
+                            let ps = document.createElement("p");
+                            ps.innerText = destinations[dest][d].naziv;
+                            divDestinacijeNazivi.append(ps);
+                        }
+                    }  
+                }
+                let td = document.createElement("td")
+                td.append(divDestinacijeNazivi);
+                tr.append(td);
+                continue;   
+            }
+            let td = document.createElement("td")
+            td.append(agency[i]);
+            tr.append(td);
+        }
+    }       
+}
+function createDestinationTable() {
+    let adminBody = document.querySelector(".admin-body");
+    let tableDestinations = document.createElement("table");
+    tableDestinations.classList.add("tabela-destinacije")
+    adminBody.append(tableDestinations);
+    for (let id in destinations) {
+        let destination = destinations[id];
+        for (let dest in destination) { 
+            let tr = document.createElement("tr")
+            tableDestinations.append(tr);
+            let th = document.createElement("th")
+            th.innerHTML = "EDIT";
+            tr.append(th);
+            for (i in destination[dest]) {
+                let th = document.createElement("th")
+                let s = i;
+                let naziv = "";
+                let br = 0;
+                for (let j = 0; j < s.length; j++) {
+                    letter = s[j];
+                    let l = letter.toUpperCase();
+                    if (br === 0) {
+                        naziv += l;
+                    } else {
+                        if (letter === l) {
+                            naziv += " ";
+                            naziv += l;
+                        } else {
+                            naziv += l;
+                        }
+                    }
+                    br++;
+                }   
+                th.innerHTML = naziv;
+                tr.append(th);
+            }
+            break;
+        }
+        break;
+    }
+    for (let id in destinations) {
+        let destination = destinations[id];
+        for (let dest in destination) { 
+            let tr = document.createElement("tr")
+            tableDestinations.append(tr);  
+            let td = document.createElement("td")
+            let buttonEdit = document.createElement("button")
+            buttonEdit.setAttribute("id", ("edit,destinacija," + dest));
+            buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+            let buttonDelete = document.createElement("button")
+            buttonDelete.setAttribute("id", (dest));
+            buttonDelete.setAttribute("onclick", "doYouWantToDeleteDestination(this.id)");
+            buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
+            td.append(buttonEdit);
+            td.append(buttonDelete);
+            tr.append(td);
+            for (let i in destination[dest]) {
+                if (i === "opis") {
+                    let divOpis = document.createElement("div");
+                    divOpis.classList.add("destinacija-opis-url");
+                    let po = document.createElement("p");
+                    po.innerText = destination[dest][i];
+                    divOpis.append(po);
+                    let td = document.createElement("td")
+                    td.append(divOpis);
+                    tr.append(td);
+                    continue;
+                }
+                if (i === "slike") {
+                    let divSlike = document.createElement("div");
+                    divSlike.classList.add("destinacija-slike-url");
+                    for (let sl in destination[dest][i]) {
+                        let ps = document.createElement("p");
+                        ps.innerText = destination[dest][i][sl];
+                        divSlike.append(ps);
+                    }
+                    let td = document.createElement("td")
+                    td.append(divSlike);
+                    tr.append(td);
+                    continue;
+                }
+                let td = document.createElement("td")
+                td.append(destination[dest][i]);
+                tr.append(td);
+            }
+        }
+    }
+}
 
+
+function scrollToTop() {
+    var position = document.body.scrollTop || document.documentElement.scrollTop;
+    if (position) {
+      window.scrollBy(0, -Math.max(1, Math.floor(position / 10)));
+      scrollAnimation = setTimeout("scrollToTop()", 12);
+    } else clearTimeout(scrollAnimation);
+}
 
 function main() {
 
@@ -633,7 +824,6 @@ function main() {
         }
     });
     
-    
     document.getElementById('menu-toggle').onclick = function() {
         if (clicked === 0) {
             clicked = 1;
@@ -691,214 +881,27 @@ function main() {
     let reg = document.getElementById("register-button");
     reg.onclick = showRegister;
 
-    //log.onclick = showLogin;
+    createDestinationTable();
+    createAgencyTable();
+    createUsersTable();
 
-
-    loadDestinations();
-}
-
-
-function loadDestinations() {
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                destinationsID = [];
-                destinations = JSON.parse(request.responseText);
-                let adminBody = document.querySelector(".admin-body");
-                let tableDestinations = document.createElement("table");
-                tableDestinations.classList.add("tabela-destinacije")
-                adminBody.append(tableDestinations);
-
-                for (let id in destinations) {
-                    let destination = destinations[id];
-                    for (let dest in destination) { 
-                        let tr = document.createElement("tr")
-                        tableDestinations.append(tr);
-                        let th = document.createElement("th")
-                        th.innerHTML = "EDIT";
-                        tr.append(th);
-                        for (i in destination[dest]) {
-                            
-                            let th = document.createElement("th")
-                            let s = i;
-                            let naziv = "";
-                            let br = 0;
-                            for (let j = 0; j < s.length; j++) {
-                                letter = s[j];
-                                let l = letter.toUpperCase();
-                                if (br === 0) {
-                                    naziv += l;
-                                } else {
-                                    if (letter === l) {
-                                        naziv += " ";
-                                        naziv += l;
-                                    } else {
-                                        naziv += l;
-                                    }
-                                }
-                                br++;
-                            }   
-                            th.innerHTML = naziv;
-                            tr.append(th);
-                        }
-                        break;
-                    }
-                    break;
-                }
-                for (let id in destinations) {
-                    let destination = destinations[id];
-
-                    for (let dest in destination) { 
-                        let tr = document.createElement("tr")
-                    tableDestinations.append(tr);  
-                    let td = document.createElement("td")
-                        let buttonEdit = document.createElement("button")
-                        buttonEdit.setAttribute("id", ("edit,destinacija," + dest));
-                        buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
-                        let buttonDelete = document.createElement("button")
-                        buttonDelete.setAttribute("id", (dest));
-                        buttonDelete.setAttribute("onclick", "doYouWantToDeleteDestination(this.id)");
-                        buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
-                    td.append(buttonEdit);
-                    td.append(buttonDelete);
-                    tr.append(td);
-                        for (let i in destination[dest]) {
-                            if (i === "opis") {
-                                let divOpis = document.createElement("div");
-                                divOpis.classList.add("destinacija-opis-url");
-                                let po = document.createElement("p");
-                                po.innerText = destination[dest][i];
-                                divOpis.append(po);
-                                let td = document.createElement("td")
-                                td.append(divOpis);
-                                tr.append(td);
-                                continue;
-                            }
-                            if (i === "slike") {
-                                let divSlike = document.createElement("div");
-                                divSlike.classList.add("destinacija-slike-url");
-                                for (let sl in destination[dest][i]) {
-                                    let ps = document.createElement("p");
-                                    ps.innerText = destination[dest][i][sl];
-                                    divSlike.append(ps);
-                                }
-                                let td = document.createElement("td")
-                                td.append(divSlike);
-                                tr.append(td);
-                                continue;
-                            }
-                            let td = document.createElement("td")
-                            td.append(destination[dest][i]);
-                            tr.append(td);
-                        }
-                    }
-                }
-            } else {
-                alert('Error occurred. Car could not be loaded.');
-            }
-            loadAgencies(destinations);
+    let selectDropdown = document.getElementById("select-dropdown");
+    let agencijeTable = document.querySelector(".tabela-agencije");
+    let destinacijeTable = document.querySelector(".tabela-destinacije");
+    let korisniciTable = document.querySelector(".tabela-korisnici");
+    selectDropdown.addEventListener("change", function() {
+        let selectedValue = this.value;
+        agencijeTable.style.display = "none";
+        destinacijeTable.style.display = "none";
+        korisniciTable.style.display = "none";
+        if (selectedValue === "agencije") {
+            agencijeTable.style.display = "table";
+        } else if (selectedValue === "destinacije") {
+            destinacijeTable.style.display = "table";
+        } else if (selectedValue === "korisnici") {
+            korisniciTable.style.display = "table";
         }
-    }
-    request.open('GET', firebaseUrl + '/destinacije.json');
-    request.send();
-}
-
-function loadAgencies(destinations) {
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                agenciesID = [];
-                agencies = JSON.parse(request.responseText);
-                let adminBody = document.querySelector(".admin-body");
-                let tableAgencies = document.createElement("table");
-                tableAgencies.classList.add("tabela-agencije")
-                adminBody.append(tableAgencies);
-                for (let id in agencies) {
-                    let agency = agencies[id];
-                    let tr = document.createElement("tr")
-                    tableAgencies.append(tr);
-                    let th = document.createElement("th")
-                    th.innerHTML = "EDIT";
-                    tr.append(th);
-                    for (i in agency) {
-                        let th = document.createElement("th")
-                        let s = i;
-                        let naziv = "";
-                        let br = 0;
-                        for (let j = 0; j < s.length; j++) {
-                            letter = s[j];
-                            let l = letter.toUpperCase();
-                            if (br === 0) {
-                                naziv += l;
-                            } else {
-                                if (letter === l) {
-                                    naziv += " ";
-                                    naziv += l;
-                                } else {
-                                    naziv += l;
-                                }
-                            }
-                            br++;
-                        }
-                        th.innerHTML = naziv;
-                        tr.append(th);
-                    }
-                    break;
-                }
-                for (let id in agencies) {
-                    let tr = document.createElement("tr")
-                    tableAgencies.append(tr);
-                    let agency = agencies[id];
-                    //console.log("Agencija: " + agency);
-                    let td = document.createElement("td")
-                    let div1 = document.createElement("div");
-                        let buttonEdit = document.createElement("button")
-                        buttonEdit.setAttribute("id", ("edit,agencija," + id));
-                        buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
-                        let buttonDelete = document.createElement("button")
-                        buttonDelete.setAttribute("id", (id));
-                        buttonDelete.setAttribute("onclick", "doYouWantToDeleteAgency(this.id)");
-                        buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
-                    div1.append(buttonEdit);   
-                    div1.append(buttonDelete);  
-                    div1.classList.add("edit-delete-buttons");
-                    td.append(div1);
-                    tr.append(td);
-                    for (i in agency) {
-                        if (i === "destinacije") {
-                            let divDestinacijeNazivi = document.createElement("div");
-                            for (let dest in destinations) {
-                                if (dest === agency.destinacije) {
-                                    for (let d in destinations[dest]) {
-                                        let ps = document.createElement("p");
-                                        ps.innerText = destinations[dest][d].naziv;
-                                        divDestinacijeNazivi.append(ps);
-                                        //console.log("dest: " + destinations[dest][d].naziv);
-                                    }
-                                }  
-                            }
-                            let td = document.createElement("td")
-                            td.append(divDestinacijeNazivi);
-                            tr.append(td);
-                            continue;   
-                        }
-                        let td = document.createElement("td")
-                        td.append(agency[i]);
-                        //console.log(i + " === " + agency[i]);
-                        tr.append(td);
-                    }
-                    agenciesID.push(id);
-                }       
-            } else {
-                alert('Error occurred. Car could not be loaded.')
-            }
-            loadUsers();
-        }
-    }
-    request.open('GET', firebaseUrl + '/agencjie.json');
-    request.send();
+    });
 }
 
 
@@ -909,304 +912,55 @@ function loadUsers() {
             if (this.status == 200) {
                 usersID = [];
                 users = JSON.parse(request.responseText);
-                let adminBody = document.querySelector(".admin-body");
-                let tableUsers = document.createElement("table");
-                tableUsers.classList.add("tabela-korisnici")
-                adminBody.append(tableUsers);
                 for (let id in users) {
-                    let user = users[id];
-                    let tr = document.createElement("tr")
-                    tableUsers.append(tr);
-                    let th = document.createElement("th")
-                    th.innerHTML = "EDIT";
-                    tr.append(th);
-                    for (i in user) {
-                        let th = document.createElement("th")
-                        let s = i;
-                        let naziv = "";
-                        let br = 0;
-                        for (let j = 0; j < s.length; j++) {
-                            letter = s[j];
-                            let l = letter.toUpperCase();
-                            if (br === 0) {
-                                naziv += l;
-                            } else {
-                                if (letter === l) {
-                                    naziv += " ";
-                                    naziv += l;
-                                } else {
-                                    naziv += l;
-                                }
-                            }
-                            br++;
-                        }
-                        th.innerHTML = naziv;
-                        tr.append(th);
-                    }
-                    break;
-                }
-                for (let id in users) {
-                    let tr = document.createElement("tr")
-                    tableUsers.append(tr);
-                    let user = users[id];
-                    //console.log("Agencija: " + agency);
-                    let td = document.createElement("td")
-                        let buttonEdit = document.createElement("button")
-                        buttonEdit.setAttribute("id", ("edit,korisnik," + id));
-                        buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
-                        let buttonDelete = document.createElement("button")
-                        buttonDelete.setAttribute("id", (id));
-                        buttonDelete.setAttribute("onclick", "doYouWantToDeleteUser(this.id)");
-                        buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
-                    td.append(buttonEdit);
-                    td.append(buttonDelete);
-                    tr.append(td);
-                    for (i in user) {
-                        let td = document.createElement("td")
-                        td.append(user[i]);
-                        //console.log(i + " === " + agency[i]);
-                        tr.append(td);
-                    }
                     usersID.push(id);
                 }       
             } else {
                 alert('Error occurred. Car could not be loaded.')
-            }        
-            let selectDropdown = document.getElementById("select-dropdown");
-            let agencijeTable = document.querySelector(".tabela-agencije");
-            let destinacijeTable = document.querySelector(".tabela-destinacije");
-            let korisniciTable = document.querySelector(".tabela-korisnici");
-            selectDropdown.addEventListener("change", function() {
-                let selectedValue = this.value;
-                agencijeTable.style.display = "none";
-                destinacijeTable.style.display = "none";
-                korisniciTable.style.display = "none";
-                // show the selected table
-                if (selectedValue === "agencije") {
-                  agencijeTable.style.display = "table";
-                } else if (selectedValue === "destinacije") {
-                  destinacijeTable.style.display = "table";
-                } else if (selectedValue === "korisnici") {
-                  korisniciTable.style.display = "table";
-                }
-            });
+            }  
+            main();      
         }
     }
     request.open('GET', firebaseUrl + '/korisnici.json');
     request.send();
 }
 
-
-function promijeniBroj(id) {
-    ids = id.split("-");
-    let p = document.querySelector(".numberSlide");
-    p.innerHTML = ids[2] + " / " + picturesNum;
-    let labels = document.querySelectorAll(".slikemenu label");
-    for (let i = 0; i < labels.length; i++) {
-        labels[i].style.backgroundColor = "white";
-        if ((i + 1) == ids[2]) {
-            labels[i].style.backgroundColor = "#989898";
+function loadDestinations() {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                destinationsID = [];
+                destinations = JSON.parse(request.responseText);
+                for (let id in destinations) {
+                    destinationsID.push(id);
+                }
+            } else {
+                alert('Error occurred. Car could not be loaded.')
+            }
+            loadUsers();
         }
     }
+    request.open('GET', firebaseUrl + '/destinacije.json');
+    request.send();
 }
 
-function appendDestinationBody(cur, br, agency, destinacija) {
-   
-    let title = document.querySelector("title");
-    title.innerHTML = "CapyTravel | " + agency.naziv + " | " + destinacija.naziv;   
-    
-    let newTitle = document.getElementById("header1");
-    newTitle.innerHTML = destinacija.naziv;
-    let newHead = document.querySelector(".head");
-    newHead.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.353), rgba(0, 0, 0, 0.288)), url('" + destinacija.slike[0] + "')";
-
-    let newDestinationDesc = document.querySelector(".moj-opis-destinacije2");
-    newDestinationDesc.innerHTML = destinacija.opis;
-
-    let citat = document.getElementById("citat");
-    citat.innerHTML = destinacija.tip;
-
-    let logo = document.querySelector(".logo");
-    logo.innerHTML = "<i>" + agency.naziv + "</i>";
-
-    let number = destinacija.maxOsoba; // Change this number to the desired value
-    number.trim();
-    number = parseInt(number);
-    let interval = 20; // Change this value to control the speed of the loading effect
-    if (number < 60) {
-        interval = 30; 
+function loadAgencies() {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                agenciesID = [];
+                agencies = JSON.parse(request.responseText);
+                for (let id in agencies) {
+                    agenciesID.push(id);
+                }       
+            } else {
+                alert('Error occurred. Car could not be loaded.')
+            }
+            loadDestinations();
+        }
     }
-    if (number < 40) {
-        interval = 35;
-    }
-    if (number < 20) {
-        interval = 40;
-    }
-	let count = 0;
-    let intervalId = setInterval(function() {
-        document.getElementById("ispis-maks-osoba-destinacije").innerHTML = count++;
-        if (count > number) {
-            clearInterval(intervalId);
-        }
-    }, interval);
- 
-    let mojOpisDestinacije = document.querySelector(".moj-opis-destinacije");
-    let prevoz = "";
-    if (destinacija.prevoz === "sopstveni") {
-        prevoz = "Prevoz ne spada u aranžman, te morate organizovati svoj <b> sopstveni </b> prevoz. "
-    } else { 
-        prevoz = "Prevoz je <b> organizovan</b>, te se do naše destinacije putuje <b>" + destinacija.prevoz + "om</b>. ";
-    }
-    let cuveno = "";
-    let n = destinacija.naziv.length;
-    if (destinacija.naziv[n - 1] === 'a') {
-        cuveno = "čuvena";
-    } else {
-        cuveno = "čuveni";
-    }
-    mojOpisDestinacije.innerHTML = "Turistička agencija '" + agency.naziv + "' nudi veliki broj destinacija. Jedna od njih je " + cuveno + " <b>" + destinacija.naziv + "</b>, čiji aranžman putovanja iznosi <b>" + destinacija.cena + " RSD. </b>" + prevoz + " Broj putnika je ograničen, a maksimalni broj slobodnih mesta je <b>" + destinacija.maxOsoba + "</b>, tako da požurite i rezervišite Vaše mesto!";
-
-    let cost = destinacija.cena; // Change this number to the desired value
-    cost.trim();
-    cost = parseInt(cost);
-    let interval1 = 1; // Change this value to control the speed of the loading effect
-	let count1 = 0;
-    let intervalId1 = setInterval(function() {
-        if (cost <= 20000) {
-            document.getElementById("ispis-cijena-destinacije").innerHTML = (count1 += 83);
-        }
-        if (cost > 20000 && cost <= 40000) {
-            document.getElementById("ispis-cijena-destinacije").innerHTML = (count1 += 113);
-        }
-        if (cost > 40000 && cost <= 60000) {
-            document.getElementById("ispis-cijena-destinacije").innerHTML = (count1 += 147);
-        }
-        if (cost > 60000 && cost <= 80000) {
-            document.getElementById("ispis-cijena-destinacije").innerHTML = (count1 += 239);
-        }
-        if (cost > 80000 && cost <= 100000) {
-            document.getElementById("ispis-cijena-destinacije").innerHTML = (count1 += 297);
-        }
-        if (cost >= 100000) {
-            document.getElementById("ispis-cijena-destinacije").innerHTML = (count1 += 323);
-        }
-        if (count1 > cost) {
-            clearInterval(intervalId1);
-        }
-    }, interval1);
-
-    document.getElementById("ispis-prevoz-destinacije").innerHTML = destinacija.prevoz;
-
-    let sliderContainer = document.querySelector(".slider-container")
-    let slikemenu = document.querySelector(".slikemenu");
-    let sveSlike = destinacija.slike;
-    picturesNum = sveSlike.length;
-
-    for (let i = 0; i < sveSlike.length; i++) {
-        let label = document.createElement("Label");
-        label.setAttribute("for", ("slide-tackica-" + (i + 1)));
-        slikemenu.appendChild(label);
-    }
-    sliderContainer.append(slikemenu);
-
-    let p = document.createElement("div");
-    p.innerHTML =  "1 / " + sveSlike.length;
-    p.classList.add("numberSlide")
-    sliderContainer.append(p);
-
-    for (let i = 0; i < sveSlike.length; i++) {
-        let input = document.createElement("input");
-        input.setAttribute("id", ("slide-tackica-" + (i + 1)));
-        input.setAttribute("name", "slides");
-        input.setAttribute("type", "radio");
-        input.setAttribute("onclick", "promijeniBroj(this.id)");
-        if (i == 0) {
-            input.setAttribute("checked", "true");
-        }
-        let div = document.createElement("div");
-        div.classList.add("slide");
-        div.style.backgroundImage = "url(" + sveSlike[i] + ")";
-        sliderContainer.appendChild(input);
-        sliderContainer.appendChild(div);
-    }
-    let labels = document.querySelectorAll(".slikemenu label");
-    labels[0].style.backgroundColor = "#989898";
-
-    let opis2Agencije = document.querySelector(".opis2-agencije-tekstovi");
-    let opis2AgencijeInfo = document.createElement("div");
-    opis2AgencijeInfo.classList.add("opis2-agencije-info");
-    
-    let opis2AgencijeTekst1 = document.createElement("p");
-    let randomProcenat = Math.floor(Math.random() * (35 - 15 + 1)) + 15;
-    opis2AgencijeTekst1.innerHTML = "Agencija <b>'" + agency.naziv + "'</b> je turistička agencija u Srbiji, koja je osnovana " + agency.godina + ", a u poslednje 3 godine ima čak " + randomProcenat + "% godišnje više putnika o odnosu na druge turističke agencije iz Srbije! <br/> <br/> <i>" + agency.naziv + "</i> nudi najbolje destinacije za Vas, te smo tu da Vaše putovanje učinimo putovanjem iz snova!";
-    
-    let opis2AgencijeTekst2 = document.createElement("p");
-    opis2AgencijeTekst2.innerText = "E-mail: " + agency.email;
-    opis2AgencijeTekst2.style.marginTop = "50px";
-    let opis2AgencijeTekst3 = document.createElement("p");
-    opis2AgencijeTekst3.innerText = "Telefon: " + agency.brojTelefona;
-    opis2AgencijeTekst3.style.marginTop = "10px";
-    opis2AgencijeTekst3.style.marginBottom = "40px";
-    let opis2AgencijeTekst4 = document.createElement("p");
-    opis2AgencijeTekst4.innerText = "Lokacija agencije: " + agency.adresa;
-    opis2AgencijeTekst4.style.marginTop = "10px";
-
-    opis2Agencije.append(opis2AgencijeTekst1);
-    opis2AgencijeInfo.append(opis2AgencijeTekst2);
-    opis2AgencijeInfo.append(opis2AgencijeTekst3);
-    opis2AgencijeInfo.append(opis2AgencijeTekst4);
-    opis2Agencije.append(opis2AgencijeInfo);
-
-    
+    request.open('GET', firebaseUrl + '/agencjie.json');
+    request.send();
 }
-
-
-function appendMainBox2(position, destination, agency) {
-
-    console.log(destination);
-    let newMainBox = document.createElement('div');
-    newMainBox.setAttribute('id', curBox);
-    newMainBox.classList.add("box");
-    curBox++;
-   
-    let newBoxCard = document.createElement('div');
-    newBoxCard.classList.add("card");  
-
-    let newDestinationImage = document.createElement('div');
-    newDestinationImage.classList.add("destination-image");
-    newDestinationImage.innerHTML = '<img src = "' + destination.slike[0] + '">';
-
-    let newDestinationDesc = document.createElement('div');
-    newDestinationDesc.style.textDecoration = "none";
-    newDestinationDesc.classList.add("opis-destinacije");
-
-    let newDestinationName = document.createElement('p');
-    newDestinationName.classList.add("ime-destinacije");
-    newDestinationName.innerHTML = destination.naziv;
-    newDestinationDesc.appendChild(newDestinationName);
-
-    let newDestinationType = document.createElement('p');
-    newDestinationType.classList.add("tip-destinacije");
-    newDestinationType.innerHTML = destination.tip;
-    newDestinationDesc.appendChild(newDestinationType);
-
-    let newDestinationTransport = document.createElement('p');
-    newDestinationTransport.classList.add("prevoz-destinacije");
-    newDestinationTransport.innerHTML = destination.prevoz;
-    newDestinationDesc.appendChild(newDestinationTransport);
-
-    let newDestinationCost = document.createElement('p');
-    newDestinationCost.classList.add("cena-destinacije");
-    newDestinationCost.innerHTML = destination.cena;
-    newDestinationDesc.appendChild(newDestinationCost);
-
-    newBoxCard.appendChild(newDestinationImage);
-    newBoxCard.appendChild(newDestinationDesc);
-
-    newMainBox.appendChild(newBoxCard);
-
-    let mainBoxes = document.querySelector(position);
-    mainBoxes.appendChild(newMainBox);
-}
-
-

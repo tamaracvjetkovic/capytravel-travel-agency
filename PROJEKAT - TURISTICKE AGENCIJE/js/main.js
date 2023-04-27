@@ -1,85 +1,51 @@
 
-
-window.addEventListener('load', main);
-
-
-var curBox = 0;
 var firebaseUrl = 'https://turistickaagencijaprojekattaca-default-rtdb.europe-west1.firebasedatabase.app/';
 
 var agenciesID = [];
 var agencies = {};
-
+var destinationsID = [];
+var destinations = {};
+var korisniciID = [];
 var korisnici = {};
 
 var clicked = 0;
-
-/*
-function createMainBox() {
-    let newMainBox = document.createElement('div');
-    newMainBox.classList.add("box");
-    newMainBox.innerHTML = " " + curBox + " ";
-    let mainBoxes = document.querySelector(".boxes");
-    mainBoxes.appendChild(newMainBox);
-    curBox++;
-};*/
+var curBox = 0;
 
 
-function scrollToTop() {
-    var position = document.body.scrollTop || document.documentElement.scrollTop;
-    if (position) {
-      window.scrollBy(0, -Math.max(1, Math.floor(position / 10)));
-      scrollAnimation = setTimeout("scrollToTop()", 12);
-    } else clearTimeout(scrollAnimation);
-}
-
+window.addEventListener('load', loadAgencies);
 
 
 function tryToLogin() {
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                usersID = [];
-                users = JSON.parse(request.responseText);
-                let korisnickoValue = document.getElementById('korisnicko-login');
-                let korisnicko1 = korisnickoValue.value;
-                let pswValue = document.getElementById('psw-login');
-                let psw1 = pswValue.value; 
-                let errorKorisnicko = document.getElementById("error-login-korisnicko");
+    let korisnickoValue = document.getElementById('korisnicko-login');
+    let korisnicko1 = korisnickoValue.value;
+    let pswValue = document.getElementById('psw-login');
+    let psw1 = pswValue.value; 
+    let errorKorisnicko = document.getElementById("error-login-korisnicko");
+    errorKorisnicko.innerText = "";
+    let errorLozinka = document.getElementById("error-login-lozinka");
+    errorLozinka.innerText = "";
+    for (let i in users) { 
+        if (users[i].korisnickoIme === korisnicko1) {
+            if (users[i].lozinka === psw1) {
+                alert("Dobrodošli, " + korisnicko1 + "!");  
                 errorKorisnicko.innerText = "";
-                let errorLozinka = document.getElementById("error-login-lozinka");
                 errorLozinka.innerText = "";
-                for (let i in users) { 
-                    if (users[i].korisnickoIme === korisnicko1) {
-                        if (users[i].lozinka === psw1) {
-                            alert("Dobrodošli, " + korisnicko1 + "!");  
-                            errorKorisnicko.innerText = "";
-                            errorLozinka.innerText = "";
-                            let btnClose = document.querySelector(".btn-login-cancel");
-                            btnClose.click();
-                            location.reload();
-                            return;
-                        } else {
-                            errorLozinka.innerText = "Pogresna šifra!"; 
-                            return;
-                        }
-                    } 
-                }   
-                errorKorisnicko.innerText = "Ne postoji korisničko ime!";   
+                let btnClose = document.querySelector(".btn-login-cancel");
+                btnClose.click();
+                location.reload();
+                return;
             } else {
-                alert('Error occurred. Car could not be loaded.')
-            }   
-            return users;     
-        }
+                errorLozinka.innerText = "Pogresna šifra!"; 
+                return;
+            }
+        }      
     }
-    request.open('GET', firebaseUrl + '/korisnici.json');
-    request.send();
+    errorKorisnicko.innerText = "Ne postoji korisničko ime!";  
 }   
 function isLoginValid() {
     event.preventDefault();
     tryToLogin();
 }
-
 
 
 function registerNewUser() {
@@ -91,7 +57,6 @@ function registerNewUser() {
     let psw1 = document.getElementById('psw-register').value;
     let adresa1 = document.getElementById('adresa-register').value;
     let telefon1 = document.getElementById('telefon-register').value;
-
     var newUser = {
         adresa: adresa1,
         datumRodjenja: datum1,
@@ -102,7 +67,6 @@ function registerNewUser() {
         prezime: prezime1,
         telefon: telefon1   
     };
-
     var userJson = JSON.stringify(newUser);
     console.log(userJson);
     var request = new XMLHttpRequest();
@@ -161,7 +125,6 @@ function isRegisterValid() {
     if (isPhoneValid != true) {
         okForma = 0;
     }
-
     if (okForma === 1) {
         //alert("Registrovani ste!");
         event.preventDefault();
@@ -177,8 +140,6 @@ function isRegisterValid() {
         return false;
     }
 }
-
-
 function validateRegisterInputIme(elem) {
     let value = elem.value.trim();
     let ok = 1;
@@ -341,17 +302,7 @@ function validateRegisterInputPsw(elem) {
 }
 function validateRegisterInputAddress(elem) {
     let value = elem.value;
-    let ok = 1;/*
-    let errorMessage = document.getElementById("error-address");
-    let testing = /^[a-zA-Z0-9]+([ \t]+[a-zA-Z0-9]+)*$/.test(value);
-    if (testing === true) {
-        errorMessage.innerText = 'Pogrešna adresa!';
-        ok = 0;
-    } else {
-        errorMessage.innerText = '';
-        ok = 1;
-    }
-*/
+    let ok = 1;
     if (ok === 1) {
         return true;
     } else {
@@ -377,7 +328,6 @@ function validateRegisterInputPhone(elem) {
         return false;
     }
 }
-
 
 
 var mainFilterLogin;
@@ -410,7 +360,6 @@ function showLogin() {
 
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
-    //goUp.style.filter = "blur(4px)";
     document.body.style.overflow = "hidden";
     document.body.addEventListener('click', disableClicksOutsideLoginPopup);
 }
@@ -465,18 +414,6 @@ function showRegister() {
     goUp.style.opacity = "0";
     document.body.style.overflow = "hidden";
     document.body.addEventListener('click', disableClicksOutsideRegisterPopup);
-/*
-    let inputIme = document.getElementById('ime-register').value;
-    if (inputIme != "Tamara") {
-        const errorMessage = document.getElementById('error-message');
-        errorMessage.innerText = 'Please enter a valid value.';
-    }*/
-    /*
-    for (let i = 0; i < inputIme.length; i++) {
-
-    }*/
-
-
 }
 function closeRegister() {
     let regDiv = document.querySelector(".register-div");
@@ -501,7 +438,62 @@ function closeRegister() {
 }
 
 
+function scrollToTop() {
+    var position = document.body.scrollTop || document.documentElement.scrollTop;
+    if (position) {
+      window.scrollBy(0, -Math.max(1, Math.floor(position / 10)));
+      scrollAnimation = setTimeout("scrollToTop()", 12);
+    } else clearTimeout(scrollAnimation);
+}
+
+
+function appendMainBox(position, agency) {
+    let newMainBox = document.createElement('div');
+    newMainBox.setAttribute('id', curBox);
+    newMainBox.classList.add("box");
+    curBox++;
+   
+    let newBoxCard = document.createElement('div');
+    newBoxCard.classList.add("card");  
+
+    let newAgencyImage = document.createElement('div');
+    newAgencyImage.classList.add("agency-image");
+    newAgencyImage.innerHTML = '<img src = "' + agency.logo + '">';
+    
+    let newAgencyDesc = document.createElement('div');
+    newAgencyDesc.style.textDecoration = "none";
+    newAgencyDesc.classList.add("opis-agencije");
+
+    let newAgencyName = document.createElement('p');
+    newAgencyName.classList.add("ime-agencije");
+    newAgencyName.innerHTML = agency.naziv;
+    newAgencyDesc.appendChild(newAgencyName);
+    let newAgencyAdress = document.createElement('p');
+    newAgencyAdress.classList.add("adresa-agencije");
+    newAgencyAdress.innerHTML = agency.adresa;
+    newAgencyDesc.appendChild(newAgencyAdress);
+    let newAgencyNumber = document.createElement('p');
+    newAgencyNumber.classList.add("broj-telefona-agencije");
+    newAgencyNumber.innerHTML = agency.brojTelefona;
+    newAgencyDesc.appendChild(newAgencyNumber);
+    let newAgencyEmail = document.createElement('p');
+    newAgencyEmail.classList.add("email-agencije");
+    newAgencyEmail.innerHTML = agency.email;
+    newAgencyDesc.appendChild(newAgencyEmail);
+
+    newBoxCard.appendChild(newAgencyImage);
+    newBoxCard.appendChild(newAgencyDesc);
+
+    newMainBox.appendChild(newBoxCard);
+    let mainBoxes = document.querySelector(position);
+    mainBoxes.appendChild(newMainBox);
+}
+
+
+
+
 function main() {
+
     document.addEventListener("load", () => {
         let nav = document.querySelector(".navbar");
         let nava = document.querySelectorAll(".nava");
@@ -593,99 +585,85 @@ function main() {
             }
         }
     }
-    
+    for (var id in agencies) {
+        var agency = agencies[id];
+        appendMainBox(".boxes", agency);
+    }
+    const boxes = document.querySelectorAll('.box');
+    boxes.forEach(box => {
+        box.addEventListener('click', () => {
+        const boxId = box.getAttribute('id');
+        window.location.href = `agencija.html#${boxId}`;
+        });
+    });
+
     let log = document.getElementById("login-button");
     log.onclick = showLogin;
 
     let reg = document.getElementById("register-button");
     reg.onclick = showRegister;
-    
-    // ***** LOAD BOXES ON MAIN PAGE *****
-    loadBoxes();
 }
 
 
-function loadBoxes() {
+function loadUsers() {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                usersID = [];
+                users = JSON.parse(request.responseText);
+                for (let id in users) {
+                    usersID.push(id);
+                }       
+            } else {
+                alert('Error occurred. Car could not be loaded.')
+            }  
+            main();      
+        }
+    }
+    request.open('GET', firebaseUrl + '/korisnici.json');
+    request.send();
+}
+
+function loadDestinations() {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                destinationsID = [];
+                destinations = JSON.parse(request.responseText);
+                for (let id in destinations) {
+                    destinationsID.push(id);    
+                }           
+            } else {
+                alert('Error occurred. Car could not be loaded.')
+            }
+            loadUsers();
+        }
+    }
+    request.open('GET', firebaseUrl + '/destinacije.json');
+    request.send();
+}
+
+function loadAgencies() {
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
             if (this.status == 200) {
                 agenciesID = [];
-                curBox = 0;
                 agencies = JSON.parse(request.responseText);
-                for (var id in agencies) {
-                    var agency = agencies[id];
-                    appendMainBox(".boxes", agency);
+                for (let id in agencies) {
                     agenciesID.push(id);
                 }
-                const boxes = document.querySelectorAll('.box');
-                boxes.forEach(box => {
-                    box.addEventListener('click', () => {
-                    const boxId = box.getAttribute('id');
-                    window.location.href = `agencija.html#${boxId}`;
-                    });
-                });
             } else {
                 alert('Error occurred. Car could not be loaded.')
             }
+            loadDestinations(); 
         }
     }
     request.open('GET', firebaseUrl + '/agencjie.json');
     request.send();
 }
-
-
-function appendMainBox(position, agency) {
-
-    let newMainBox = document.createElement('div');
-    newMainBox.setAttribute('id', curBox);
-    newMainBox.classList.add("box");
-    curBox++;
-   
-    let newBoxCard = document.createElement('div');
-    newBoxCard.classList.add("card");  
-
-    let newAgencyImage = document.createElement('div');
-    newAgencyImage.classList.add("agency-image");
-    newAgencyImage.innerHTML = '<img src = "' + agency.logo + '">';
-    
-    let newAgencyDesc = document.createElement('div');
-    newAgencyDesc.style.textDecoration = "none";
-    newAgencyDesc.classList.add("opis-agencije");
-
-    let newAgencyName = document.createElement('p');
-    newAgencyName.classList.add("ime-agencije");
-    newAgencyName.innerHTML = agency.naziv;
-    newAgencyDesc.appendChild(newAgencyName);
-    let newAgencyAdress = document.createElement('p');
-    newAgencyAdress.classList.add("adresa-agencije");
-    newAgencyAdress.innerHTML = agency.adresa;
-    newAgencyDesc.appendChild(newAgencyAdress);
-    let newAgencyNumber = document.createElement('p');
-    newAgencyNumber.classList.add("broj-telefona-agencije");
-    newAgencyNumber.innerHTML = agency.brojTelefona;
-    newAgencyDesc.appendChild(newAgencyNumber);
-    let newAgencyEmail = document.createElement('p');
-    newAgencyEmail.classList.add("email-agencije");
-    newAgencyEmail.innerHTML = agency.email;
-    newAgencyDesc.appendChild(newAgencyEmail);
-
-    newBoxCard.appendChild(newAgencyImage);
-    newBoxCard.appendChild(newAgencyDesc);
-
-    newMainBox.appendChild(newBoxCard);
-
-    
-
-
-    let mainBoxes = document.querySelector(position);
-    mainBoxes.appendChild(newMainBox);
-}
-
-
-
-
-
 
 
 
