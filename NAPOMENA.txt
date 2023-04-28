@@ -1,0 +1,5 @@
+
+Stranica "Greška" neće biti u navbaru, tu je stavljena samo da biste mogli vidjeti izgled otprilike 
+(ideja sa slikom životinjice posudjena iz "https://www.amazon.com/404").
+
+Takođe stranica "Kontakt" (nije u sklopu projekta, moj dodatak) će biti napravljena do odbrane.
