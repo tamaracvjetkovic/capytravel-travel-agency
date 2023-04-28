@@ -15,6 +15,7 @@ var curBox = 0;
 window.addEventListener('load', loadAgencies);
 
 
+
 function tryToLogin() {
     let korisnickoValue = document.getElementById('korisnicko-login');
     let korisnicko1 = korisnickoValue.value;
