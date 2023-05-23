@@ -1,5 +1,5 @@
 
-var firebaseUrl = 'https://turistickaagencijaprojekattaca-default-rtdb.europe-west1.firebasedatabase.app';
+var firebaseUrl = 'https://novabazatacawebdesign-default-rtdb.europe-west1.firebasedatabase.app/';
 
 var agenciesID = [];
 var agencies = {};
@@ -668,7 +668,7 @@ function loadAgency(cur, br, curAgency) {
             loadDestination2(cur, br, agency);
         }
     }
-    request.open('GET', firebaseUrl + '/agencjie/' + agenciesID[curAgency] + '.json');
+    request.open('GET', firebaseUrl + '/agencije/' + agenciesID[curAgency] + '.json');
     request.send();
 }
 
@@ -798,7 +798,7 @@ function loadDestinations() {
                     destinationsID.push(id);
                 }
             } else {
-                alert('Error occurred. Car could not be loaded.')
+                window.location.href = "error.html";
             }
             main();
         }
@@ -818,12 +818,12 @@ function loadAgencies() {
                     agenciesID.push(id);
                 }
             } else {
-                alert('Error occurred. Car could not be loaded.')
+                window.location.href = "error.html";
             }
             loadDestinations(); 
         }
     }
-    request.open('GET', firebaseUrl + '/agencjie.json');
+    request.open('GET', firebaseUrl + '/agencije.json');
     request.send();
 }
 

@@ -1,5 +1,5 @@
 
-var firebaseUrl = 'https://turistickaagencijaprojekattaca-default-rtdb.europe-west1.firebasedatabase.app/';
+var firebaseUrl = 'https://novabazatacawebdesign-default-rtdb.europe-west1.firebasedatabase.app/';
 
 var agenciesID = [];
 var agencies = {};
@@ -494,23 +494,21 @@ function appendMainBox(position, agency) {
 
 
 function main() {
+    let nav = document.querySelector(".navbar");
+    let nava = document.querySelectorAll(".nava");
+    if (window.scrollY > 0) { 
+         if (clicked === 0) {
+            nav.classList.add("scrolled");
+            for (let i = 0; i < nava.length; i++) {
+                nava[i].classList.add("scrolled");
+            }
+        } 
+        let button1 = document.querySelector(".menu-button");
+        button1.style.setProperty('--button1Color','black');
+        let logo = document.getElementById("logo1");
+        logo.src = "../slike/logo/logo1/png/logo-no-background.png";
+    }
 
-    document.addEventListener("load", () => {
-        let nav = document.querySelector(".navbar");
-        let nava = document.querySelectorAll(".nava");
-        if (window.scrollY > 0) {
-            if (clicked === 0) {
-                nav.classList.add("scrolled");
-                for (let i = 0; i < nava.length; i++) {
-                    nava[i].classList.add("scrolled");
-                }
-            } 
-            let button1 = document.querySelector(".menu-button");
-            button1.style.setProperty('--button1Color','black');
-            let logo = document.getElementById("logo1");
-            logo.src = "../slike/logo/logo1/png/logo-no-background.png";
-        }
-    });
     // ***** CHANGING NAVBAR WHEN SCROLLED *****
     document.addEventListener("scroll", () => {
         let nav = document.querySelector(".navbar");
@@ -617,7 +615,7 @@ function loadUsers() {
                     usersID.push(id);
                 }       
             } else {
-                alert('Error occurred. Car could not be loaded.')
+                window.location.href = "error.html";
             }  
             main();      
         }
@@ -637,7 +635,7 @@ function loadDestinations() {
                     destinationsID.push(id);    
                 }           
             } else {
-                alert('Error occurred. Car could not be loaded.')
+                window.location.href = "error.html";
             }
             loadUsers();
         }
@@ -657,12 +655,12 @@ function loadAgencies() {
                     agenciesID.push(id);
                 }
             } else {
-                alert('Error occurred. Car could not be loaded.')
+                window.location.href = "error.html";
             }
             loadDestinations(); 
         }
     }
-    request.open('GET', firebaseUrl + '/agencjie.json');
+    request.open('GET', firebaseUrl + '/agencije.json');
     request.send();
 }
 

@@ -1,5 +1,5 @@
 
-var firebaseUrl = 'https://turistickaagencijaprojekattaca-default-rtdb.europe-west1.firebasedatabase.app/';
+var firebaseUrl = 'https://novabazatacawebdesign-default-rtdb.europe-west1.firebasedatabase.app/';
 
 var usersID = [];
 var users = {};
@@ -556,7 +556,7 @@ function loadUsers() {
                     usersID.push(id);
                 }       
             } else {
-                alert('Error occurred. Car could not be loaded.')
+                window.location.href = "error.html";
             }  
             main();      
         }

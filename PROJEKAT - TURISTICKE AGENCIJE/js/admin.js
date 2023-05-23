@@ -1,5 +1,5 @@
 
-var firebaseUrl = 'https://turistickaagencijaprojekattaca-default-rtdb.europe-west1.firebasedatabase.app/';
+var firebaseUrl = 'https://novabazatacawebdesign-default-rtdb.europe-west1.firebasedatabase.app/';
 
 var agenciesID = [];
 var agencies = {};
@@ -32,6 +32,17 @@ function closeDeleteAgencyPopup() {
 function closeDeleteUserPopup() {
     let popup = document.getElementById("delete-user-popup");
     popup.style.display = "none";
+    let main = document.querySelector(".main");
+    main.style.opacity = "1";
+    main.style.filter = "none";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.filter = "none";
+    navbar.style.opacity = "1";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "1";
+    goUp.style.filter = "none";
+    document.body.style.overflow = "auto";
+    
 }
 
 
@@ -72,7 +83,7 @@ function deleteAgency() {
             }            
         }
     }
-    request.open('DELETE', firebaseUrl + '/agencjie/' + agencyDeleteID + '.json');
+    request.open('DELETE', firebaseUrl + '/agencije' + agencyDeleteID + '.json');
     request.send(); 
 }
 function doYouWantToDeleteAgency(agencyID) {
@@ -82,6 +93,7 @@ function doYouWantToDeleteAgency(agencyID) {
     popup.style.display = "block";
 }
 
+
 function deleteUser() {
     //  alert("Brisete user: " + userID);
     var request = new XMLHttpRequest();
@@ -89,6 +101,16 @@ function deleteUser() {
         if (this.readyState == 4) {
             if (this.status == 200) {
                 console.log('User deleted successfully!');
+                let main = document.querySelector(".main");
+                main.style.filter = "none";
+                main.style.opacity = "1";
+                let navbar = document.querySelector(".navbar");
+                navbar.style.filter = "none";
+                navbar.style.opacity = "1";
+                let goUp = document.querySelector(".go-up");
+                goUp.style.opacity = "1";
+                goUp.style.filter = "none";
+                document.body.style.overflow = "auto";
                 location.reload();
             } else {
                 alert('Error occurred. User could not be deleted.')
@@ -103,6 +125,17 @@ function doYouWantToDeleteUser(userID) {
     console.log(userDeleteID);
     let popup = document.getElementById("delete-user-popup");
     popup.style.display = "block";
+    let main = document.querySelector(".main");
+    main.style.opacity = "0.1";
+    main.style.filter = "blur(4px)";
+
+    let navbar = document.querySelector(".navbar");
+    navbar.style.opacity = "0.1";
+    navbar.style.filter = "blur(4px)";
+    
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "0";
+    document.body.style.overflow = "hidden";
 }
 
 
@@ -772,6 +805,7 @@ function main() {
         let nav = document.querySelector(".navbar");
         let nava = document.querySelectorAll(".nava");
         if (window.scrollY > 0) {
+            console.log(window.scrollY);
             if (clicked === 0) {
                 nav.classList.add("scrolled");
                 for (let i = 0; i < nava.length; i++) {
@@ -917,7 +951,7 @@ function loadUsers() {
                     usersID.push(id);
                 }       
             } else {
-                alert('Error occurred. Car could not be loaded.')
+                window.location.href = "error.html";
             }  
             main();      
         }
@@ -937,7 +971,7 @@ function loadDestinations() {
                     destinationsID.push(id);
                 }
             } else {
-                alert('Error occurred. Car could not be loaded.')
+                window.location.href = "error.html";
             }
             loadUsers();
         }
@@ -957,11 +991,11 @@ function loadAgencies() {
                     agenciesID.push(id);
                 }       
             } else {
-                alert('Error occurred. Car could not be loaded.')
+                window.location.href = "error.html";
             }
             loadDestinations();
         }
     }
-    request.open('GET', firebaseUrl + '/agencjie.json');
+    request.open('GET', firebaseUrl + '/agencije.json');
     request.send();
 }

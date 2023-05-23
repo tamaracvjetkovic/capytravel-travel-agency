@@ -1,4 +1,6 @@
 
+- dodati logo u linku gore
+
 - napraviti stranicu za greske
 
 - staviti drugaciji alert za failed load json
@@ -11,6 +13,9 @@
 
 - dodati alt na sve slike
 
+- disable klik kad na telefonu se otvori navbar
+
+- filter blur i opacity nakon delete user/agency/destination
 
 
 

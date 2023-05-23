@@ -1,5 +1,5 @@
 
-var firebaseUrl = 'https://turistickaagencijaprojekattaca-default-rtdb.europe-west1.firebasedatabase.app/';
+var firebaseUrl = 'https://novabazatacawebdesign-default-rtdb.europe-west1.firebasedatabase.app/';
 
 var agenciesID = [];
 var agencies = {};
