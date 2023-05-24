@@ -1,5 +1,5 @@
 
-var firebaseUrl = 'https://novabazatacawebdesign-default-rtdb.europe-west1.firebasedatabase.app/';
+var firebaseUrl = 'https://tacaprobabaza-default-rtdb.europe-west1.firebasedatabase.app/';
 
 var agenciesID = [];
 var agencies = {};
@@ -472,6 +472,8 @@ function closeRegister() {
 
 function appendMainBox(position, dest, destination, curAgency) {
 
+    //console.log("provjera: ", destination)
+    //console.log("provjera222: ", destinations[destinationsID[dest]])
     let newMainBox = document.createElement('div');
     newMainBox.setAttribute('id', (dest + "-" + curBox + "-" + curAgency));
     newMainBox.classList.add("box");

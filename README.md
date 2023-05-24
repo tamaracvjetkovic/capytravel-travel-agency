@@ -17,7 +17,8 @@ Sajt nudi prikaz i pretragu agencija i njihovih destinacija, podržava funckiona
 
 
 # Način pokretanja
-Za pokretanje veb-sajta, potrebno je da se, nakon skidanja foldera "wd-sv-48-2022", dvoklikom pokrene index.html, koji se nalazi na sledećoj putanji: ** wd-sv-48-2022\PROJEKAT - TURISTICKE AGENCIJE\html\index.html' **
+Za pokretanje veb-sajta, potrebno je da se, nakon skidanja foldera "wd-sv-48-2022", dvoklikom pokrene index.html, koji se nalazi na sledećoj putanji:
+wd-sv-48-2022\PROJEKAT - TURISTICKE AGENCIJE\html\index.html'
 Izbor pregledača je prepušten korisniku.
 
 

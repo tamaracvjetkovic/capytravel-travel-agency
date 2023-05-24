@@ -1,5 +1,5 @@
 
-var firebaseUrl = 'https://novabazatacawebdesign-default-rtdb.europe-west1.firebasedatabase.app/';
+var firebaseUrl = 'https://tacaprobabaza-default-rtdb.europe-west1.firebasedatabase.app/';
 
 var agenciesID = [];
 var agencies = {};
@@ -12,8 +12,78 @@ var picturesNum = 0;
 var clicked = 0;
 var curBox = 1;
 
+var destinationDeleteID;
+
 
 window.addEventListener('load', loadAgencies);
+
+
+
+function closeDeleteDestinationPopup() {
+    let popup = document.getElementById("delete-destination-popup");
+    popup.style.display = "none";
+    let head = document.querySelector(".head");
+    head.style.opacity = "1";
+    head.style.filter = "none";
+    let main = document.querySelector(".main");
+    main.style.opacity = "1";
+    main.style.filter = "none";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.filter = "none";
+    navbar.style.opacity = "1";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "1";
+    goUp.style.filter = "none";
+    document.body.style.overflow = "auto";
+}
+//CEKACU DA APDEJTUJU JSON FILE
+function deleteDestination() {
+    let popup = document.getElementById("delete-destination-popup");
+    popup.style.display = "none";
+
+    
+
+    
+    /*
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                console.log('Destination deleted successfully!');
+                location.reload();
+            } else {
+                alert('Error occurred. Destination could not be deleted.')
+            }            
+        }
+    }
+    request.open('DELETE', , firebaseUrl + '/destinacije/' + destinationsID[cur] + "/" + destinationsInDestinationID[br] + '.json');
+    request.send(); */
+}
+function doYouWantToDeleteDestination(destinationID) {
+    console.log("\n\n\n\n")
+    let pageId = window.location.hash.substr(1);
+    pageId = pageId.split("-");
+
+    console.log(destinationsInDestinationID)
+    let destinacija = destinations[destinationID];
+    let p = document.getElementById("upozorenje-poruka-destinacija");
+    p.innerHTML = "Da li ste sigurni da želite da obrišete destinaciju '" + destinacija.naziv + "'?";
+    destinationDeleteID = destinationID;
+    let popup = document.getElementById("delete-destination-popup");
+    popup.style.display = "block";
+    let head = document.querySelector(".head");
+    head.style.opacity = "0.3";
+    head.style.filter = "blur(4px)";
+    let main = document.querySelector(".main");
+    main.style.opacity = "0.3";
+    main.style.filter = "blur(4px)";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.opacity = "0.3";
+    navbar.style.filter = "blur(4px)";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "0";
+    document.body.style.overflow = "hidden";
+}
 
 
 
@@ -784,7 +854,61 @@ function main() {
     let pageId = window.location.hash.substr(1);
     pageId = pageId.split("-");
     loadAgency(pageId[0], pageId[1], pageId[2]);
+   
+    let buttonEdit = document.getElementById("button-edit-destination");
+    let buttonDelete = document.getElementById("button-delete-destination");
+    buttonEdit.style.display = "inline-block";
+    buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+    buttonEdit.setAttribute("onclick", "editDestination()");
+    buttonDelete.style.display = "inline-block";
+    buttonDelete.setAttribute("onclick", "doYouWantToDeleteDestination()");
+    buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+let th = document.createElement("th")
+            th.innerHTML = "EDIT";
+            tr.append(th);
+
+            let td = document.createElement("td")
+            let buttonEdit = document.createElement("button")
+            buttonEdit.setAttribute("id", ("edit,destinacija," + dest));
+            buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
+            let buttonDelete = document.createElement("button")
+            buttonDelete.setAttribute("id", (dest));
+            buttonDelete.setAttribute("onclick", "doYouWantToDeleteDestination(this.id)");
+            buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
+            td.append(buttonEdit);
+            td.append(buttonDelete);
+            tr.append(td);
+*/
+
+
+
+
+
+
+
+
+
+
+
 
 
 function loadDestinations() {

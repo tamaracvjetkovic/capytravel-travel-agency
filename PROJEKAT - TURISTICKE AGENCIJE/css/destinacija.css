@@ -707,7 +707,7 @@ body {
                     font-size: 3vw;
                 }
                 .destinacija-info div div {
-                    font-size: 6vw;
+                    font-size: 7vw;
                     margin-bottom: 0;  
                     transition: 0.3s ease-in-out;
                 }
@@ -729,8 +729,8 @@ body {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding-top: 50px;
-        padding-bottom: 50px;     
+        padding-top: 35px;
+        padding-bottom: 20px;     
         text-shadow: 3px 2px 3px rgba(8, 11, 28, 0.9),
                      2px 1px 3px rgb(47, 57, 96);
     }
@@ -847,6 +847,27 @@ body {
             .searchbar input {
                 width: 60vw;
             }
+        }
+
+
+.edit-delete-buttons {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    padding-top: 0px;
+    padding-bottom: 30px;
+}
+    .edit-delete-buttons div{
+        padding: 12px;
+    }
+        .edit-delete-buttons button {
+            display: none;
+            padding: 8px;
+            width: 40px;
+            border-radius: 10px;
+            border: none;
+            box-shadow:0px 0px 5px rgba(0, 0, 0, 0.258);
+            font-size: 19px;
         }
 
 .moj-opis-destinacije {
@@ -1086,7 +1107,77 @@ body {
     
 }
 
-    
+ 
+
+.delete-popup {
+    color: black;
+    display: flex;
+    justify-content: center;
+    z-index: 1010;
+}
+    #delete-destination-popup {
+        position: fixed; 
+        top: 70px;
+        display: none;
+        text-align: center;
+        width: 280px;
+        border-radius: 10px 10px 10px 10px;
+        background-color: white;
+        max-height: 100%;
+        z-index: 1010;
+        overflow: auto;
+        box-shadow: 0px 0px 15px rgb(104, 104, 104);
+    }
+        .delete-popup h1 {
+            font-size: 20px;
+            color: rgb(255, 255, 255);
+            padding-top: 0;
+            margin-bottom: 10px;
+            background-color: red;
+            width: 100%;
+            padding: 15px;
+        }
+        .delete-popup h2 {
+            font-size: 17px;
+            color: rgb(0, 0, 0);
+            padding: 10px;
+        }
+        .delete-yes-no {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            padding: 10px;
+            padding-bottom: 20px;
+        }
+        .delete-yes-no button {
+            width: 30%;
+            padding: 9px;
+            cursor: pointer;
+        }
+            .btn-delete-yes {
+                background-color: red;  
+                border: none;
+                opacity: 0.6;
+            }
+            .btn-delete-yes:hover, 
+            .btn-delete-yes:focus {
+                opacity: 1;
+            }
+            .btn-delete-no {
+                background-color: rgb(156, 156, 156);
+                border: none;
+                opacity: 0.6;
+            }
+            .btn-delete-no:hover, 
+            .btn-delete-no:focus {
+                opacity: 1;
+            }
+
+
+
+
+
+
 .footer {
     display: flex;
     justify-content: center;

@@ -1,5 +1,5 @@
 
-var firebaseUrl = 'https://novabazatacawebdesign-default-rtdb.europe-west1.firebasedatabase.app/';
+var firebaseUrl = 'https://tacaprobabaza-default-rtdb.europe-west1.firebasedatabase.app/';
 
 var agenciesID = [];
 var agencies = {};
@@ -10,7 +10,6 @@ var users = {};
 
 var userDeleteID;
 var agencyDeleteID;
-var destinationDeleteID;
 
 var clicked = 0;
 var curBox = 1;
@@ -21,17 +20,11 @@ window.addEventListener('load', loadAgencies);
 
 
 
-function closeDeleteDestinationPopup() {
-    let popup = document.getElementById("delete-destination-popup");
-    popup.style.display = "none";
-}
 function closeDeleteAgencyPopup() {
     let popup = document.getElementById("delete-agency-popup");
     popup.style.display = "none";
-}
-function closeDeleteUserPopup() {
-    let popup = document.getElementById("delete-user-popup");
-    popup.style.display = "none";
+    let popup2 = document.querySelector(".delete-popup2");
+    popup2.style.display = "none";
     let main = document.querySelector(".main");
     main.style.opacity = "1";
     main.style.filter = "none";
@@ -42,34 +35,7 @@ function closeDeleteUserPopup() {
     goUp.style.opacity = "1";
     goUp.style.filter = "none";
     document.body.style.overflow = "auto";
-    
 }
-
-
-//CEKACU DA APDEJTUJU JSON FILE
-function deleteDestination() {
-    let popup = document.getElementById("delete-destination-popup");
-    popup.style.display = "none";
-    /*var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                console.log('Destination deleted successfully!');
-                location.reload();
-            } else {
-                alert('Error occurred. Destination could not be deleted.')
-            }            
-        }
-    }
-    request.open('DELETE', firebaseUrl + '/destinacije/' + destinationDeleteID + '.json');
-    request.send(); */
-}
-function doYouWantToDeleteDestination(destinationID) {
-    destinationDeleteID = destinationID;
-    let popup = document.getElementById("delete-destination-popup");
-    popup.style.display = "block";
-}
-
 function deleteAgency() {
     //  alert("Brisete user: " + userID);
     var request = new XMLHttpRequest();
@@ -77,23 +43,66 @@ function deleteAgency() {
         if (this.readyState == 4) {
             if (this.status == 200) {
                 console.log('Agency deleted successfully!');
+                let main = document.querySelector(".main");
+                main.style.filter = "none";
+                main.style.opacity = "1";
+                let navbar = document.querySelector(".navbar");
+                navbar.style.filter = "none";
+                navbar.style.opacity = "1";
+                let goUp = document.querySelector(".go-up");
+                goUp.style.opacity = "1";
+                goUp.style.filter = "none";
+                document.body.style.overflow = "auto";
                 location.reload();
             } else {
                 alert('Error occurred. Agency could not be deleted.')
             }            
         }
     }
-    request.open('DELETE', firebaseUrl + '/agencije' + agencyDeleteID + '.json');
+    request.open('DELETE', firebaseUrl + '/agencije/' + agencyDeleteID + '.json');
     request.send(); 
 }
 function doYouWantToDeleteAgency(agencyID) {
+    agencija = agencies[agencyID];
+    let p = document.getElementById("upozorenje-poruka-agencija");
+    p.innerHTML = "Da li ste sigurni da želite da obrišete agenciju '" + agencija.naziv + "'?";
     agencyDeleteID = agencyID;
-    //console.log(agencyDeleteID);
+    console.log(agencyDeleteID);
     let popup = document.getElementById("delete-agency-popup");
     popup.style.display = "block";
+    let popup2 = document.querySelector(".delete-popup2");
+    popup2.style.display = "flex";
+    
+    let main = document.querySelector(".main");
+    main.style.opacity = "0.3";
+    main.style.filter = "blur(4px)";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.opacity = "0.3";
+    navbar.style.filter = "blur(4px)";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "0";
+    document.body.style.overflow = "hidden";
 }
 
 
+
+
+function closeDeleteUserPopup() {
+    let popup = document.getElementById("delete-user-popup");
+    popup.style.display = "none";
+    let popup2 = document.querySelector(".delete-popup1");
+    popup2.style.display = "none";
+    let main = document.querySelector(".main");
+    main.style.opacity = "1";
+    main.style.filter = "none";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.filter = "none";
+    navbar.style.opacity = "1";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "1";
+    goUp.style.filter = "none";
+    document.body.style.overflow = "auto";
+}
 function deleteUser() {
     //  alert("Brisete user: " + userID);
     var request = new XMLHttpRequest();
@@ -121,22 +130,27 @@ function deleteUser() {
     request.send(); 
 }
 function doYouWantToDeleteUser(userID) {
+    let user = users[userID];
+    let p = document.getElementById("upozorenje-poruka-user");
+    p.innerHTML = "Da li ste sigurni da želite da obrišete korisnika '@" + user.korisnickoIme + "'?";
     userDeleteID = userID;
     console.log(userDeleteID);
     let popup = document.getElementById("delete-user-popup");
     popup.style.display = "block";
-    let main = document.querySelector(".main");
-    main.style.opacity = "0.1";
-    main.style.filter = "blur(4px)";
-
-    let navbar = document.querySelector(".navbar");
-    navbar.style.opacity = "0.1";
-    navbar.style.filter = "blur(4px)";
+    let popup2 = document.querySelector(".delete-popup1");
+    popup2.style.display = "flex";
     
+    let main = document.querySelector(".main");
+    main.style.opacity = "0.3";
+    main.style.filter = "blur(4px)";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.opacity = "0.3";
+    navbar.style.filter = "blur(4px)";
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
     document.body.style.overflow = "hidden";
 }
+
 
 
 function tryToLogin() {
@@ -661,12 +675,12 @@ function createAgencyTable() {
         break;
     }
     for (let id in agencies) {
-        let tr = document.createElement("tr")
+        let tr = document.createElement("tr");
         tableAgencies.append(tr);
         let agency = agencies[id];
-        let td = document.createElement("td")
+        let td = document.createElement("td");
         let div1 = document.createElement("div");
-        let buttonEdit = document.createElement("button")
+        let buttonEdit = document.createElement("button");
         buttonEdit.setAttribute("id", ("edit,agencija," + id));
         buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
         let buttonDelete = document.createElement("button")
@@ -695,7 +709,7 @@ function createAgencyTable() {
                 tr.append(td);
                 continue;   
             }
-            let td = document.createElement("td")
+            let td = document.createElement("td");
             td.append(agency[i]);
             tr.append(td);
         }
@@ -704,18 +718,15 @@ function createAgencyTable() {
 function createDestinationTable() {
     let adminBody = document.querySelector(".admin-body");
     let tableDestinations = document.createElement("table");
-    tableDestinations.classList.add("tabela-destinacije")
+    tableDestinations.classList.add("tabela-destinacije");
     adminBody.append(tableDestinations);
     for (let id in destinations) {
         let destination = destinations[id];
         for (let dest in destination) { 
-            let tr = document.createElement("tr")
+            let tr = document.createElement("tr");
             tableDestinations.append(tr);
-            let th = document.createElement("th")
-            th.innerHTML = "EDIT";
-            tr.append(th);
             for (i in destination[dest]) {
-                let th = document.createElement("th")
+                let th = document.createElement("th");
                 let s = i;
                 let naziv = "";
                 let br = 0;
@@ -744,19 +755,8 @@ function createDestinationTable() {
     for (let id in destinations) {
         let destination = destinations[id];
         for (let dest in destination) { 
-            let tr = document.createElement("tr")
+            let tr = document.createElement("tr");
             tableDestinations.append(tr);  
-            let td = document.createElement("td")
-            let buttonEdit = document.createElement("button")
-            buttonEdit.setAttribute("id", ("edit,destinacija," + dest));
-            buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
-            let buttonDelete = document.createElement("button")
-            buttonDelete.setAttribute("id", (dest));
-            buttonDelete.setAttribute("onclick", "doYouWantToDeleteDestination(this.id)");
-            buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
-            td.append(buttonEdit);
-            td.append(buttonDelete);
-            tr.append(td);
             for (let i in destination[dest]) {
                 if (i === "opis") {
                     let divOpis = document.createElement("div");
@@ -898,8 +898,8 @@ function main() {
     let dropdown = document.getElementById("select-dropdown");
     let options = {
         "Agencije": "agencije",
+        "Korisnici": "korisnici",
         "Destinacije": "destinacije",
-        "Korisnici": "korisnici"
     };
 
     for (let key in options) {
@@ -916,25 +916,29 @@ function main() {
     let reg = document.getElementById("register-button");
     reg.onclick = showRegister;
 
-    createDestinationTable();
     createAgencyTable();
     createUsersTable();
+    createDestinationTable();
 
     let selectDropdown = document.getElementById("select-dropdown");
     let agencijeTable = document.querySelector(".tabela-agencije");
-    let destinacijeTable = document.querySelector(".tabela-destinacije");
     let korisniciTable = document.querySelector(".tabela-korisnici");
+    let destinacijeTable = document.querySelector(".tabela-destinacije");
     selectDropdown.addEventListener("change", function() {
         let selectedValue = this.value;
+        let notify = document.getElementById("destination-notification");
         agencijeTable.style.display = "none";
         destinacijeTable.style.display = "none";
         korisniciTable.style.display = "none";
         if (selectedValue === "agencije") {
             agencijeTable.style.display = "table";
-        } else if (selectedValue === "destinacije") {
-            destinacijeTable.style.display = "table";
+            notify.style.display = "none";
         } else if (selectedValue === "korisnici") {
             korisniciTable.style.display = "table";
+            notify.style.display = "none";
+        } else if (selectedValue === "destinacije") {
+            destinacijeTable.style.display = "table";
+            notify.style.display = "block";
         }
     });
 }

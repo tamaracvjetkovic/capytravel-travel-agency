@@ -754,7 +754,7 @@ body {
       }
       td button:hover {
         background-color: rgb(220, 220, 220);
-      }
+      }header
       
       
       tr:nth-child(even){background-color: #f2f2f2}
@@ -771,52 +771,38 @@ body {
     display: none;
 }
 
-.delete-popup {
+#destination-notification {
+    display: none;  
+    padding: 20px;
+    padding-top: 10px;   
+    padding-bottom: 40px;
+    color: white;
+}
+
+
+.delete-popup1,
+.delete-popup2 {
     color: black;
-    display: flex;
+    display: none;
     justify-content: center;
     z-index: 1010;
 }
-    #delete-user-popup {
-        position: fixed; 
-        top: 0;
-        display: none;
-        text-align: center;
-        width: 280px;
-        border-radius: 0 0px 10px 10px;
-        background-color: white;
-        max-height: 100%;
-        z-index: 1010;
-        overflow: auto;
-        box-shadow: 0px 0px 15px rgb(104, 104, 104);
-    }
+    #delete-user-popup,
     #delete-agency-popup {
         position: fixed; 
-        top: 0;
+        top: 70px;
         display: none;
         text-align: center;
         width: 280px;
-        border-radius: 0 0px 10px 10px;
-        background-color: white;
-        max-height: 100%;
-        z-index: 1010;
-        overflow: auto;
-        box-shadow: 0px 0px 15px rgb(104, 104, 104);
-    }   
-    #delete-destination-popup {
-        position: fixed; 
-        top: 0;
-        display: none;
-        text-align: center;
-        width: 280px;
-        border-radius: 0 0px 10px 10px;
+        border-radius: 10px 10px 10px 10px;
         background-color: white;
         max-height: 100%;
         z-index: 1010;
         overflow: auto;
         box-shadow: 0px 0px 15px rgb(104, 104, 104);
     }
-        .delete-popup h1 {
+        .delete-popup1 h1,
+        .delete-popup2 h1 {
             font-size: 20px;
             color: rgb(255, 255, 255);
             padding-top: 0;
@@ -825,7 +811,8 @@ body {
             width: 100%;
             padding: 15px;
         }
-        .delete-popup h2 {
+        .delete-popup1 h2,
+        .delete-popup2 h2 {
             font-size: 17px;
             color: rgb(0, 0, 0);
             padding: 10px;

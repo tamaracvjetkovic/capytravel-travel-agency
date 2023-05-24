@@ -52,6 +52,7 @@
 
             </select>
         </div> 
+        <p id = "destination-notification"> * Funkcionalnost izmene i brisanja destinacija omogućena je samo u stranici pojedinačne destinacije svake agencije, a funckionalnost dodavanja novih destinacija omogućena je tokom izmene pojedinačne agencije. </p>
         <div class= "admin-body">
 
         </div>
@@ -169,10 +170,10 @@
     </div>
     
 
-    <div class = "delete-popup"> 
+    <div class = "delete-popup1"> 
         <div id = "delete-user-popup">
             <h1> UPOZORENJE! </h1>
-            <h2> Da li ste sigurni da želite da obrišete korisnika? </h2>
+            <h2 id = "upozorenje-poruka-user"> Da li ste sigurni da želite da obrišete korisnika? </h2>
             <div class = "delete-yes-no">
                 <button id = "btn-delete-user-yes" type = "button" class = "btn-delete-yes" onclick = "deleteUser()"> Da </button>
                 <button id = "btn-delete-user-no" type = "button" class = "btn-delete-no" onclick = "closeDeleteUserPopup()"> Ne </button>
@@ -180,10 +181,10 @@
         </div>
     </div>
 
-    <div class = "delete-popup"> 
+    <div class = "delete-popup2"> 
         <div id = "delete-agency-popup">
             <h1> UPOZORENJE! </h1>
-            <h2> Da li ste sigurni da želite da obrišete agenciju? </h2>
+            <h2 id = "upozorenje-poruka-agencija"> Da li ste sigurni da želite da obrišete agenciju? </h2>
             <div class = "delete-yes-no">
                 <button id = "btn-delete-agency-yes" type = "button" class = "btn-delete-yes" onclick = "deleteAgency()"> Da </button>
                 <button id = "btn-delete-agency-no" type = "button" class = "btn-delete-no" onclick = "closeDeleteAgencyPopup()"> Ne </button>
@@ -191,16 +192,7 @@
         </div>
     </div>
 
-    <div class = "delete-popup"> 
-        <div id = "delete-destination-popup">
-            <h1> UPOZORENJE! </h1>
-            <h2> Ova opcija trenutno ne radi. </h2>
-            <div class = "delete-yes-no">
-                <button id = "btn-delete-destination-yes" type = "button" class = "btn-delete-yes" onclick = "deleteDestination()"> Ok </button>
-                <button id = "btn-delete-destination-no" type = "button" class = "btn-delete-no" onclick = "closeDeleteDestinationPopup()"> Ok </button>
-            </div>
-        </div>
-    </div>
+   
     
     <script type = "text/javascript" src = "../js/admin.js"> </script>
 </body>

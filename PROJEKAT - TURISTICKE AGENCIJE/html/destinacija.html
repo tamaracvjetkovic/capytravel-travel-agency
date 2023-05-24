@@ -50,6 +50,14 @@
             <h3 id = "citat"> </h3>
             <h1 id = "header1"> </h1>
         </div>  
+        <div class = "edit-delete-buttons">
+            <div class = "edit-destination"> 
+                <button id = "button-edit-destination"> </button>
+            </div>
+            <div class = "delete-destination"> 
+                <button id = "button-delete-destination" onclick = "doYouWantToDeleteDestination()"> </button>
+            </div>
+        </div>
     </div>
 
     <div class = "main"> 
@@ -218,6 +226,18 @@
         </div>
     </div>
     
+    <div class = "delete-popup"> 
+        <div id = "delete-destination-popup">
+            <h1> UPOZORENJE! </h1>
+            <h2 id = "upozorenje-poruka-destinacija"> Da li ste sigurni da želite da izbrišete destinaciju? </h2>
+            <div class = "delete-yes-no">
+                <button id = "btn-delete-destination-yes" type = "button" class = "btn-delete-yes" onclick = "deleteDestination()"> Da </button>
+                <button id = "btn-delete-destination-no" type = "button" class = "btn-delete-no" onclick = "closeDeleteDestinationPopup()"> Ne </button>
+            </div>
+        </div>
+    </div>
+
+
     <script type = "text/javascript" src = "../js/destinacija.js"> </script>
 </body>
 
