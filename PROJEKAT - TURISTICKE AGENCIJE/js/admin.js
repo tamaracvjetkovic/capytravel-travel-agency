@@ -38,22 +38,15 @@ function closeDeleteAgencyPopup() {
 }
 function deleteAgency() {
     //  alert("Brisete user: " + userID);
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
             if (this.status == 200) {
-                console.log('Agency deleted successfully!');
-                let main = document.querySelector(".main");
-                main.style.filter = "none";
-                main.style.opacity = "1";
-                let navbar = document.querySelector(".navbar");
-                navbar.style.filter = "none";
-                navbar.style.opacity = "1";
-                let goUp = document.querySelector(".go-up");
-                goUp.style.opacity = "1";
-                goUp.style.filter = "none";
-                document.body.style.overflow = "auto";
-                location.reload();
+                //console.log('Agency deleted successfully!');
+                //console.log('User deleted successfully!');
+                closeDeleteAgencyPopup()
+                loadAgencies2()
+                //location.reload();
             } else {
                 alert('Error occurred. Agency could not be deleted.')
             }            
@@ -86,7 +79,6 @@ function doYouWantToDeleteAgency(agencyID) {
 
 
 
-
 function closeDeleteUserPopup() {
     let popup = document.getElementById("delete-user-popup");
     popup.style.display = "none";
@@ -105,25 +97,18 @@ function closeDeleteUserPopup() {
 }
 function deleteUser() {
     //  alert("Brisete user: " + userID);
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
             if (this.status == 200) {
-                console.log('User deleted successfully!');
-                let main = document.querySelector(".main");
-                main.style.filter = "none";
-                main.style.opacity = "1";
-                let navbar = document.querySelector(".navbar");
-                navbar.style.filter = "none";
-                navbar.style.opacity = "1";
-                let goUp = document.querySelector(".go-up");
-                goUp.style.opacity = "1";
-                goUp.style.filter = "none";
-                document.body.style.overflow = "auto";
-                location.reload();
+                //console.log('User deleted successfully!');
+                closeDeleteUserPopup()
+                loadUsers2()
+                //location.reload();
             } else {
                 alert('Error occurred. User could not be deleted.')
-            }            
+            }    
+                    
         }
     }
     request.open('DELETE', firebaseUrl + '/korisnici/' + userDeleteID + '.json');
@@ -154,7 +139,7 @@ function doYouWantToDeleteUser(userID) {
 
 
 function tryToLogin() {
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
             if (this.status == 200) {
@@ -221,7 +206,7 @@ function registerNewUser() {
     };
     var userJson = JSON.stringify(newUser);
     console.log(userJson);
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
     request.open('POST', firebaseUrl + '/korisnici.json');
     request.setRequestHeader('Content-Type', 'application/json');
     request.onreadystatechange = function () {
@@ -236,6 +221,7 @@ function registerNewUser() {
     request.send(userJson);
 }
 function isRegisterValid() { 
+    event.preventDefault();
     let okForma = 1;
     let inputIme = document.getElementById("ime-register");
     let isImeValid = validateRegisterInputIme(inputIme);
@@ -279,7 +265,6 @@ function isRegisterValid() {
     }
     if (okForma === 1) {
         //alert("Registrovani ste!");
-        event.preventDefault();
         registerNewUser();
         alert("Registracija USPEŠNA!");
         let btnClose = document.querySelector(".btn-register-cancel");
@@ -288,7 +273,6 @@ function isRegisterValid() {
         return true;
     } else {
         alert("GREŠKA! Popunite pravilno podatke!");
-        event.preventDefault();
         return false;
     }
 }
@@ -297,23 +281,24 @@ function isRegisterValid() {
 function validateRegisterInputIme(elem) {
     let value = elem.value.trim();
     let ok = 1;
+    let ok2 = 1;
     for (let i = 0; i < value.length; i++) {
         if ((value.codePointAt(i) < 65) || ((value.codePointAt(i) > 90) && (value.codePointAt(i) < 97)) || value.codePointAt(i) > 122) {
-            ok = 0;
+            ok2 = 0;
         }
     }
     let errorMessage = document.getElementById("error-ime");
-    if (ok === 0) {
-        errorMessage.innerText = 'Pogrešni karakteri!';
-        ok = 0;
-    } else if (value === '') {
+    if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Pogrešni karakteri!';
         ok = 0;
     } else if (value.length < 2) {
         errorMessage.innerText = 'Dužina imena >= 2';
         ok = 0;
-    } else if (value.length > 40) {
-        errorMessage.innerText = 'Dužina imena <= 40';
+    } else if (value.length > 30) {
+        errorMessage.innerText = 'Dužina imena <= 30';
         ok = 0;
     }  else {
         errorMessage.innerText = '';
@@ -343,8 +328,8 @@ function validateRegisterInputPrezime(elem) {
     } else if (value.length < 2) {
         errorMessage.innerText = 'Dužina prezimena >= 2';
         ok = 0;
-    } else if (value.length > 40) {
-        errorMessage.innerText = 'Dužina prezimena <= 40';
+    } else if (value.length > 30) {
+        errorMessage.innerText = 'Dužina prezimena <= 30';
         ok = 0;
     }  else {
         errorMessage.innerText = '';
@@ -359,23 +344,36 @@ function validateRegisterInputPrezime(elem) {
 }
 function validateRegisterInputDate(elem) {
     let value = elem.value;
+    let dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    
     let date1 = new Date(value);
     let currentDate = new Date();
+
     let errorMessage = document.getElementById("error-date");
-    if (isNaN(date1.getTime())) {
+
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    }
+    else if (dateRegex.test(value) != true) {
         errorMessage.innerText = 'Pogrešan datum!';
         ok = 0;
-    } else if (currentDate < date1) {
+    }
+    else if (isNaN(date1.getTime())) {
         errorMessage.innerText = 'Pogrešan datum!';
         ok = 0;
-    } else if (currentDate.getFullYear() - date1.getFullYear() > 110) {
+    }
+     else if (currentDate < date1) {
+        errorMessage.innerText = 'Pogrešan datum!';
+        ok = 0;
+    }
+    else if (currentDate.getFullYear() - date1.getFullYear() > 110) {
         errorMessage.innerText = 'Pogrešan datum!';
         ok = 0;
     } else {
         errorMessage.innerText = '';
         ok = 1;
     }
-
     if (ok === 1) {
         return true;
     } else {
@@ -388,7 +386,11 @@ function validateRegisterInputEmail(elem) {
     let errorMessage = document.getElementById("error-email");
     let atIndex = value.indexOf("@");
     let dotIndex = value.lastIndexOf(".");
-    if (atIndex < 1 || dotIndex < atIndex + 2 || dotIndex + 2 >= value.length) {
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    }
+    else if (atIndex < 1 || dotIndex < atIndex + 2 || dotIndex + 2 >= value.length) {
         errorMessage.innerText = 'Pogrešan email!';
         ok = 0;
     }  else {
@@ -421,6 +423,18 @@ function validateRegisterInputUsername(elem) {
         return false;
     }
 }
+
+function togglePswVisibility2() {
+    let passwordInputLogin = document.getElementById("psw-login");
+    let passwordToggleLogin = document.querySelector(".psw-login-toggle");
+    if (passwordInputLogin.type === "password") {
+        passwordInputLogin.type = "text";
+        passwordToggleLogin.innerHTML = '<i class = "fa fa-eye" aria-hidden = "true"> </i>';
+    } else {
+        passwordInputLogin.type = "password";
+        passwordToggleLogin.innerHTML = '<i class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
+    }
+}
 function togglePswVisibility() {
     let passwordInput = document.getElementById("psw-register");
     let passwordToggle = document.querySelector(".psw-register-toggle");
@@ -436,13 +450,17 @@ function validateRegisterInputPsw(elem) {
     let value = elem.value;
     let ok = 1;
     let errorMessage = document.getElementById("error-psw");
-    if (value.length < 8) {
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    }
+    else if (value.length < 8) {
         errorMessage.innerText = 'Dužina lozinke >= 8!';
         ok = 0;
     }
     for (let i = 0; i < value.length; i++) {
         if (value[i] === " ") {
-            errorMessage.innerText = 'Lozinka ne treba da sadrži space!';
+            errorMessage.innerText = 'Lozinka sadrži space!';
             ok = 0;
         }
     } 
@@ -456,17 +474,16 @@ function validateRegisterInputPsw(elem) {
 }
 function validateRegisterInputAddress(elem) {
     let value = elem.value;
-    let ok = 1;/*
+    let ok = 1;
     let errorMessage = document.getElementById("error-address");
-    let testing = /^[a-zA-Z0-9]+([ \t]+[a-zA-Z0-9]+)*$/.test(value);
-    if (testing === true) {
-        errorMessage.innerText = 'Pogrešna adresa!';
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
         ok = 0;
     } else {
         errorMessage.innerText = '';
         ok = 1;
     }
-*/
+
     if (ok === 1) {
         return true;
     } else {
@@ -478,7 +495,10 @@ function validateRegisterInputPhone(elem) {
     let ok = 1;
     let errorMessage = document.getElementById("error-phone");
     let testing = /06[1-6]{1}[0-9]{7}/.test(value);
-    if (testing != true) {
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (testing != true) {
         errorMessage.innerText = 'Pogrešan br. telefona!';
         ok = 0;
     } else {
@@ -578,11 +598,15 @@ function closeRegister() {
 }
 
 
+function deleteUsersTable() {
+    let tableUsersBody = document.querySelector(".tabela-korisnici");
+    while (tableUsersBody.firstChild) {
+        tableUsersBody.removeChild(tableUsersBody.lastChild);
+    }
+}
 function createUsersTable() {
-    let adminBody = document.querySelector(".admin-body");
-    let tableUsers = document.createElement("table");
-    tableUsers.classList.add("tabela-korisnici")
-    adminBody.append(tableUsers);
+    deleteUsersTable()
+    let tableUsers = document.querySelector(".tabela-korisnici");
     for (let id in users) {
         let user = users[id];
         let tr = document.createElement("tr")
@@ -637,11 +661,17 @@ function createUsersTable() {
         }
     }       
 }
+
+
+function deleteAgencyTable() {
+    let tableAgencyBody = document.querySelector(".tabela-agencije");
+    while (tableAgencyBody.firstChild) {
+        tableAgencyBody.removeChild(tableAgencyBody.lastChild);
+    }
+}
 function createAgencyTable() {
-    let adminBody = document.querySelector(".admin-body");
-    let tableAgencies = document.createElement("table");
-    tableAgencies.classList.add("tabela-agencije")
-    adminBody.append(tableAgencies);
+    deleteAgencyTable()
+    let tableAgencies = document.querySelector(".tabela-agencije");
     for (let id in agencies) {
         let agency = agencies[id];
         let tr = document.createElement("tr")
@@ -716,10 +746,7 @@ function createAgencyTable() {
     }       
 }
 function createDestinationTable() {
-    let adminBody = document.querySelector(".admin-body");
-    let tableDestinations = document.createElement("table");
-    tableDestinations.classList.add("tabela-destinacije");
-    adminBody.append(tableDestinations);
+    let tableDestinations = document.querySelector(".tabela-destinacije");
     for (let id in destinations) {
         let destination = destinations[id];
         for (let dest in destination) { 
@@ -941,11 +968,18 @@ function main() {
             notify.style.display = "block";
         }
     });
+
+    let loginForm = document.getElementById("login-form");
+    loginForm.addEventListener("submit", isLoginValid)
+    
+    let registerForm = document.getElementById("register-form");
+    registerForm.addEventListener("submit", isRegisterValid)
+
 }
 
 
 function loadUsers() {
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
             if (this.status == 200) {
@@ -963,9 +997,30 @@ function loadUsers() {
     request.open('GET', firebaseUrl + '/korisnici.json');
     request.send();
 }
+function loadUsers2() {
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                usersID = [];
+                users = JSON.parse(request.responseText);
+                for (let id in users) {
+                    usersID.push(id);
+                }    
+                //console.log(users)
+                createUsersTable()  
+            } else {
+                window.location.href = "error.html";
+            }       
+        }
+    }
+    request.open('GET', firebaseUrl + '/korisnici.json');
+    request.send();
+}
+
 
 function loadDestinations() {
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
             if (this.status == 200) {
@@ -983,9 +1038,29 @@ function loadDestinations() {
     request.open('GET', firebaseUrl + '/destinacije.json');
     request.send();
 }
+function loadDestinations2() {
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                destinationsID = [];
+                destinations = JSON.parse(request.responseText);
+                for (let id in destinations) {
+                    destinationsID.push(id);
+                }
+            } else {
+                window.location.href = "error.html";
+            }
+        }
+    }
+    request.open('GET', firebaseUrl + '/destinacije.json');
+    request.send();
+}
+
+
 
 function loadAgencies() {
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
             if (this.status == 200) {
@@ -998,6 +1073,25 @@ function loadAgencies() {
                 window.location.href = "error.html";
             }
             loadDestinations();
+        }
+    }
+    request.open('GET', firebaseUrl + '/agencije.json');
+    request.send();
+}
+function loadAgencies2() {
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                agenciesID = [];
+                agencies = JSON.parse(request.responseText);
+                for (let id in agencies) {
+                    agenciesID.push(id);
+                }     
+                createAgencyTable()  
+            } else {
+                window.location.href = "error.html";
+            }
         }
     }
     request.open('GET', firebaseUrl + '/agencije.json');

@@ -181,14 +181,18 @@
 
     <div class = "login-div"> 
         <div id = "login-popup">
-            <form action = "" class = "form-container" id = "login-form" onsubmit = "isLoginValid()">
+            <form action = "" class = "form-container" id = "login-form">
                 <h1> Login </h1>
                 <label for = "korisnicko-login"> <b> Korisničko ime </b> </label>
                 <div class = "error-message" id = "error-login-korisnicko"> </div>
                 <input id = "korisnicko-login" type = "text" placeholder = "Username.." name = "korisnicko-login" required>
                 <label for = "psw-login"> <b> Lozinka </b> </label>
                 <div class = "error-message" id = "error-login-lozinka"> </div>
-                <input id = "psw-login" type = "password" placeholder = "Password.." name = "psw-login" required>
+                <div class = "pass-input-view">
+                    <input id = "psw-login" type = "password" placeholder = "Password.." name = "psw-login" required>
+                    <button type = "button" class = "psw-login-toggle" onclick = "togglePswVisibility2()">
+                    <i class = "fa fa-eye-slash" aria-hidden = "true"> </i>
+                </div>
                 <div class = "login-submit-cancel">
                     <button type = "submit" class = "btn-submit-login"> Login </button>
                     <button type = "button" class = "btn-login-cancel" onclick = "closeLogin()"> Close </button>
@@ -199,7 +203,7 @@
     
     <div class = "register-div"> 
         <div id = "register-popup">
-            <form action = "" id = "register-form" onsubmit = "isRegisterValid()">
+            <form action = "" id = "register-form">
                 <h1> Sign Up </h1>
                 <div class = "register-ime-i-prezime"> 
                     <div class = "register-ime-input"> 

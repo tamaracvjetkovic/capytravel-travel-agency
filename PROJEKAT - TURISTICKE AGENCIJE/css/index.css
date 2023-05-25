@@ -848,6 +848,7 @@ body {
                     }
 }
 
+
 .pass-input-view {
     position: relative;
 }
@@ -860,10 +861,25 @@ body {
         outline: none;
         cursor: pointer;
     }
+    .psw-login-toggle {
+        position: absolute;
+        top: 29%;
+        right: 14px;
+        background: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
     .psw-register-toggle i {
         font-size: 16px;
     }
+    .psw-login-toggle i {
+        font-size: 16px;
+    }
     .psw-register-toggle:focus i {
+        color: #007bff;
+    }
+    .psw-login-toggle:focus i {
         color: #007bff;
     }
 

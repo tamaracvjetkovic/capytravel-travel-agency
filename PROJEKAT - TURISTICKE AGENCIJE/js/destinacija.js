@@ -12,8 +12,6 @@ var picturesNum = 0;
 var clicked = 0;
 var curBox = 1;
 
-var destinationDeleteID;
-
 
 window.addEventListener('load', loadAgencies);
 
@@ -40,35 +38,36 @@ function closeDeleteDestinationPopup() {
 function deleteDestination() {
     let popup = document.getElementById("delete-destination-popup");
     popup.style.display = "none";
-
-    
-
-    
-    /*
+    let pageId = window.location.hash.substr(1);
+    pageId = pageId.split("-");
+    let id1 = parseInt(pageId[0])
+    let id2 = parseInt(pageId[1])
+    let id3 = parseInt(pageId[2])
+    let destID = destinationsID[id1];
+    let destInDestID = destinationsInDestinationID[id2];
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
             if (this.status == 200) {
                 console.log('Destination deleted successfully!');
-                location.reload();
+                //location.reload();
+                window.location.href = `agencija.html#${id3}`;
             } else {
                 alert('Error occurred. Destination could not be deleted.')
             }            
         }
     }
-    request.open('DELETE', , firebaseUrl + '/destinacije/' + destinationsID[cur] + "/" + destinationsInDestinationID[br] + '.json');
-    request.send(); */
+    request.open('DELETE', firebaseUrl + '/destinacije/' + destID + "/" + destInDestID + '.json');
+    request.send(); 
 }
-function doYouWantToDeleteDestination(destinationID) {
-    console.log("\n\n\n\n")
+function doYouWantToDeleteDestination() {
     let pageId = window.location.hash.substr(1);
     pageId = pageId.split("-");
-
-    console.log(destinationsInDestinationID)
-    let destinacija = destinations[destinationID];
+    let id2 = parseInt(pageId[1])
+    let destInDestID = destinationsInDestinationID[id2];
+    let destInDest = destinationsInDestination[destInDestID];
     let p = document.getElementById("upozorenje-poruka-destinacija");
-    p.innerHTML = "Da li ste sigurni da želite da obrišete destinaciju '" + destinacija.naziv + "'?";
-    destinationDeleteID = destinationID;
+    p.innerHTML = "Da li ste sigurni da želite da obrišete destinaciju '" + destInDest.naziv + "'?";
     let popup = document.getElementById("delete-destination-popup");
     popup.style.display = "block";
     let head = document.querySelector(".head");
@@ -235,23 +234,24 @@ function isRegisterValid() {
 function validateRegisterInputIme(elem) {
     let value = elem.value.trim();
     let ok = 1;
+    let ok2 = 1;
     for (let i = 0; i < value.length; i++) {
         if ((value.codePointAt(i) < 65) || ((value.codePointAt(i) > 90) && (value.codePointAt(i) < 97)) || value.codePointAt(i) > 122) {
-            ok = 0;
+            ok2 = 0;
         }
     }
     let errorMessage = document.getElementById("error-ime");
-    if (ok === 0) {
-        errorMessage.innerText = 'Pogrešni karakteri!';
-        ok = 0;
-    } else if (value === '') {
+    if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Pogrešni karakteri!';
         ok = 0;
     } else if (value.length < 2) {
         errorMessage.innerText = 'Dužina imena >= 2';
         ok = 0;
-    } else if (value.length > 40) {
-        errorMessage.innerText = 'Dužina imena <= 40';
+    } else if (value.length > 30) {
+        errorMessage.innerText = 'Dužina imena <= 30';
         ok = 0;
     }  else {
         errorMessage.innerText = '';
@@ -281,8 +281,8 @@ function validateRegisterInputPrezime(elem) {
     } else if (value.length < 2) {
         errorMessage.innerText = 'Dužina prezimena >= 2';
         ok = 0;
-    } else if (value.length > 40) {
-        errorMessage.innerText = 'Dužina prezimena <= 40';
+    } else if (value.length > 30) {
+        errorMessage.innerText = 'Dužina prezimena <= 30';
         ok = 0;
     }  else {
         errorMessage.innerText = '';
@@ -297,23 +297,36 @@ function validateRegisterInputPrezime(elem) {
 }
 function validateRegisterInputDate(elem) {
     let value = elem.value;
+    let dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    
     let date1 = new Date(value);
     let currentDate = new Date();
+
     let errorMessage = document.getElementById("error-date");
-    if (isNaN(date1.getTime())) {
+
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    }
+    else if (dateRegex.test(value) != true) {
         errorMessage.innerText = 'Pogrešan datum!';
         ok = 0;
-    } else if (currentDate < date1) {
+    }
+    else if (isNaN(date1.getTime())) {
         errorMessage.innerText = 'Pogrešan datum!';
         ok = 0;
-    } else if (currentDate.getFullYear() - date1.getFullYear() > 110) {
+    }
+     else if (currentDate < date1) {
+        errorMessage.innerText = 'Pogrešan datum!';
+        ok = 0;
+    }
+    else if (currentDate.getFullYear() - date1.getFullYear() > 110) {
         errorMessage.innerText = 'Pogrešan datum!';
         ok = 0;
     } else {
         errorMessage.innerText = '';
         ok = 1;
     }
-
     if (ok === 1) {
         return true;
     } else {
@@ -326,7 +339,11 @@ function validateRegisterInputEmail(elem) {
     let errorMessage = document.getElementById("error-email");
     let atIndex = value.indexOf("@");
     let dotIndex = value.lastIndexOf(".");
-    if (atIndex < 1 || dotIndex < atIndex + 2 || dotIndex + 2 >= value.length) {
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    }
+    else if (atIndex < 1 || dotIndex < atIndex + 2 || dotIndex + 2 >= value.length) {
         errorMessage.innerText = 'Pogrešan email!';
         ok = 0;
     }  else {
@@ -359,6 +376,18 @@ function validateRegisterInputUsername(elem) {
         return false;
     }
 }
+
+function togglePswVisibility2() {
+    let passwordInputLogin = document.getElementById("psw-login");
+    let passwordToggleLogin = document.querySelector(".psw-login-toggle");
+    if (passwordInputLogin.type === "password") {
+        passwordInputLogin.type = "text";
+        passwordToggleLogin.innerHTML = '<i class = "fa fa-eye" aria-hidden = "true"> </i>';
+    } else {
+        passwordInputLogin.type = "password";
+        passwordToggleLogin.innerHTML = '<i class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
+    }
+}
 function togglePswVisibility() {
     let passwordInput = document.getElementById("psw-register");
     let passwordToggle = document.querySelector(".psw-register-toggle");
@@ -374,13 +403,17 @@ function validateRegisterInputPsw(elem) {
     let value = elem.value;
     let ok = 1;
     let errorMessage = document.getElementById("error-psw");
-    if (value.length < 8) {
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    }
+    else if (value.length < 8) {
         errorMessage.innerText = 'Dužina lozinke >= 8!';
         ok = 0;
     }
     for (let i = 0; i < value.length; i++) {
         if (value[i] === " ") {
-            errorMessage.innerText = 'Lozinka ne treba da sadrži space!';
+            errorMessage.innerText = 'Lozinka sadrži space!';
             ok = 0;
         }
     } 
@@ -394,17 +427,16 @@ function validateRegisterInputPsw(elem) {
 }
 function validateRegisterInputAddress(elem) {
     let value = elem.value;
-    let ok = 1;/*
+    let ok = 1;
     let errorMessage = document.getElementById("error-address");
-    let testing = /^[a-zA-Z0-9]+([ \t]+[a-zA-Z0-9]+)*$/.test(value);
-    if (testing === true) {
-        errorMessage.innerText = 'Pogrešna adresa!';
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
         ok = 0;
     } else {
         errorMessage.innerText = '';
         ok = 1;
     }
-*/
+
     if (ok === 1) {
         return true;
     } else {
@@ -416,7 +448,10 @@ function validateRegisterInputPhone(elem) {
     let ok = 1;
     let errorMessage = document.getElementById("error-phone");
     let testing = /06[1-6]{1}[0-9]{7}/.test(value);
-    if (testing != true) {
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (testing != true) {
         errorMessage.innerText = 'Pogrešan br. telefona!';
         ok = 0;
     } else {
@@ -430,6 +465,7 @@ function validateRegisterInputPhone(elem) {
         return false;
     }
 }
+
 
 function disableClicksOutsideLoginPopup(event) {
     let logDiv = document.querySelector(".login-div");
@@ -546,7 +582,7 @@ function closeRegister() {
 
 
 
-function appendDestinationBody(cur, br, agency, destinacija) {
+function appendDestinationBody(agency, destinacija) {
    
     let title = document.querySelector("title");
     title.innerHTML = "CapyTravel | " + agency.naziv + " | " + destinacija.naziv;   
@@ -694,53 +730,12 @@ function appendDestinationBody(cur, br, agency, destinacija) {
     opis2Agencije.append(opis2AgencijeInfo);
 }
 
-function loadDestination(cur, br, agency) {
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                var destination = JSON.parse(request.responseText);
-            } else {
-                alert('Error occurred. Car could not be loaded.')
-            }
-            appendDestinationBody(cur, br, agency, destination);
-        }
-    }
-    request.open('GET', firebaseUrl + '/destinacije/' + destinationsID[cur] + "/" + destinationsInDestinationID[br] + '.json');
-    request.send();
-}
-function loadDestination2(cur, br, agency) {
-    let b = 0;
-    let dest = agency.destinacije;
-    for (let id in destinations) {
-        var destination = destinations[id];
-        destinationsID.push(id);
-        if (id === dest) {
-            for (let i in destination) {
-                destinationsInDestinationID.push(i);
-                if (b == br) {
-                    loadDestination(cur, br, agency);
-                }
-                b++;
-            }
-        }      
-    }           
-}
-function loadAgency(cur, br, curAgency) {  
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                var agency = JSON.parse(request.responseText);
-            } else {
-                alert('Error occurred. Car could not be loaded.')
-            }
-            loadDestination2(cur, br, agency);
-        }
-    }
-    request.open('GET', firebaseUrl + '/agencije/' + agenciesID[curAgency] + '.json');
-    request.send();
-}
+
+
+
+
+
+
 
 
 function scrollToTop() {
@@ -750,6 +745,8 @@ function scrollToTop() {
       scrollAnimation = setTimeout("scrollToTop()", 12);
     } else clearTimeout(scrollAnimation);
 }
+
+
 
 function main() {
 
@@ -851,10 +848,27 @@ function main() {
     let reg = document.getElementById("register-button");
     reg.onclick = showRegister;
 
+    let loginForm = document.getElementById("login-form");
+    loginForm.addEventListener("submit", isLoginValid)
+    
+    let registerForm = document.getElementById("register-form");
+    registerForm.addEventListener("submit", isRegisterValid)
+
+    
     let pageId = window.location.hash.substr(1);
     pageId = pageId.split("-");
-    loadAgency(pageId[0], pageId[1], pageId[2]);
-   
+
+    let id2 = parseInt(pageId[1])
+    let id3 = parseInt(pageId[2])
+
+    let destInDestID = destinationsInDestinationID[id2];
+    let agencyID = agenciesID[id3];
+
+    let destInDest = destinationsInDestination[destInDestID];
+    let agency = agencies[agencyID];
+
+    appendDestinationBody(agency, destInDest);
+
     let buttonEdit = document.getElementById("button-edit-destination");
     let buttonDelete = document.getElementById("button-delete-destination");
     buttonEdit.style.display = "inline-block";
@@ -863,9 +877,6 @@ function main() {
     buttonDelete.style.display = "inline-block";
     buttonDelete.setAttribute("onclick", "doYouWantToDeleteDestination()");
     buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
-
-
-
 }
 
 
@@ -880,35 +891,25 @@ function main() {
 
 
 
-/*
-
-let th = document.createElement("th")
-            th.innerHTML = "EDIT";
-            tr.append(th);
-
-            let td = document.createElement("td")
-            let buttonEdit = document.createElement("button")
-            buttonEdit.setAttribute("id", ("edit,destinacija," + dest));
-            buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
-            let buttonDelete = document.createElement("button")
-            buttonDelete.setAttribute("id", (dest));
-            buttonDelete.setAttribute("onclick", "doYouWantToDeleteDestination(this.id)");
-            buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
-            td.append(buttonEdit);
-            td.append(buttonDelete);
-            tr.append(td);
-*/
-
-
-
-
-
-
-
-
-
-
-
+function loadDestinationsInDestination(destID) {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                destinationsInDestinationID = [];
+                destinationsInDestination = JSON.parse(request.responseText);
+                for (let id in destinationsInDestination) {
+                    destinationsInDestinationID.push(id);
+                }
+            } else {
+                alert('Error occurred. Car could not be loaded.')
+            }
+            main();
+        }
+    }
+    request.open('GET', firebaseUrl + '/destinacije/' + destID + '.json');
+    request.send();
+}
 
 
 function loadDestinations() {
@@ -923,8 +924,13 @@ function loadDestinations() {
                 }
             } else {
                 window.location.href = "error.html";
-            }
-            main();
+            }  
+            let pageId = window.location.hash.substr(1);
+            pageId = pageId.split("-");
+            let id1 = parseInt(pageId[0])
+            let destID = destinationsID[id1];
+            //console.log("ID DESTINACIJE: " + destID)
+            loadDestinationsInDestination(destID);
         }
     }
     request.open('GET', firebaseUrl + '/destinacije.json');

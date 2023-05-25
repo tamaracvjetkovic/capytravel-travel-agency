@@ -139,23 +139,24 @@ function isRegisterValid() {
 function validateRegisterInputIme(elem) {
     let value = elem.value.trim();
     let ok = 1;
+    let ok2 = 1;
     for (let i = 0; i < value.length; i++) {
         if ((value.codePointAt(i) < 65) || ((value.codePointAt(i) > 90) && (value.codePointAt(i) < 97)) || value.codePointAt(i) > 122) {
-            ok = 0;
+            ok2 = 0;
         }
     }
     let errorMessage = document.getElementById("error-ime");
-    if (ok === 0) {
-        errorMessage.innerText = 'Pogrešni karakteri!';
-        ok = 0;
-    } else if (value === '') {
+    if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Pogrešni karakteri!';
         ok = 0;
     } else if (value.length < 2) {
         errorMessage.innerText = 'Dužina imena >= 2';
         ok = 0;
-    } else if (value.length > 40) {
-        errorMessage.innerText = 'Dužina imena <= 40';
+    } else if (value.length > 30) {
+        errorMessage.innerText = 'Dužina imena <= 30';
         ok = 0;
     }  else {
         errorMessage.innerText = '';
@@ -185,8 +186,8 @@ function validateRegisterInputPrezime(elem) {
     } else if (value.length < 2) {
         errorMessage.innerText = 'Dužina prezimena >= 2';
         ok = 0;
-    } else if (value.length > 40) {
-        errorMessage.innerText = 'Dužina prezimena <= 40';
+    } else if (value.length > 30) {
+        errorMessage.innerText = 'Dužina prezimena <= 30';
         ok = 0;
     }  else {
         errorMessage.innerText = '';
@@ -201,23 +202,36 @@ function validateRegisterInputPrezime(elem) {
 }
 function validateRegisterInputDate(elem) {
     let value = elem.value;
+    let dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    
     let date1 = new Date(value);
     let currentDate = new Date();
+
     let errorMessage = document.getElementById("error-date");
-    if (isNaN(date1.getTime())) {
+
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    }
+    else if (dateRegex.test(value) != true) {
         errorMessage.innerText = 'Pogrešan datum!';
         ok = 0;
-    } else if (currentDate < date1) {
+    }
+    else if (isNaN(date1.getTime())) {
         errorMessage.innerText = 'Pogrešan datum!';
         ok = 0;
-    } else if (currentDate.getFullYear() - date1.getFullYear() > 110) {
+    }
+     else if (currentDate < date1) {
+        errorMessage.innerText = 'Pogrešan datum!';
+        ok = 0;
+    }
+    else if (currentDate.getFullYear() - date1.getFullYear() > 110) {
         errorMessage.innerText = 'Pogrešan datum!';
         ok = 0;
     } else {
         errorMessage.innerText = '';
         ok = 1;
     }
-
     if (ok === 1) {
         return true;
     } else {
@@ -230,7 +244,11 @@ function validateRegisterInputEmail(elem) {
     let errorMessage = document.getElementById("error-email");
     let atIndex = value.indexOf("@");
     let dotIndex = value.lastIndexOf(".");
-    if (atIndex < 1 || dotIndex < atIndex + 2 || dotIndex + 2 >= value.length) {
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    }
+    else if (atIndex < 1 || dotIndex < atIndex + 2 || dotIndex + 2 >= value.length) {
         errorMessage.innerText = 'Pogrešan email!';
         ok = 0;
     }  else {
@@ -263,6 +281,18 @@ function validateRegisterInputUsername(elem) {
         return false;
     }
 }
+
+function togglePswVisibility2() {
+    let passwordInputLogin = document.getElementById("psw-login");
+    let passwordToggleLogin = document.querySelector(".psw-login-toggle");
+    if (passwordInputLogin.type === "password") {
+        passwordInputLogin.type = "text";
+        passwordToggleLogin.innerHTML = '<i class = "fa fa-eye" aria-hidden = "true"> </i>';
+    } else {
+        passwordInputLogin.type = "password";
+        passwordToggleLogin.innerHTML = '<i class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
+    }
+}
 function togglePswVisibility() {
     let passwordInput = document.getElementById("psw-register");
     let passwordToggle = document.querySelector(".psw-register-toggle");
@@ -278,13 +308,17 @@ function validateRegisterInputPsw(elem) {
     let value = elem.value;
     let ok = 1;
     let errorMessage = document.getElementById("error-psw");
-    if (value.length < 8) {
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    }
+    else if (value.length < 8) {
         errorMessage.innerText = 'Dužina lozinke >= 8!';
         ok = 0;
     }
     for (let i = 0; i < value.length; i++) {
         if (value[i] === " ") {
-            errorMessage.innerText = 'Lozinka ne treba da sadrži space!';
+            errorMessage.innerText = 'Lozinka sadrži space!';
             ok = 0;
         }
     } 
@@ -299,6 +333,15 @@ function validateRegisterInputPsw(elem) {
 function validateRegisterInputAddress(elem) {
     let value = elem.value;
     let ok = 1;
+    let errorMessage = document.getElementById("error-address");
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+
     if (ok === 1) {
         return true;
     } else {
@@ -310,7 +353,10 @@ function validateRegisterInputPhone(elem) {
     let ok = 1;
     let errorMessage = document.getElementById("error-phone");
     let testing = /06[1-6]{1}[0-9]{7}/.test(value);
-    if (testing != true) {
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (testing != true) {
         errorMessage.innerText = 'Pogrešan br. telefona!';
         ok = 0;
     } else {
@@ -542,6 +588,12 @@ function main() {
 
     let reg = document.getElementById("register-button");
     reg.onclick = showRegister;
+
+    let loginForm = document.getElementById("login-form");
+    loginForm.addEventListener("submit", isLoginValid)
+    
+    let registerForm = document.getElementById("register-form");
+    registerForm.addEventListener("submit", isRegisterValid)
 }
 
 
