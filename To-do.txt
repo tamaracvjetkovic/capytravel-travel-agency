@@ -1,4 +1,12 @@
 
+
+promijeniti visibility na sve sto se moze kliknuti
+- u svakom 
+
+
+
+
+
 - dodati logo u linku gore
 
 - napraviti stranicu za greske
@@ -32,3 +40,34 @@ DONE:
 //- napraviti Logo
 
 //- ispod destinacije odmah da se ocitaju maks osobe, cijena i prevoz u boxu nekom 
+
+
+
+//U svaki main dodati:
+
+	document.addEventListener("click", () => {
+        if (popupClicked === 1) {
+            let nav = document.querySelector(".navbar");
+            nav.style.visibility = "hidden";
+            let adminSelect = document.querySelector(".admin-select");
+            adminSelect.style.visibility = "hidden";
+            let footer = document.querySelector(".footer");
+            footer.style.visibility = "hidden";
+            
+        } else {
+            let nav = document.querySelector(".navbar");
+            nav.style.visibility = "";
+            let adminSelect = document.querySelector(".admin-select");
+            adminSelect.style.visibility = "";
+            let footer = document.querySelector(".footer");
+            footer.style.visibility = "";
+        }
+    });
+
+
+//var popupClicked = 0;
+za svaku funkciju klika dodati popupClicked = 1
+
+//za register i login dodati padding i bottom: 5vh;
+
+//izbrisati kod svih maina ono kod windows.scrollY > 0

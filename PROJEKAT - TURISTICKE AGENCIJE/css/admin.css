@@ -12,6 +12,24 @@ body {
     color: rgb(0, 0, 0);
 }
 
+
+.head {
+    transition: 100ms;
+}
+.main {
+    transition: 100ms;
+}
+.footer {
+    transition: 100ms; 
+}
+.opis-agencije-main {
+    transition: 100ms;  
+}
+.opis2-agencije-main {
+    transition: 100ms;  
+}
+
+
 .go-up {
     visibility: hidden;
     position: fixed;
@@ -236,6 +254,7 @@ body {
 
 
               
+
 .login-div {
     display: flex;
     justify-content: center;
@@ -250,12 +269,12 @@ body {
         z-index: 1010;
     }
         #login-form {
-            border-radius: 10px;
             max-width: 280px;
             padding: 20px;
             z-index: 1010;
             background-color: white;
-            box-shadow: 0px 0px 10px rgb(72, 72, 72);
+            border-radius: 20px;
+            border: 1.5px solid rgb(145, 145, 145);
         }
             #login-form h1 {
                 text-align: center;
@@ -309,30 +328,32 @@ body {
       
 @media (min-width: 769px) {
     .register-div {
-        color: black;
         display: flex;
         justify-content: center;
         display: none;
         z-index: 1010;
+        color: black;
     }
         #register-popup {
             position: fixed; 
             top: 5vh;
+            bottom: 5vh;
             max-height: 100%;
             z-index: 1010;
             overflow: auto;
-            box-shadow: 0px 0px 15px rgb(100, 100, 100);
         }
             #register-form {
+                border-radius: 20px;
+                border: 1.5px solid rgb(145, 145, 145);
                 max-height: 100%;
                 overflow: auto;
-                border-radius: 10px;
                 width: 550px;
                 max-width: 700px;
                 padding: 15px;
+                padding-right: 25px;
+                padding-left: 25px;
                 z-index: 1010;
                 background-color: white;
-                box-shadow: 0px 0px 10px rgb(72, 72, 72);
             }
                 #register-form h1 {
                     text-align: center;
@@ -469,20 +490,22 @@ body {
         #register-popup {
             position: fixed; 
             top: 5vh;
+            bottom: 5vh;
             max-height: 100%;
             z-index: 1010;
             overflow: auto;
-            box-shadow: 0px 0px 15px rgb(100, 100, 100);
         }
             #register-form {
+                border-radius: 20px;
+                border: 1.5px solid rgb(145, 145, 145);
                 overflow: auto;
                 max-height: 100%;
-                border-radius: 10px;
                 max-width: 340px;
-                padding: 23px;
+                padding: 15px;
+                padding-right: 25px;
+                padding-left: 25px;
                 z-index: 1010;
                 background-color: white;
-                box-shadow: 0px 0px 10px rgb(72, 72, 72);
             }
                 #register-form h1 {
                     text-align: center;
@@ -605,6 +628,8 @@ body {
                         opacity: 1;
                     }
 }
+
+
 
 .pass-input-view {
     position: relative;
@@ -796,14 +821,16 @@ body {
 
 
 .delete-popup1,
-.delete-popup2 {
+.delete-popup2,
+.delete-popup3 {
     color: black;
-    display: none;
+    display: flex;
     justify-content: center;
-    z-index: 1010;
+    z-index: 1020;
 }
     #delete-user-popup,
-    #delete-agency-popup {
+    #delete-agency-popup,
+    #delete-destination-popup {
         position: fixed; 
         top: 70px;
         display: none;
@@ -812,12 +839,13 @@ body {
         border-radius: 10px 10px 10px 10px;
         background-color: white;
         max-height: 100%;
-        z-index: 1010;
+        z-index: 1020;
         overflow: auto;
         box-shadow: 0px 0px 15px rgb(104, 104, 104);
     }
         .delete-popup1 h1,
-        .delete-popup2 h1 {
+        .delete-popup2 h1,
+        .delete-popup3 h1 {
             font-size: 20px;
             color: rgb(255, 255, 255);
             padding-top: 0;
@@ -827,7 +855,8 @@ body {
             padding: 15px;
         }
         .delete-popup1 h2,
-        .delete-popup2 h2 {
+        .delete-popup2 h2,
+        .delete-popup3 h2 {
             font-size: 17px;
             color: rgb(0, 0, 0);
             padding: 10px;
@@ -863,7 +892,365 @@ body {
                 opacity: 1;
             }
 
-    
+   
+            
+
+
+
+@media (min-width: 769px) {
+    .edit-agency-div {
+        display: flex;
+        justify-content: center;
+        display: none; 
+        z-index: 1010;
+    }
+        #edit-agency-popup {
+            position: fixed; 
+            top: 5vh;
+            bottom: 5vh;
+            max-height: 100%;
+            z-index: 1010;
+            overflow: auto;
+        }
+            #edit-agency-form {
+                max-height: 100%;
+                overflow: auto;
+                border-radius: 10px 10px 0px 0px;
+                width: 550px;
+                max-width: 700px;
+                padding: 15px;
+                padding-bottom: 0px;
+                padding-right: 25px;
+                padding-left: 25px;
+                z-index: 1010;
+                background-color: white;
+            }
+            .edit-agency-destinacije {
+                border-radius: 0px 0px 10px 10px;
+                width: 550px;
+                max-width: 700px;
+                padding: 15px;
+                padding-top: 0px;
+                padding-right: 25px;
+                padding-left: 25px;
+                z-index: 1010;
+                background-color: white;
+            }
+                #edit-agency-form h1 {
+                    text-align: center;
+                    margin-bottom: 22px;
+                    font-size: 26px;
+                }
+                #edit-agency-form label {
+                    font-size: 15px;
+                }
+                #edit-agency-form input {
+                    width: 100%;
+                    padding: 5px;
+                    margin-top: 6px;
+                    height: 38px;
+                    margin-bottom: 15px;
+                    border: none;
+                    background: #e8e8e8;
+                }
+                #edit-agency-form input:focus {
+                    background-color: #ddd;
+                    outline: none;
+                }
+
+                .edit-agency-ime-i-telefon {
+                    display: flex;
+                    flex-direction: row; 
+                    justify-content: center;                    
+                }
+                    .edit-agency-ime-input {
+                        margin-right: 7px;
+                        display: flex;
+                        width: 50%;
+                        flex-direction: column;
+                    }
+                    .edit-agency-telefon-input {
+                        margin-left: 7px;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                .edit-agency-email-i-adresa {
+                    display: flex;
+                    flex-direction: row; 
+                    justify-content: center;                         
+                }
+                    .edit-agency-email-input {
+                        margin-right: 7px;
+                        display: flex;
+                        width: 50%;
+                        flex-direction: column;
+                    }
+                    .edit-agency-adresa-input {
+                        margin-left: 7px;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                    }    
+                .edit-agency-logo-i-godina {
+                    display: flex;
+                    flex-direction: row; 
+                    justify-content: center;                          
+                }
+                    .edit-agency-logo-input {
+                        display: flex;
+                        width: 50%;
+                        margin-right: 7px;
+                        flex-direction: column;
+                    }
+                    .edit-agency-godina-input {
+                        margin-left: 7px;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                    }  
+                .edit-agency-submit-cancel {
+                    display: flex;
+                    flex-direction: row;
+                    margin-top: 10px;
+                }
+                    .btn-submit-edit-agency {
+                        background-color: #0b890b;
+                        color: white;
+                        padding: 16px 20px;
+                        border: none;
+                        cursor: pointer;
+                        width: 50%;
+                        margin-bottom:10px;
+                        opacity: 0.8;
+                        margin-right: 5px;
+                    }
+                    .btn-edit-agency-cancel {
+                        background-color: rgb(238, 31, 86);
+                        color: white;
+                        padding: 16px 20px;
+                        border: none;
+                        cursor: pointer;
+                        width: 50%;
+                        margin-bottom:10px;
+                        margin-left: 5px;
+                        opacity: 0.8;
+                    }
+                    #edit-agency-form button:hover, .open-button:hover {
+                        opacity: 1;
+                    }
+}
+
+
+@media (max-width: 768px) {
+    .edit-agency-div {
+        display: flex;
+        justify-content: center;
+        z-index: 1010;
+        display: none;
+        overflow: auto;
+        color: black;
+    }
+        #edit-agency-popup {
+            position: fixed; 
+            top: 5vh;
+            bottom: 5vh;
+            max-height: 100%;
+            z-index: 1010;
+            overflow: auto;
+        }
+            #edit-agency-form {
+                border-radius: 10px 10px 0px 0px;
+                overflow: auto;
+                max-height: 100%;
+                max-width: 340px;
+                padding: 15px;
+                padding-bottom: 15px;
+                padding-right: 25px;
+                padding-left: 25px;
+                z-index: 1010;
+                background-color: white;
+                margin-bottom: -25px;
+            }
+            .edit-agency-destinacije {
+                border-radius: 0px 0px 10px 10px;   
+                max-width: 340px;
+                padding: 15px;
+                padding-top: 0px;
+                padding-right: 25px;
+                padding-left: 25px;
+                z-index: 1010;
+                background-color: white;
+            }
+                #edit-agency-form h1 {
+                    text-align: center;
+                    margin-bottom: 20px;
+                    font-size: 24px;
+                }
+                #edit-agency-form label {
+                    font-size: 14px;
+                }
+                #edit-agency-form input {
+                    overflow: auto;
+                    width: 100%;
+                    padding: 7px;
+                    margin-top: 6px;
+                    height: 33px;
+                    margin-bottom: 14px;
+                    border: none;
+                    background: #e8e8e8;
+                }
+                #edit-agency-form input:focus {
+                    background-color: #ddd;
+                    outline: none;
+                }
+
+                .edit-agency-ime-i-telefon {
+                    display: flex;
+                    flex-direction: row; 
+                    justify-content: center;                    
+                }
+                    .edit-agency-ime-input {
+                        margin-right: 7px;
+                        display: flex;
+                        width: 50%;
+                        flex-direction: column;
+                    }
+                    .edit-agency-telefon-input {
+                        margin-left: 7px;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                .edit-agency-email-i-adresa {
+                    display: flex;
+                    flex-direction: row; 
+                    justify-content: center;                         
+                }
+                    .edit-agency-email-input {
+                        margin-right: 7px;
+                        display: flex;
+                        width: 50%;
+                        flex-direction: column;
+                    }
+                    .edit-agency-adresa-input {
+                        margin-left: 7px;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                    }    
+                .edit-agency-logo-i-godina {
+                    display: flex;
+                    flex-direction: row; 
+                    justify-content: center;                          
+                }
+                    .edit-agency-logo-input {
+                        display: flex;
+                        width: 50%;
+                        margin-right: 7px;
+                        flex-direction: column;
+                    }
+                    .edit-agency-godina-input {
+                        margin-left: 7px;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                .edit-agency-submit-cancel {
+                    display: flex;
+                    margin-top: 10px;
+                    flex-direction: row;
+                }
+                    .btn-submit-edit-agency {
+                        background-color: #0b890b;
+                        color: white;
+                        padding: 16px 20px;
+                        border: none;
+                        cursor: pointer;
+                        width: 50%;
+                        margin-bottom:10px;
+                        opacity: 0.8;
+                        margin-right: 5px;
+                    }
+                    .btn-edit-agency-cancel {
+                        background-color: rgb(238, 31, 86);
+                        color: white;
+                        padding: 16px 20px;
+                        border: none;
+                        cursor: pointer;
+                        width: 50%;
+                        margin-bottom:10px;
+                        margin-left: 5px;
+                        opacity: 0.8;
+                    }
+                    #edit-agency-form button:hover, .open-button:hover {
+                        opacity: 1;
+                    }
+}
+
+
+.edit-agency-destinacije {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-color: #ffffff;
+}
+    .edit-agency-destination {
+        width: 270px;
+        padding: 11px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;  
+        align-items: center;
+        margin: 5px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        background-color: #e8e8e8;
+    }
+        .edit-agency-div-label {
+            width: 120px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .edit-agency-destination button {
+            padding: 3px 6px 3px 6px;   
+        }
+        .buttons {
+            width: 100px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-right: -15px;
+        }
+        .btn-edit-agency-add-destination {
+            color: rgb(4, 141, 4);
+            opacity: 0.6;
+            font-size: 36px;
+            background-color: #ffffff;
+            border: none;
+            margin-bottom: 15px; 
+            cursor: pointer;
+        }
+        .btn-edit-agency-add-destination:hover {
+            opacity: 1;
+        }
+
+
+
+#p-edit-destination-in-agency {
+    padding-top: 13px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    text-decoration: 0.8px underline rgba(0, 0, 0, 0.979);
+    text-underline-offset: 2px;
+    text-align: center;
+}
+
+
 
 
 .footer {

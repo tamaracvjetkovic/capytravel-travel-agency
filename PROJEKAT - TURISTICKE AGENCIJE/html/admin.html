@@ -52,7 +52,7 @@
 
             </select>
         </div> 
-        <p id = "destination-notification"> * Funkcionalnost izmene i brisanja destinacija omogućena je samo u stranici pojedinačne destinacije svake agencije, a funckionalnost dodavanja novih destinacija omogućena je tokom izmene pojedinačne agencije. </p>
+        <p id = "destination-notification"> * Funkcionalnost izmene i brisanja pojedinačne destinacije omogućena je u samoj stranici te destinacije, kao i tokom izmene agencije koja sadrži istu. </p>
         <div class= "admin-body">
             <table class = "tabela-agencije">
             </table>
@@ -180,7 +180,6 @@
         </div>
     </div>
     
-
     <div class = "delete-popup1"> 
         <div id = "delete-user-popup">
             <h1> UPOZORENJE! </h1>
@@ -203,7 +202,76 @@
         </div>
     </div>
 
+    <div class = "delete-popup3"> 
+        <div id = "delete-destination-popup">
+            <h1> UPOZORENJE! </h1>
+            <h2 id = "upozorenje-poruka-destinacija"> Da li ste sigurni da želite da izbrišete destinaciju? </h2>
+            <div class = "delete-yes-no">
+                <button id = "btn-delete-destination-yes" type = "button" class = "btn-delete-yes" onclick = "deleteDestinationInAgency(this.id)"> Da </button>
+                <button id = "btn-delete-destination-no" type = "button" class = "btn-delete-no" onclick = "closeDeleteDestinationInAgencyPopup()"> Ne </button>
+            </div>
+        </div>
+    </div>
+
    
+    <div class = "edit-agency-div"> 
+        <div id = "edit-agency-popup">
+            <form action = "" id = "edit-agency-form">
+                <h1> Edit </h1>
+                <div class = "edit-agency-ime-i-telefon"> 
+                    <div class = "edit-agency-ime-input"> 
+                        <label for = "ime-edit-agency"> <b> Naziv </b> </label>
+                        <div class = "error-message" id = "error-agency-ime"> </div>
+                        <input id = "ime-edit-agency" type = "text" placeholder = "Name.." name = "ime-edit-agency" required oninput = "validateEditAgencyInputIme(this)">
+                    </div>
+                    <div class = "edit-agency-telefon-input">
+                        <label for = "telefon-edit-agency"> <b> Telefon</b> </label>
+                        <div class = "error-message" id = "error-agency-phone"> </div>
+                        <input id = "telefon-edit-agency" type = "text" name = "telefon-edit-agency" placeholder = "012/1234-123456" pattern = "/^0[1-9]{2}\/[1-9]{4}-\d{6}$/" required oninput = "validateEditAgencyInputPhone(this)">
+                    </div>
+                </div>   
+                <div class = "edit-agency-email-i-adresa"> 
+                    <div class = "edit-agency-email-input">
+                        <label for = "email-edit-agency"> <b> E-mail </b> </label>
+                        <div class = "error-message" id = "error-agency-email"> </div>
+                        <input id = "email-edit-agency" type = "text" placeholder = "E-mail.." name = "email-edit-agency" required oninput = "validateEditAgencyInputEmail(this)">
+                    </div>
+                    <div class = "edit-agency-adresa-input">
+                        <label for = "adresa-edit-agency"> <b> Adresa </b> </label>
+                        <div class = "error-message" id = "error-agency-address"> </div>
+                        <input id = "adresa-edit-agency" type = "text" placeholder = "Address.." name = "adresa-edit-agency" required oninput = "validateEditAgencyInputAddress(this)">
+                    </div>
+                    
+                </div>
+                <div class = "edit-agency-logo-i-godina"> 
+                    <div class = "edit-agency-logo-input">
+                        <label for = "logo-edit-agency"> <b> Logo </b> </label>
+                        <div class = "error-message" id = "error-agency-logo"> </div>
+                        <input id = "logo-edit-agency" type = "text" placeholder = "https://i.imgur.com/jsFrKCn.jpeg" name = "logo-edit-agency" required oninput = "validateEditAgencyInputLogo(this)">
+                    </div>
+                    <div class = "edit-agency-godina-input">
+                        <label for = "godina-edit-agency"> <b> Godina osnivanja </b> </label>
+                        <div class = "error-message" id = "error-agency-godina"> </div>
+                        <input id = "godina-edit-agency" type = "number" placeholder = "Year.." name = "godina-edit-agency" required oninput = "validateEditAgencyInputGodina(this)">  
+                    </div>
+                </div>
+                <div class = "edit-agency-submit-cancel">
+                    <button type = "submit" class = "btn-submit-edit-agency"> Edit </button>
+                    <button type = "button" class = "btn-edit-agency-cancel" onclick = "closeEditAgencyPopup()"> Close </button>
+                </div>
+            </form>
+            <div class = "edit-agency-destinacije"> 
+                <p style = "text-align: center; padding-top: 15px; padding-bottom: 15px; font-size: 18px"> <b> DESTINACIJE </b> </p>
+            </div>     
+            
+        </div>  
+    </div>
+
+
+
+
+
+
     
     <script type = "text/javascript" src = "../js/admin.js"> </script>
 </body>

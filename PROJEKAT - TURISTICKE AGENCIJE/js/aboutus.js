@@ -6,6 +6,8 @@ var users = {};
 
 var clicked = 0;
 
+var popupClicked = 0;
+
 
 window.addEventListener('load', loadUsers());
 
@@ -373,14 +375,13 @@ function validateRegisterInputPhone(elem) {
 
 
 var mainFilterLogin;
-function disableClicksOutsideLoginPopup(event) {
-    let logDiv = document.querySelector(".login-div");
-    if (!logDiv.contains(event.target)) {
-      event.stopPropagation();
-      event.preventDefault();
-    }
-}
+
 function showLogin() {
+    if (popupClicked === 1) {
+        return
+    }
+    popupClicked = 1
+    window.scrollTo(0, 0);
     let logDiv = document.querySelector(".login-div");
     logDiv.style.display = "flex";
     let main = document.querySelector(".main");
@@ -403,9 +404,9 @@ function showLogin() {
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
     document.body.style.overflow = "hidden";
-    document.body.addEventListener('click', disableClicksOutsideLoginPopup);
 }
 function closeLogin() {
+    popupClicked = 0;
     let logDiv = document.querySelector(".login-div");
     logDiv.style.display = "none";
     let main = document.querySelector(".main");
@@ -424,19 +425,16 @@ function closeLogin() {
     goUp.style.opacity = "1";
     goUp.style.filter = "none";
     document.body.style.overflow = "auto";
-    document.body.removeEventListener('click', disableClicksOutsideLoginPopup);
 }
 
 
 var mainFilterRegister;
-function disableClicksOutsideRegisterPopup(event) {
-    let regDiv = document.querySelector(".register-div");
-    if (!regDiv.contains(event.target)) {
-      event.stopPropagation();
-      event.preventDefault();
-    }
-}
 function showRegister() {
+    if (popupClicked === 1) {
+        return
+    }
+    popupClicked = 1
+    window.scrollTo(0, 0);
     let regDiv = document.querySelector(".register-div");
     regDiv.style.display = "flex";
     let main = document.querySelector(".main");
@@ -455,9 +453,9 @@ function showRegister() {
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
     document.body.style.overflow = "hidden";
-    document.body.addEventListener('click', disableClicksOutsideRegisterPopup);
 }
 function closeRegister() {
+    popupClicked = 0;
     let regDiv = document.querySelector(".register-div");
     regDiv.style.display = "none";
     let main = document.querySelector(".main");
@@ -476,11 +474,13 @@ function closeRegister() {
     goUp.style.opacity = "1";
     goUp.style.filter = "none";
     document.body.style.overflow = "auto";
-    document.body.removeEventListener('click', disableClicksOutsideRegisterPopup);
 }
 
 
 function scrollToTop() {
+    if (popupClicked === 1) {
+        return
+    }
     var position = document.body.scrollTop || document.documentElement.scrollTop;
     if (position) {
       window.scrollBy(0, -Math.max(1, Math.floor(position / 10)));
@@ -490,22 +490,36 @@ function scrollToTop() {
 
 function main() {
 
-    document.addEventListener("load", () => {
-        let nav = document.querySelector(".navbar");
-        let nava = document.querySelectorAll(".nava");
-        if (window.scrollY > 0) {
-            if (clicked === 0) {
-                nav.classList.add("scrolled");
-                for (let i = 0; i < nava.length; i++) {
-                    nava[i].classList.add("scrolled");
-                }
-            } 
-            let button1 = document.querySelector(".menu-button");
-            button1.style.setProperty('--button1Color','black');
-            let logo = document.getElementById("logo1");
-            logo.src = "../slike/logo/logo1/png/logo-no-background.png";
+    document.addEventListener("click", () => {
+        if (popupClicked === 1) {
+            let nav = document.querySelector(".navbar");
+            nav.style.visibility = "hidden";
+            let footer = document.querySelector(".footer");
+            footer.style.visibility = "hidden";
+            
+        } else {
+            let nav = document.querySelector(".navbar");
+            nav.style.visibility = "";
+            let footer = document.querySelector(".footer");
+            footer.style.visibility = "";
         }
     });
+
+    
+    let nav = document.querySelector(".navbar");
+    let nava = document.querySelectorAll(".nava");
+    if (window.scrollY > 0) {
+        if (clicked === 0) {
+            nav.classList.add("scrolled");
+            for (let i = 0; i < nava.length; i++) {
+                nava[i].classList.add("scrolled");
+            }
+        } 
+        let button1 = document.querySelector(".menu-button");
+        button1.style.setProperty('--button1Color','black');
+        let logo = document.getElementById("logo1");
+        logo.src = "../slike/logo/logo1/png/logo-no-background.png";
+    }
 
     // ***** CHANGING NAVBAR WHEN SCROLLED *****
     document.addEventListener("scroll", () => {

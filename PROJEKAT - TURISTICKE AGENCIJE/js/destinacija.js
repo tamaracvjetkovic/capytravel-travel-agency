@@ -5,12 +5,14 @@ var agenciesID = [];
 var agencies = {};
 var destinationsID = [];
 var destinations = {};
-var destinationsInDestinationID = [];
-var destinationsInDestination = {};
+var curDestinationInDestinationID;
+var curDestinationInDestination;
 
 var picturesNum = 0;
 var clicked = 0;
 var curBox = 1;
+
+var popupClicked = 0; 
 
 
 window.addEventListener('load', loadAgencies);
@@ -18,6 +20,7 @@ window.addEventListener('load', loadAgencies);
 
 
 function closeDeleteDestinationPopup() {
+    popupClicked = 0;
     let popup = document.getElementById("delete-destination-popup");
     popup.style.display = "none";
     let head = document.querySelector(".head");
@@ -36,6 +39,7 @@ function closeDeleteDestinationPopup() {
 }
 //CEKACU DA APDEJTUJU JSON FILE
 function deleteDestination() {
+    popupClicked = 0;
     let popup = document.getElementById("delete-destination-popup");
     popup.style.display = "none";
     let pageId = window.location.hash.substr(1);
@@ -44,7 +48,7 @@ function deleteDestination() {
     let id2 = parseInt(pageId[1])
     let id3 = parseInt(pageId[2])
     let destID = destinationsID[id1];
-    let destInDestID = destinationsInDestinationID[id2];
+    let destInDestID = curDestinationInDestinationID;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -61,11 +65,12 @@ function deleteDestination() {
     request.send(); 
 }
 function doYouWantToDeleteDestination() {
-    let pageId = window.location.hash.substr(1);
-    pageId = pageId.split("-");
-    let id2 = parseInt(pageId[1])
-    let destInDestID = destinationsInDestinationID[id2];
-    let destInDest = destinationsInDestination[destInDestID];
+    if (popupClicked === 1) {
+        return
+    }
+    popupClicked = 1
+    window.scrollTo(0, 0);
+    let destInDest = curDestinationInDestination;
     let p = document.getElementById("upozorenje-poruka-destinacija");
     p.innerHTML = "Da li ste sigurni da želite da obrišete destinaciju '" + destInDest.naziv + "'?";
     let popup = document.getElementById("delete-destination-popup");
@@ -467,16 +472,13 @@ function validateRegisterInputPhone(elem) {
 }
 
 
-function disableClicksOutsideLoginPopup(event) {
-    let logDiv = document.querySelector(".login-div");
-    if (!logDiv.contains(event.target)) {
-      event.stopPropagation();
-      event.preventDefault();
-    }
-}
-
 var mainFilterLogin;
 function showLogin() {
+    if (popupClicked === 1) {
+        return
+    }
+    popupClicked = 1
+    window.scrollTo(0, 0);
     let logDiv = document.querySelector(".login-div");
     logDiv.style.display = "flex";
     let main = document.querySelector(".main");
@@ -492,6 +494,10 @@ function showLogin() {
     head.style.opacity = "0.5";
     head.style.filter = "blur(10px)";
 
+    let opis2Agencije = document.querySelector(".opis2-agencije-main");
+    opis2Agencije.style.opacity = "0.5";
+    opis2Agencije.style.filter = "blur(10px)";
+
     let footer = document.querySelector(".footer");
     footer.style.opacity = "0.5";
     footer.style.filter = "blur(10px)";
@@ -500,9 +506,9 @@ function showLogin() {
     goUp.style.opacity = "0";
     //goUp.style.filter = "blur(4px)";
     document.body.style.overflow = "hidden";
-    document.body.addEventListener('click', disableClicksOutsideLoginPopup);
 }
 function closeLogin() {
+    popupClicked = 0;
     let logDiv = document.querySelector(".login-div");
     logDiv.style.display = "none";
     let main = document.querySelector(".main");
@@ -514,6 +520,9 @@ function closeLogin() {
     let head = document.querySelector(".head");
     head.style.opacity = "1";
     head.style.filter = "none";
+    let opis2Agencije = document.querySelector(".opis2-agencije-main");
+    opis2Agencije.style.opacity = "1";
+    opis2Agencije.style.filter = "none";
     let footer = document.querySelector(".footer");
     footer.style.opacity = "1";
     footer.style.filter = "none";
@@ -521,19 +530,16 @@ function closeLogin() {
     goUp.style.opacity = "1";
     goUp.style.filter = "none";
     document.body.style.overflow = "auto";
-    document.body.removeEventListener('click', disableClicksOutsideLoginPopup);
 }
 
 
 var mainFilterRegister;
-function disableClicksOutsideRegisterPopup(event) {
-    let regDiv = document.querySelector(".register-div");
-    if (!regDiv.contains(event.target)) {
-      event.stopPropagation();
-      event.preventDefault();
-    }
-}
 function showRegister() {
+    if (popupClicked === 1) {
+        return
+    }
+    popupClicked = 1
+    window.scrollTo(0, 0);
     let regDiv = document.querySelector(".register-div");
     regDiv.style.display = "flex";
     let main = document.querySelector(".main");
@@ -549,6 +555,10 @@ function showRegister() {
     head.style.opacity = "0.5";
     head.style.filter = "blur(10px)";
 
+    let opis2Agencije = document.querySelector(".opis2-agencije-main");
+    opis2Agencije.style.opacity = "0.5";
+    opis2Agencije.style.filter = "blur(10px)";
+    
     let footer = document.querySelector(".footer");
     footer.style.opacity = "0.5";
     footer.style.filter = "blur(10px)";
@@ -556,9 +566,9 @@ function showRegister() {
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
     document.body.style.overflow = "hidden";
-    document.body.addEventListener('click', disableClicksOutsideRegisterPopup);
 }
 function closeRegister() {
+    popupClicked = 0;
     let regDiv = document.querySelector(".register-div");
     regDiv.style.display = "none";
     let main = document.querySelector(".main");
@@ -570,6 +580,9 @@ function closeRegister() {
     let head = document.querySelector(".head");
     head.style.opacity = "1";
     head.style.filter = "none";
+    let opis2Agencije = document.querySelector(".opis2-agencije-main");
+    opis2Agencije.style.opacity = "1";
+    opis2Agencije.style.filter = "none";
     let footer = document.querySelector(".footer");
     footer.style.opacity = "1";
     footer.style.filter = "none";
@@ -577,7 +590,6 @@ function closeRegister() {
     goUp.style.opacity = "1";
     goUp.style.filter = "none";
     document.body.style.overflow = "auto";
-    document.body.removeEventListener('click', disableClicksOutsideRegisterPopup);
 }
 
 
@@ -739,6 +751,9 @@ function appendDestinationBody(agency, destinacija) {
 
 
 function scrollToTop() {
+    if (popupClicked === 1) {
+        return
+    }
     var position = document.body.scrollTop || document.documentElement.scrollTop;
     if (position) {
       window.scrollBy(0, -Math.max(1, Math.floor(position / 10)));
@@ -750,22 +765,61 @@ function scrollToTop() {
 
 function main() {
 
-    document.addEventListener("load", () => {
-        let nav = document.querySelector(".navbar");
-        let nava = document.querySelectorAll(".nava");
-        if (window.scrollY > 0) {
-            if (clicked === 0) {
-                nav.classList.add("scrolled");
-                for (let i = 0; i < nava.length; i++) {
-                    nava[i].classList.add("scrolled");
-                }
-            } 
-            let button1 = document.querySelector(".menu-button");
-            button1.style.setProperty('--button1Color','black');
-            let logo = document.querySelector(".logo");
-            logo.style.color = "black";
+    document.addEventListener("click", () => {
+        if (popupClicked === 1) {
+            let nav = document.querySelector(".navbar");
+            nav.style.visibility = "hidden";
+            let footer = document.querySelector(".footer");
+            footer.style.visibility = "hidden";
+            
+        } else {
+            let nav = document.querySelector(".navbar");
+            nav.style.visibility = "";
+            let footer = document.querySelector(".footer");
+            footer.style.visibility = "";
         }
     });
+
+    let pageId = window.location.hash.substr(1);
+    pageId = pageId.split("-");
+
+    let id1 = parseInt(pageId[0]);
+    let id2 = parseInt(pageId[1]);
+    let id3 = parseInt(pageId[2]);
+
+    let destID = destinationsID[id1]
+    let dest = destinations[destID]
+    console.log(dest + "\n\n\n") 
+    let cnt = 0
+    let destInDestID = "";
+    for (let idDest in dest) {
+        if (cnt == id2) {
+            destInDestID = idDest;
+        }
+        cnt++;
+    }
+    let destInDest = dest[destInDestID] 
+    let agencyID = agenciesID[id3];
+    let agency = agencies[agencyID];
+
+    curDestinationInDestinationID = destInDestID;
+    curDestinationInDestination = destInDest;
+
+    let nav = document.querySelector(".navbar");
+    let nava = document.querySelectorAll(".nava");
+    if (window.scrollY > 0) {
+        if (clicked === 0) {
+            nav.classList.add("scrolled");
+            for (let i = 0; i < nava.length; i++) {
+                nava[i].classList.add("scrolled");
+            }
+        } 
+        let button1 = document.querySelector(".menu-button");
+        button1.style.setProperty('--button1Color','black');
+        let logo = document.querySelector(".logo");
+        logo.style.color = "black";
+    }
+
     // ***** CHANGING NAVBAR WHEN SCROLLED *****
     document.addEventListener("scroll", () => {
         let nav = document.querySelector(".navbar");
@@ -854,18 +908,6 @@ function main() {
     let registerForm = document.getElementById("register-form");
     registerForm.addEventListener("submit", isRegisterValid)
 
-    
-    let pageId = window.location.hash.substr(1);
-    pageId = pageId.split("-");
-
-    let id2 = parseInt(pageId[1])
-    let id3 = parseInt(pageId[2])
-
-    let destInDestID = destinationsInDestinationID[id2];
-    let agencyID = agenciesID[id3];
-
-    let destInDest = destinationsInDestination[destInDestID];
-    let agency = agencies[agencyID];
 
     appendDestinationBody(agency, destInDest);
 
@@ -877,39 +919,9 @@ function main() {
     buttonDelete.style.display = "inline-block";
     buttonDelete.setAttribute("onclick", "doYouWantToDeleteDestination()");
     buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
+    
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-function loadDestinationsInDestination(destID) {
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                destinationsInDestinationID = [];
-                destinationsInDestination = JSON.parse(request.responseText);
-                for (let id in destinationsInDestination) {
-                    destinationsInDestinationID.push(id);
-                }
-            } else {
-                alert('Error occurred. Car could not be loaded.')
-            }
-            main();
-        }
-    }
-    request.open('GET', firebaseUrl + '/destinacije/' + destID + '.json');
-    request.send();
-}
 
 
 function loadDestinations() {
@@ -919,18 +931,14 @@ function loadDestinations() {
             if (this.status == 200) {
                 destinationsID = [];
                 destinations = JSON.parse(request.responseText);
+                //console.log(destinations)
                 for (let id in destinations) {
                     destinationsID.push(id);
                 }
             } else {
                 window.location.href = "error.html";
             }  
-            let pageId = window.location.hash.substr(1);
-            pageId = pageId.split("-");
-            let id1 = parseInt(pageId[0])
-            let destID = destinationsID[id1];
-            //console.log("ID DESTINACIJE: " + destID)
-            loadDestinationsInDestination(destID);
+            main()
         }
     }
     request.open('GET', firebaseUrl + '/destinacije.json');

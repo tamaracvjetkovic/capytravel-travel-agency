@@ -17,6 +17,15 @@ body {
 .main {
     transition: 100ms;
 }
+.footer {
+    transition: 100ms; 
+}
+.opis-agencije-main {
+    transition: 100ms;  
+}
+.opis2-agencije-main {
+    transition: 100ms;  
+}
 
 .go-up {
     visibility: hidden;
@@ -232,26 +241,27 @@ body {
     }
 
 
+
 .login-div {
     display: flex;
     justify-content: center;
     display: none;
     z-index: 1010;
-    color: black;
 }
     #login-popup {
         position: fixed; 
         top: 7vh;
         bottom: 7vh;
         z-index: 1010;
+        color: black;
     }
         #login-form {
-            border-radius: 10px;
             max-width: 280px;
             padding: 20px;
             z-index: 1010;
             background-color: white;
-            box-shadow: 0px 0px 10px rgb(72, 72, 72);
+            border-radius: 20px;
+            border: 1.5px solid rgb(145, 145, 145);
         }
             #login-form h1 {
                 text-align: center;
@@ -305,30 +315,32 @@ body {
       
 @media (min-width: 769px) {
     .register-div {
-        color: black;
         display: flex;
         justify-content: center;
         display: none;
         z-index: 1010;
+        color: black;
     }
         #register-popup {
             position: fixed; 
             top: 5vh;
+            bottom: 5vh;
             max-height: 100%;
             z-index: 1010;
             overflow: auto;
-            box-shadow: 0px 0px 15px rgb(100, 100, 100);
         }
             #register-form {
+                border-radius: 20px;
+                border: 1.5px solid rgb(145, 145, 145);
                 max-height: 100%;
                 overflow: auto;
-                border-radius: 10px;
                 width: 550px;
                 max-width: 700px;
                 padding: 15px;
+                padding-right: 25px;
+                padding-left: 25px;
                 z-index: 1010;
                 background-color: white;
-                box-shadow: 0px 0px 10px rgb(72, 72, 72);
             }
                 #register-form h1 {
                     text-align: center;
@@ -465,20 +477,22 @@ body {
         #register-popup {
             position: fixed; 
             top: 5vh;
+            bottom: 5vh;
             max-height: 100%;
             z-index: 1010;
             overflow: auto;
-            box-shadow: 0px 0px 15px rgb(100, 100, 100);
         }
             #register-form {
+                border-radius: 20px;
+                border: 1.5px solid rgb(145, 145, 145);
                 overflow: auto;
                 max-height: 100%;
-                border-radius: 10px;
                 max-width: 340px;
-                padding: 23px;
+                padding: 15px;
+                padding-right: 25px;
+                padding-left: 25px;
                 z-index: 1010;
                 background-color: white;
-                box-shadow: 0px 0px 10px rgb(72, 72, 72);
             }
                 #register-form h1 {
                     text-align: center;

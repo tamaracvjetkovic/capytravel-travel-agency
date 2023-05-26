@@ -9,6 +9,7 @@ CapyTravel: veb-sajt za turističke agencije.
 
 
 # Opis projekta
+PROJEKAT IZ PREDMETA "Web Dizajn", FTN SIIT, 2. semestar, Novi Sad, 2023.
 CapyTravel je veb-sajt namenjen za turističke agencije. Cilj projekta je primeniti stečeno znanje iz web dizajna i kreirati veb stranicu sa estetski prihvatljivim dizajnom, koja pruža profesionalan izgled i funkcionalnost, uz implementirane CRUD operacije nad korisnicima sistema, turističkim agencijama i njihovim destinacijama.
 
 
