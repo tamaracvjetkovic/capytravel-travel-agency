@@ -898,8 +898,6 @@ function main() {
         }
     }
 
-    let logo1 = document.getElementById("logo1");
-    logo1.onclick = ocitajPocetnu;
 
     let log = document.getElementById("login-button");
     log.onclick = showLogin;
