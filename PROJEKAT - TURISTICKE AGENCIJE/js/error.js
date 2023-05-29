@@ -16,6 +16,7 @@ window.addEventListener('load', main);
 
 
 
+// SCROLL TO TOP DUGME
 function scrollToTop() {
     var position = document.body.scrollTop || document.documentElement.scrollTop;
     if (position) {
@@ -23,9 +24,7 @@ function scrollToTop() {
       scrollAnimation = setTimeout("scrollToTop()", 12);
     } else clearTimeout(scrollAnimation);
 }
-
-
-
+// MAIN
 function main() {
 
     document.addEventListener("load", () => {

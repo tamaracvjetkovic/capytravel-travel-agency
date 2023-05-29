@@ -17,128 +17,58 @@ var curBox = 1;
 
 
 var popupClicked = 0
+var curAgencyToEdit = 0;
+var curUserToEdit = 0;
 
 
 window.addEventListener('load', loadAgencies);
 
 
 
-
-function validateEditAgencyInputGodina(elem) {
-    let value = elem.value.trim();
-    let ok = 1;
-    let errorMessage = document.getElementById("error-agency-godina");
-    if (value === '') {
-        errorMessage.innerText = 'Polje je prazno!';
-        ok = 0;
-    } else {
-        errorMessage.innerText = '';
-        ok = 1;
-    }
-
-    if (ok === 1) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function validateEditAgencyInputLogo(elem) {
-    let value = elem.value.trim();
-    let ok = 1;
-    let errorMessage = document.getElementById("error-agency-logo");
-    if (value === '') {
-        errorMessage.innerText = 'Polje je prazno!';
-        ok = 0;
-    } else {
-        errorMessage.innerText = '';
-        ok = 1;
-    }
-
-    if (ok === 1) {
-        return true;
-    } else {
-        return false;
-    }
-}
-function validateEditAgencyInputAddress(elem) {
-    let value = elem.value.trim();
-    let ok = 1;
-    let errorMessage = document.getElementById("error-agency-address");
-    if (value === '') {
-        errorMessage.innerText = 'Polje je prazno!';
-        ok = 0;
-    } else {
-        errorMessage.innerText = '';
-        ok = 1;
-    }
-
-    if (ok === 1) {
-        return true;
-    } else {
-        return false;
-    }
-}
-function validateEditAgencyInputEmail(elem) {
-    let value = elem.value.trim();
-    let ok = 1;
-    let errorMessage = document.getElementById("error-agency-email");
-    let atIndex = value.indexOf("@");
-    let dotIndex = value.lastIndexOf(".");
-    if (value === '') {
-        errorMessage.innerText = 'Polje je prazno!';
-        ok = 0;
-    }
-    else if (atIndex < 1 || dotIndex < atIndex + 2 || dotIndex + 2 >= value.length) {
-        errorMessage.innerText = 'Pogrešan email!';
-        ok = 0;
-    }  else {
-        errorMessage.innerText = '';
-        ok = 1;
-    }
-
-    if (ok === 1) {
-        return true;
-    } else {
-        return false;
-    }
-}
-function validateEditAgencyInputPhone(elem) {
-    let value = elem.value.trim();
-    let ok = 1;
-    let errorMessage = document.getElementById("error-agency-phone");
-    let testing = /06[1-6]{1}[0-9]{7}/.test(value);
-    if (value === '') {
-        errorMessage.innerText = 'Polje je prazno!';
-        ok = 0;
-    } else if (testing != true) {
-        errorMessage.innerText = 'Pogrešan br. telefona!';
-        ok = 0;
-    } else {
-        errorMessage.innerText = '';
-        ok = 1;
-    }
-
-    if (ok === 1) {
-        return true;
-    } else {
-        return false;
-    }
-}
-function validateEditAgencyInputIme(elem) {
-    let value = elem.value.trim();
-    let ok = 1;
-    let ok2 = 1;
-    for (let i = 0; i < value.length; i++) {
-        if ((value.codePointAt(i) < 65) || ((value.codePointAt(i) > 90) && (value.codePointAt(i) < 97)) || value.codePointAt(i) > 122) {
-            ok2 = 0;
+// EDIT USER
+function editTheUser() {
+    //let user = users[curUserToEdit];  
+    let ime1 = document.getElementById('ime-edit-user').value;
+    let prezime1 = document.getElementById('prezime-edit-user').value;
+    let datum1 = document.getElementById('date-edit-user').value;
+    let email1 = document.getElementById('email-edit-user').value;
+    let korisnicko1 = document.getElementById('korisnicko-edit-user').value;
+    let psw1 = document.getElementById('psw-edit-user').value;
+    let adresa1 = document.getElementById('adresa-edit-user').value;
+    let telefon1 = document.getElementById('telefon-edit-user').value;
+    let editedUser = {
+        adresa: adresa1,
+        datumRodjenja: datum1,
+        email: email1,
+        ime: ime1,
+        korisnickoIme: korisnicko1,
+        lozinka: psw1,
+        prezime: prezime1,
+        telefon: telefon1   
+    };
+    let editedUserJson = JSON.stringify(editedUser);
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+            } else {
+                window.location.href = "error.html";
+            }            
         }
     }
-    let errorMessage = document.getElementById("error-agency-ime");
+    request.open('PUT', firebaseUrl + '/korisnici/' + curUserToEdit + '.json');
+    request.setRequestHeader('Content-Type', 'application/json');
+    request.send(editedUserJson);
+}
+function validateEditUserInputIme(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let regexIme = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\s']+$/;
+    let errorMessage = document.getElementById("error-user-ime");
     if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
         ok = 0;
-    } else if (ok2 === 0) {
+    } else if (!regexIme.test(value)) { 
         errorMessage.innerText = 'Pogrešni karakteri!';
         ok = 0;
     } else if (value.length < 2) {
@@ -157,21 +87,285 @@ function validateEditAgencyInputIme(elem) {
         return false;
     }
 }
+function validateEditUserInputPrezime(elem) {
+    let value = elem.value.trim();
+    let regexPrezime = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\s']+$/;
+    let errorMessage = document.getElementById("error-user-prezime");
+    if (!regexPrezime.test(value)) {
+        errorMessage.innerText = 'Pogrešni karakteri!';
+        ok = 0;
+    } else if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (value.length < 2) {
+        errorMessage.innerText = 'Dužina prezimena >= 2';
+        ok = 0;
+    } else if (value.length > 30) {
+        errorMessage.innerText = 'Dužina prezimena <= 30';
+        ok = 0;
+    }  else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
 
-
-
-
-function deleteDestinationInAgency(id) {
-    console.log(id);
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
 }
+function validateEditUserInputDate(elem) {
+    let value = elem.value;
+    let dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    
+    let date1 = new Date(value);
+    let currentDate = new Date();
 
-function closeEditAgencyPopup() {
+    let errorMessage = document.getElementById("error-user-date");
+
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    }
+    else if (dateRegex.test(value) != true) {
+        errorMessage.innerText = 'Pogrešan datum!';
+        ok = 0;
+    }
+    else if (isNaN(date1.getTime())) {
+        errorMessage.innerText = 'Pogrešan datum!';
+        ok = 0;
+    }
+     else if (currentDate < date1) {
+        errorMessage.innerText = 'Pogrešan datum!';
+        ok = 0;
+    }
+    else if (currentDate.getFullYear() - date1.getFullYear() > 110) {
+        errorMessage.innerText = 'Pogrešan datum!';
+        ok = 0;
+    } else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditUserInputEmail(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let errorMessage = document.getElementById("error-user-email");
+    let atIndex = value.indexOf("@");
+    let dotIndex = value.lastIndexOf(".");
+    let ok2 = 1;
+    for (let user in users) {
+        if (users[user].email === value) {
+            if (users[curUserToEdit].email === value) {
+                continue;
+            }
+            ok2 = 0;
+            break
+        }
+    }
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (atIndex < 1 || dotIndex < atIndex + 2 || dotIndex + 2 >= value.length) {
+        errorMessage.innerText = 'Pogrešan email!';
+        ok = 0;
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Email je zauzet!';
+        ok = 0;
+    } else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditUserInputUsername(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let errorMessage = document.getElementById("error-user-username");
+    let usernameRegex = /^[a-z][a-z0-9]*$/;
+    let ok2 = 1;
+    for (let user in users) {
+        if (users[user].korisnickoIme === value) {
+            if (value === users[curUserToEdit].korisnickoIme) {
+                break;
+            }
+            ok2 = 0;
+            break
+        }
+    }
+    if (usernameRegex.test(value) != true) {
+        errorMessage.innerText = 'Pogrešno korisničko ime!';
+        ok = 0;
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Korisničko ime je zauzeto!';
+        ok = 0;
+    } else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditUserInputPsw(elem) {
+    let value = elem.value;
+    let ok = 1;
+    let errorMessage = document.getElementById("error-user-psw");
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    }
+    else if (value.length < 8) {
+        errorMessage.innerText = 'Dužina lozinke >= 8!';
+        ok = 0;
+    }
+    for (let i = 0; i < value.length; i++) {
+        if (value[i] === " ") {
+            errorMessage.innerText = 'Lozinka sadrži space!';
+            ok = 0;
+        }
+    } 
+
+    if (ok === 1) {
+        errorMessage.innerText = '';
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditUserInputAddress(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let regexAdresa = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\d\s',']+$/;
+    let errorMessage = document.getElementById("error-user-address");
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (!regexAdresa.test(value)) {
+        errorMessage.innerText = 'Pogrešni karakteri!';
+        ok = 0;
+    } else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditUserInputPhone(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let errorMessage = document.getElementById("error-user-phone");
+    let testing = /^06[1-6]{1}[0-9]{6}$/.test(value);
+    let ok2 = 1;
+    for (let user in users) {
+        if (users[user].telefon === value) {
+            if (users[curUserToEdit].telefon === value) {
+                continue;
+            }
+            ok2 = 0;
+            break
+        }
+    }
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (testing != true) {
+        errorMessage.innerText = 'Pogrešan broj telefona!';
+        ok = 0;
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Broj telefona je zauzet!';
+        ok = 0;
+    } else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function isEditUserValid() { 
+    event.preventDefault();
+    let okForma = 1;
+    let inputIme = document.getElementById("ime-edit-user");
+    let isImeValid = validateEditUserInputIme(inputIme);
+    if (isImeValid != true) {
+        okForma = 0;
+    }
+    let inputPrezime = document.getElementById("prezime-edit-user");
+    let isPrezimeValid = validateEditUserInputPrezime(inputPrezime);
+    if (isPrezimeValid != true) {
+        okForma = 0;
+    }
+    let inputDate = document.getElementById("date-edit-user");
+    let isDateValid = validateEditUserInputDate(inputDate);
+    if (isDateValid != true) {
+        okForma = 0;
+    }
+    let inputEmail = document.getElementById("email-edit-user");
+    let isEmailValid = validateEditUserInputEmail(inputEmail);
+    if (isEmailValid != true) {
+        okForma = 0;
+    }
+    let inputUsername = document.getElementById("korisnicko-edit-user");
+    let isUsernameValid = validateEditUserInputUsername(inputUsername);
+    if (isUsernameValid != true) {
+        okForma = 0;
+    }
+    let inputPsw = document.getElementById("psw-edit-user");
+    let isPswValid = validateEditUserInputPsw(inputPsw);
+    if (isPswValid != true) {
+        okForma = 0;
+    }
+    let inputAddress = document.getElementById("adresa-edit-user");
+    let isAddressValid = validateEditUserInputAddress(inputAddress);
+    if (isAddressValid != true) {
+        okForma = 0;
+    }
+    let inputPhone = document.getElementById("telefon-edit-user");
+    let isPhoneValid = validateEditUserInputPhone(inputPhone);
+    if (isPhoneValid != true) {
+        okForma = 0;
+    }
+    if (okForma === 1) {
+        editTheUser();
+        closeEditUserPopup();
+        location.reload();
+        return true;
+    } else {
+        alert("GREŠKA! Popunite pravilno podatke!");
+        return false;
+    }
+}
+function closeEditUserPopup() {
     popupClicked = 0;
-    let popup = document.querySelector(".edit-agency-div")
+    let popup = document.querySelector(".edit-user-div")
     popup.style.display = "none";
     let main = document.querySelector(".main");
     main.style.opacity = "1";
     main.style.filter = "none";
+    let adminBody = document.querySelector(".admin-body");
+    adminBody.style.opacity = "1";
+    adminBody.style.filter = "none";
     let navbar = document.querySelector(".navbar");
     navbar.style.filter = "none";
     navbar.style.opacity = "1";
@@ -179,16 +373,400 @@ function closeEditAgencyPopup() {
     goUp.style.opacity = "1";
     goUp.style.filter = "none";
     document.body.style.overflow = "auto";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "visible";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "visible";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "visible";
+}
+function editUserPopup(userID) {
+    if (popupClicked === 1) {
+        return
+    }
+    popupClicked = 1
+    curUserToEdit = userID;
+
+    let user = users[userID]
+
+    let popup = document.querySelector(".edit-user-div")
+    popup.style.display = "flex";
+    let main = document.querySelector(".main");
+    main.style.opacity = "0.3";
+    main.style.filter = "blur(4px)";
+    let adminBody = document.querySelector(".admin-body");
+    adminBody.style.opacity = "0.3";
+    adminBody.style.filter = "blur(4px)";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.opacity = "0.3";
+    navbar.style.filter = "blur(4px)";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "0";
+    document.body.style.overflow = "hidden";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "hidden";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "hidden";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "hidden";
+
+    let imeUser = document.getElementById("ime-edit-user");
+    imeUser.value = user.ime;
+    let prezimeUser = document.getElementById("prezime-edit-user");
+    prezimeUser.value = user.prezime;
+
+    let datumUser = document.getElementById("date-edit-user");
+    datumUser.value = user.datumRodjenja;
+    let emailUser = document.getElementById("email-edit-user");
+    emailUser.value = user.email;
+    
+    let korisnickoUser = document.getElementById("korisnicko-edit-user");
+    korisnickoUser.value = user.korisnickoIme;
+    let pswUser = document.getElementById("psw-edit-user");
+    pswUser.value = user.lozinka;
+
+    let adresaUser = document.getElementById("adresa-edit-user");
+    adresaUser.value = user.adresa;
+    let telefonUser = document.getElementById("telefon-edit-user");
+    telefonUser.value = user.telefon;
+    
+    let h1 = document.querySelector(".edit-user-div h1")
+    h1.style.display = "flex";
+    h1.style.justifyContent = "center";
+    h1.style.alignItems = "center";
+    h1.innerHTML = "EDIT - " + user.ime + " " + user.prezime;
 }
 
 
+// EDIT AGENCY
+function editTheAgency() {
+    let agencija = agencies[curAgencyToEdit];  
+    let ime1 = document.getElementById('ime-edit-agency').value;
+    let telefon1 = document.getElementById('telefon-edit-agency').value;
+    let email1 = document.getElementById('email-edit-agency').value;
+    let adresa1 = document.getElementById('adresa-edit-agency').value;
+    let logo1 = document.getElementById('logo-edit-agency').value;
+    let godina1 = document.getElementById('godina-edit-agency').value;
+    let editedAgency = {
+        adresa: adresa1,
+        brojTelefona: telefon1 ,
+        destinacije: agencija.destinacije,
+        email: email1,
+        godina: godina1,
+        logo: logo1,
+        naziv: ime1,      
+    };
+    let editedAgencyJson = JSON.stringify(editedAgency);
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+            } else {
+                window.location.href = "error.html";
+            }            
+        }
+    }
+    request.open('PUT', firebaseUrl + '/agencije/' + curAgencyToEdit + '.json');
+    request.setRequestHeader('Content-Type', 'application/json');
+    request.send(editedAgencyJson);
+}
+function isEditAgencyValid() { 
+    event.preventDefault();
+    let okForma = 1;
+    let inputIme = document.getElementById("ime-edit-agency");
+    let isImeValid = validateEditAgencyInputIme(inputIme);
+    if (isImeValid != true) {
+        okForma = 0;
+    }
+    let inputPhone = document.getElementById("telefon-edit-agency");
+    let isPhoneValid = validateEditAgencyInputPhone(inputPhone);
+    if (isPhoneValid != true) {
+        okForma = 0;
+    }
+    let inputEmail = document.getElementById("email-edit-agency");
+    let isEmailValid = validateEditAgencyInputEmail(inputEmail);
+    if (isEmailValid != true) {
+        okForma = 0;
+    }
+    let inputAddress = document.getElementById("adresa-edit-agency");
+    let isAddressValid = validateEditAgencyInputAddress(inputAddress);
+    if (isAddressValid != true) {
+        okForma = 0;
+    }
+    let inputLogo = document.getElementById("logo-edit-agency");
+    let isLogoValid = validateEditAgencyInputLogo(inputLogo);
+    if (isLogoValid != true) {
+        okForma = 0;
+    }
+    let inputGodina = document.getElementById("godina-edit-agency");
+    let isGodinaValid = validateEditAgencyInputGodina(inputGodina);
+    if (isGodinaValid != true) {
+        okForma = 0;
+    }
+    if (okForma === 1) {
+        editTheAgency();
+        location.reload();
+        return true;
+    } else {
+        alert("GREŠKA! Popunite pravilno podatke!");
+        return false;
+    }
+}
+function validateEditAgencyInputGodina(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let ok2 = 1;
+    let y = 3000;
+    let errorMessage = document.getElementById("error-agency-godina");
+    for (let i = 0; i < value.length; i++) {
+        if ((value.codePointAt(i) < 48) || (value.codePointAt(i) > 57)) {
+            ok2 = 0;
+            break;
+        }
+        y = parseInt(value);
+    }
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Polje sadrži slova!';
+        ok = 0;
+    } else if (y > 2023) {
+        errorMessage.innerText = 'Godina > 2023!';
+        ok = 0;
+    } else if (y < 1000) {
+        errorMessage.innerText = 'Godina < 1000!!';
+        ok = 0;
+    } else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditAgencyInputLogo(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let regexLogo = /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/;
+    let errorMessage = document.getElementById("error-agency-logo");
+    let testing = regexLogo.test(value);
+
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (testing != true) {
+        errorMessage.innerText = 'Unos nije link slike!';
+        ok = 0;
+    } else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditAgencyInputAddress(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let regexAdresa = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\d\s',']+$/;
+    let errorMessage = document.getElementById("error-agency-address");
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (!regexAdresa.test(value)) {
+        errorMessage.innerText = 'Pogrešni karakteri!';
+        ok = 0;
+    } else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditAgencyInputEmail(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let errorMessage = document.getElementById("error-agency-email");
+    let atIndex = value.indexOf("@");
+    let dotIndex = value.lastIndexOf(".");
+    let ok2 = 1;
+    for (let agency in agencies) {
+        if (agencies[agency].email === value) {
+            if (agencies[curAgencyToEdit].email === value) {
+                continue;
+            }
+            ok2 = 0;
+            break
+        }
+    }
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (atIndex < 1 || dotIndex < atIndex + 2 || dotIndex + 2 >= value.length) {
+        errorMessage.innerText = 'Pogrešan email!';
+        ok = 0;
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Email je zauzet!';
+        ok = 0;
+    } else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditAgencyInputPhone(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let errorMessage = document.getElementById("error-agency-phone");
+    let testing = /0[1-9]{2}\/[0-9]{4}-[0-9]{4,8}\b/.test(value);
+    let ok2 = 1;
+    for (let agency in agencies) {
+        if (agencies[agency].brojTelefona === value) {
+            if (agencies[curAgencyToEdit].brojTelefona === value) {
+                continue;
+            }
+            ok2 = 0;
+            break
+        }
+    }
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (testing != true) {
+        errorMessage.innerText = 'Pogrešan format broja telefona!';
+        ok = 0;
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Broj telefona je zauzet!';
+        ok = 0;
+    } else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditAgencyInputIme(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let regexIme = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\d\s']+$/;
+    let errorMessage = document.getElementById("error-agency-ime");
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (!regexIme.test(value)) { 
+        errorMessage.innerText = 'Pogrešni karakteri!';
+        ok = 0;
+    }  else if (value.length < 2) {
+        errorMessage.innerText = 'Dužina imena >= 2';
+        ok = 0;
+    } else if (value.length > 30) {
+        errorMessage.innerText = 'Dužina imena <= 30';
+        ok = 0;
+    }  else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+var deletedDestRightNow = 0;
+function loadDestinations3(agencyID, destinacijeID, destInDestID) {
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                destinationsID = [];
+                destinations = JSON.parse(request.responseText);
+                for (let id in destinations) {
+                    destinationsID.push(id);
+                }
+                addDestinationsToEditAgencyPopup(agencyID, destinacijeID, destinations[destinacijeID]);
+                deletedDestRightNow = 1;
+                closeDeleteDestinationInAgencyPopup();
+                editAgencyPopup(agencyID);
+            } else {
+                window.location.href = "error.html";
+            }
+        }
+    }
+    request.open('GET', firebaseUrl + '/destinacije.json');
+    request.send();
+}
+function deleteDestinationInAgency(id) {
+    let ids = id.split(",");
+    let agencyID = ids[0];
+    let destinacijeID = ids[1];
+    let destInDestID = ids[2];
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                loadDestinations3(agencyID, destinacijeID, destInDestID);          
+            } else {
+                window.location.href = "error.html";
+            }            
+        }
+    }
+    request.open('DELETE', firebaseUrl + '/destinacije/' + destinacijeID + "/" + destInDestID + '.json');
+    request.send(); 
+}
+function closeEditAgencyPopup() {
+    if (deletedDestRightNow === 1) {
+        deletedDestRightNow = 0;
+        location.reload();
+    }
+    popupClicked = 0;
+    let popup = document.querySelector(".edit-agency-div")
+    popup.style.display = "none";
+    let main = document.querySelector(".main");
+    main.style.opacity = "1";
+    main.style.filter = "none";
+    let adminBody = document.querySelector(".admin-body");
+    adminBody.style.opacity = "1";
+    adminBody.style.filter = "none";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.filter = "none";
+    navbar.style.opacity = "1";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "1";
+    goUp.style.filter = "none";
+    document.body.style.overflow = "auto";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "visible";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "visible";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "visible";
+}
 function closeDeleteDestinationInAgencyPopup() {
     let popup = document.getElementById("delete-destination-popup");
     popup.style.display = "none";
     let editAgencyPopup = document.querySelector(".edit-agency-div");
     editAgencyPopup.style.display = "flex";
 }
-
 function addDestinationsToEditAgencyPopup(agencyID, destinacijeID, destinacije) {
     let div = document.querySelector(".edit-agency-destinacije")
     while (div.firstChild) {
@@ -203,8 +781,6 @@ function addDestinationsToEditAgencyPopup(agencyID, destinacijeID, destinacije) 
     btnEditAgencyAddDestination.innerHTML = "<i class='fa fa-plus-circle' aria-hidden=';'true'></i>"
     btnEditAgencyAddDestination.classList.add("btn-edit-agency-add-destination")
     for (let destInDestID in destinacije) {
-        //console.log(destInDestID);
-        //console.log(destinacije[destInDestID])
         let destInDest = destinacije[destInDestID]
         let divEditAgencyDestination = document.createElement("div")
         divEditAgencyDestination.classList.add("edit-agency-destination");
@@ -219,7 +795,7 @@ function addDestinationsToEditAgencyPopup(agencyID, destinacijeID, destinacije) 
         img.style.height = "40px";
         divLabel.appendChild(img)
         let label = document.createElement("label");
-        label.style.marginLeft = "10px";
+        label.style.marginLeft = "15px";
         label.htmlFor = destInDestID;
         label.innerHTML = destInDest.naziv;  
         divLabel.appendChild(label);
@@ -227,17 +803,18 @@ function addDestinationsToEditAgencyPopup(agencyID, destinacijeID, destinacije) 
         let divButtons = document.createElement("div")
         divButtons.classList.add("buttons")
         divEditAgencyDestination.appendChild(divButtons);
-        let buttonEditDestinationInAgency = document.createElement("button")    
-        buttonEditDestinationInAgency.classList.add("btn-edit-dest-in-agency");
-        divButtons.appendChild(buttonEditDestinationInAgency)
         let buttonDeleteDestinationInAgency = document.createElement("button")    
         divButtons.appendChild(buttonDeleteDestinationInAgency)
-        buttonEditDestinationInAgency.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
         buttonDeleteDestinationInAgency.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
         buttonDeleteDestinationInAgency.classList.add("btn-delete-dest-in-agency");
         let idDel = agencyID + "," + destinacijeID + "," + destInDestID;
         buttonDeleteDestinationInAgency.setAttribute("id", idDel);
     }
+    let btnExit = document.createElement("button")
+    btnExit.classList.add("edit-agency-btn-exit")
+    btnExit.innerHTML = '<i class="fa fa-times-circle" aria-hidden="true"></i>';
+    btnExit.addEventListener("click", closeEditAgencyPopup);
+    div.appendChild(btnExit); 
     let buttons = document.querySelectorAll(".btn-delete-dest-in-agency");
     buttons.forEach(button => {
         button.addEventListener('click', () => {
@@ -248,9 +825,6 @@ function addDestinationsToEditAgencyPopup(agencyID, destinacijeID, destinacije) 
             let destinacijeID = ids[1];
             let destInDestID = ids[2];
             btnDeleteYes.setAttribute("id", buttonID);
-            console.log("agencyID: " + agencyID);
-            console.log("destinacijeID: " + destinacijeID);
-            console.log("destInDestID: " + destInDestID);
             let destinacije = destinations[destinacijeID];
             let destInDest = destinacije[destInDestID];
             let p = document.getElementById("upozorenje-poruka-destinacija");
@@ -263,14 +837,13 @@ function addDestinationsToEditAgencyPopup(agencyID, destinacijeID, destinacije) 
     }); 
     
 }
-
 function editAgencyPopup(agencyID) {
     if (popupClicked === 1) {
         return
     }
     popupClicked = 1
-    window.scrollTo(0, 0);
-    
+    curAgencyToEdit = agencyID;
+
     let agencija = agencies[agencyID]
     let destinacijeID = agencija.destinacije
     let destinacije = destinations[destinacijeID]
@@ -278,33 +851,48 @@ function editAgencyPopup(agencyID) {
     let popup = document.querySelector(".edit-agency-div")
     popup.style.display = "flex";
     let main = document.querySelector(".main");
-    main.style.opacity = "0.1";
-    mainFilterLogin = main.style.filter;
+    main.style.opacity = "0.3";
     main.style.filter = "blur(4px)";
+    let adminBody = document.querySelector(".admin-body");
+    adminBody.style.opacity = "0.3";
+    adminBody.style.filter = "blur(4px)";
     let navbar = document.querySelector(".navbar");
-    navbar.style.opacity = "0.1";
+    navbar.style.opacity = "0.3";
     navbar.style.filter = "blur(4px)";
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
     document.body.style.overflow = "hidden";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "hidden";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "hidden";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "hidden";
 
-    addDestinationsToEditAgencyPopup(agencyID, destinacijeID, destinacije);
-    
-    return
-    let popupEditAgency = document.querySelector(".edit-agency-div")
-    let editAgencyDestinacije = document.querySelector("edit-agency-destinacije");
-    for (dest in agencija.destinacije)
+    let imeAgencije = document.getElementById("ime-edit-agency");
+    imeAgencije.value = agencija.naziv;
+    let telefonAgencije = document.getElementById("telefon-edit-agency");
+    telefonAgencije.value = agencija.brojTelefona;
 
+    let emailAgencije = document.getElementById("email-edit-agency");
+    emailAgencije.value = agencija.email;
+    let adresaAgencije = document.getElementById("adresa-edit-agency");
+    adresaAgencije.value = agencija.adresa;
 
-    popupEditAgency.style.display = "flex";
-    
+    let logoAgencije = document.getElementById("logo-edit-agency");
+    logoAgencije.value = agencija.logo;
+    let godinaAgencije = document.getElementById("godina-edit-agency");
+    godinaAgencije.value = agencija.godina;
     let h1 = document.querySelector(".edit-agency-div h1")
-    h1.innerHTML = "EDIT - " + agencija.naziv;
+    h1.style.display = "flex";
+    h1.style.justifyContent = "center";
+    h1.style.alignItems = "center";
+    h1.innerHTML = "EDIT - " + agencija.naziv + "<img style = 'margin-left: 15px; height: 35px; width: 45px;' src = '" + agencija.logo + "'>";
+    addDestinationsToEditAgencyPopup(agencyID, destinacijeID, destinacije);
 }
 
 
-
-
+// DELETE AGENCY
 function closeDeleteAgencyPopup() {
     popupClicked = 0;
     let popup = document.getElementById("delete-agency-popup");
@@ -314,6 +902,9 @@ function closeDeleteAgencyPopup() {
     let main = document.querySelector(".main");
     main.style.opacity = "1";
     main.style.filter = "none";
+    let adminBody = document.querySelector(".admin-body");
+    adminBody.style.opacity = "1";
+    adminBody.style.filter = "none";
     let navbar = document.querySelector(".navbar");
     navbar.style.filter = "none";
     navbar.style.opacity = "1";
@@ -321,23 +912,23 @@ function closeDeleteAgencyPopup() {
     goUp.style.opacity = "1";
     goUp.style.filter = "none";
     document.body.style.overflow = "auto";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "visible";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "visible";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "visible";
 }
 function deleteAgency() {
-    if (popupClicked === 1) {
-        return
-    }
-    //  alert("Brisete user: " + userID);
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
             if (this.status == 200) {
-                //console.log('Agency deleted successfully!');
-                //console.log('User deleted successfully!');
                 closeDeleteAgencyPopup()
                 loadAgencies2()
                 //location.reload();
             } else {
-                alert('Error occurred. Agency could not be deleted.')
+                window.location.href = "error.html";
             }            
         }
     }
@@ -353,7 +944,6 @@ function doYouWantToDeleteAgency(agencyID) {
     let p = document.getElementById("upozorenje-poruka-agencija");
     p.innerHTML = "Da li ste sigurni da želite da obrišete agenciju '" + agencija.naziv + "'?";
     agencyDeleteID = agencyID;
-    console.log(agencyDeleteID);
     let popup = document.getElementById("delete-agency-popup");
     popup.style.display = "block";
     let popup2 = document.querySelector(".delete-popup2");
@@ -362,16 +952,25 @@ function doYouWantToDeleteAgency(agencyID) {
     let main = document.querySelector(".main");
     main.style.opacity = "0.3";
     main.style.filter = "blur(4px)";
+    let adminBody = document.querySelector(".admin-body");
+    adminBody.style.opacity = "0.3";
+    adminBody.style.filter = "blur(4px)";
     let navbar = document.querySelector(".navbar");
     navbar.style.opacity = "0.3";
     navbar.style.filter = "blur(4px)";
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
     document.body.style.overflow = "hidden";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "hidden";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "hidden";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "hidden";
 }
 
 
-
+// DELETE USER
 function closeDeleteUserPopup() {
     popupClicked = 0;
     let popup = document.getElementById("delete-user-popup");
@@ -381,6 +980,9 @@ function closeDeleteUserPopup() {
     let main = document.querySelector(".main");
     main.style.opacity = "1";
     main.style.filter = "none";
+    let adminBody = document.querySelector(".admin-body");
+    adminBody.style.opacity = "1";
+    adminBody.style.filter = "none";
     let navbar = document.querySelector(".navbar");
     navbar.style.filter = "none";
     navbar.style.opacity = "1";
@@ -388,19 +990,23 @@ function closeDeleteUserPopup() {
     goUp.style.opacity = "1";
     goUp.style.filter = "none";
     document.body.style.overflow = "auto";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "visible";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "visible";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "visible";
 }
 function deleteUser() {
-    //  alert("Brisete user: " + userID);
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
             if (this.status == 200) {
-                //console.log('User deleted successfully!');
-                closeDeleteUserPopup()
-                loadUsers2()
+                closeDeleteUserPopup();
+                loadUsers2();
                 //location.reload();
             } else {
-                alert('Error occurred. User could not be deleted.')
+                window.location.href = "error.html";
             }    
                     
         }
@@ -417,7 +1023,6 @@ function doYouWantToDeleteUser(userID) {
     let p = document.getElementById("upozorenje-poruka-user");
     p.innerHTML = "Da li ste sigurni da želite da obrišete korisnika '@" + user.korisnickoIme + "'?";
     userDeleteID = userID;
-    console.log(userDeleteID);
     let popup = document.getElementById("delete-user-popup");
     popup.style.display = "block";
     let popup2 = document.querySelector(".delete-popup1");
@@ -426,16 +1031,25 @@ function doYouWantToDeleteUser(userID) {
     let main = document.querySelector(".main");
     main.style.opacity = "0.3";
     main.style.filter = "blur(4px)";
+    let adminBody = document.querySelector(".admin-body");
+    adminBody.style.opacity = "0.3";
+    adminBody.style.filter = "blur(4px)";
     let navbar = document.querySelector(".navbar");
     navbar.style.opacity = "0.3";
     navbar.style.filter = "blur(4px)";
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
     document.body.style.overflow = "hidden";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "hidden";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "hidden";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "hidden";
 }
 
 
-
+// LOGIN
 function tryToLogin() {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -469,7 +1083,7 @@ function tryToLogin() {
                 }   
                 errorKorisnicko.innerText = "Ne postoji korisničko ime!";   
             } else {
-                alert('Error occurred. Car could not be loaded.')
+                window.location.href = "error.html";
             }   
             return users;     
         }
@@ -481,8 +1095,47 @@ function isLoginValid() {
     event.preventDefault();
     tryToLogin();
 }
+// LOGIN POPUP
+var mainFilterLogin;
+function showLogin() {
+    if (popupClicked === 1) {
+        return
+    }
+    popupClicked = 1
+    window.scrollTo(0, 0);
+    let logDiv = document.querySelector(".login-div");
+    logDiv.style.display = "flex";
+    let main = document.querySelector(".main");
+    main.style.opacity = "0.1";
+    mainFilterLogin = main.style.filter;
+    main.style.filter = "blur(4px)";
+
+    let navbar = document.querySelector(".navbar");
+    navbar.style.opacity = "0.1";
+    navbar.style.filter = "blur(4px)";
+    
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "0";
+    document.body.style.overflow = "hidden";
+}
+function closeLogin() {
+    popupClicked = 0
+    let logDiv = document.querySelector(".login-div");
+    logDiv.style.display = "none";
+    let main = document.querySelector(".main");
+    main.style.filter = mainFilterLogin;
+    main.style.opacity = "1";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.filter = "none";
+    navbar.style.opacity = "1";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "1";
+    goUp.style.filter = "none";
+    document.body.style.overflow = "auto";
+}
 
 
+// REGISTER
 function registerNewUser() {
     let ime1 = document.getElementById('ime-register').value;
     let prezime1 = document.getElementById('prezime-register').value;
@@ -492,7 +1145,7 @@ function registerNewUser() {
     let psw1 = document.getElementById('psw-register').value;
     let adresa1 = document.getElementById('adresa-register').value;
     let telefon1 = document.getElementById('telefon-register').value;
-    var newUser = {
+    let newUser = {
         adresa: adresa1,
         datumRodjenja: datum1,
         email: email1,
@@ -502,17 +1155,15 @@ function registerNewUser() {
         prezime: prezime1,
         telefon: telefon1   
     };
-    var userJson = JSON.stringify(newUser);
-    console.log(userJson);
+    let userJson = JSON.stringify(newUser);
     let request = new XMLHttpRequest();
     request.open('POST', firebaseUrl + '/korisnici.json');
     request.setRequestHeader('Content-Type', 'application/json');
     request.onreadystatechange = function () {
     if (this.readyState == 4) {
         if (this.status == 200) {
-            console.log('Novi korisnik je registrovan!');
         } else {
-            console.error('Greška u registraciji!');
+            window.location.href = "error.html";
         }
     }
     };
@@ -562,9 +1213,7 @@ function isRegisterValid() {
         okForma = 0;
     }
     if (okForma === 1) {
-        //alert("Registrovani ste!");
         registerNewUser();
-        alert("Registracija USPEŠNA!");
         let btnClose = document.querySelector(".btn-register-cancel");
         btnClose.click();
         location.reload();
@@ -574,22 +1223,15 @@ function isRegisterValid() {
         return false;
     }
 }
-
-
 function validateRegisterInputIme(elem) {
     let value = elem.value.trim();
     let ok = 1;
-    let ok2 = 1;
-    for (let i = 0; i < value.length; i++) {
-        if ((value.codePointAt(i) < 65) || ((value.codePointAt(i) > 90) && (value.codePointAt(i) < 97)) || value.codePointAt(i) > 122) {
-            ok2 = 0;
-        }
-    }
+    let regexIme = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\s']+$/;
     let errorMessage = document.getElementById("error-ime");
     if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
         ok = 0;
-    } else if (ok2 === 0) { 
+    } else if (!regexIme.test(value)) { 
         errorMessage.innerText = 'Pogrešni karakteri!';
         ok = 0;
     } else if (value.length < 2) {
@@ -611,16 +1253,12 @@ function validateRegisterInputIme(elem) {
 function validateRegisterInputPrezime(elem) {
     let value = elem.value.trim();
     let ok = 1;
-    for (let i = 0; i < value.length; i++) {
-        if ((value.codePointAt(i) < 65) || ((value.codePointAt(i) > 90) && (value.codePointAt(i) < 97)) || value.codePointAt(i) > 122) {
-            ok = 0;
-        }
-    }
+    let regexPrezime = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\s']+$/;
     let errorMessage = document.getElementById("error-prezime");
-    if (ok === 0) {
+    if (!regexPrezime.test(value)) {
         errorMessage.innerText = 'Pogrešni karakteri!';
         ok = 0;
-    } else if (value === '') {
+    }  else if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
         ok = 0;
     } else if (value.length < 2) {
@@ -678,12 +1316,19 @@ function validateRegisterInputDate(elem) {
         return false;
     }
 }
-function validateRegisterInputEmail(elem) {
+function validateRegisterInputEmail(elem) { 
     let value = elem.value.trim();
     let ok = 1;
     let errorMessage = document.getElementById("error-email");
     let atIndex = value.indexOf("@");
     let dotIndex = value.lastIndexOf(".");
+    let ok2 = 1;
+    for (let user in users) {
+        if (users[user].email === value) {
+            ok2 = 0;
+            break
+        }
+    }
     if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
         ok = 0;
@@ -691,7 +1336,10 @@ function validateRegisterInputEmail(elem) {
     else if (atIndex < 1 || dotIndex < atIndex + 2 || dotIndex + 2 >= value.length) {
         errorMessage.innerText = 'Pogrešan email!';
         ok = 0;
-    }  else {
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Email je zauzet!';
+        ok = 0;
+    } else {
         errorMessage.innerText = '';
         ok = 1;
     }
@@ -707,8 +1355,18 @@ function validateRegisterInputUsername(elem) {
     let ok = 1;
     let errorMessage = document.getElementById("error-username");
     let usernameRegex = /^[a-z][a-z0-9]*$/;
+    let ok2 = 1;
+    for (let user in users) {
+        if (users[user].korisnickoIme === value) {
+            ok2 = 0;
+            break
+        }
+    }
     if (usernameRegex.test(value) != true) {
         errorMessage.innerText = 'Pogrešno korisničko ime!';
+        ok = 0;
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Korisničko ime je zauzeto!';
         ok = 0;
     } else {
         errorMessage.innerText = '';
@@ -719,6 +1377,17 @@ function validateRegisterInputUsername(elem) {
         return true;
     } else {
         return false;
+    }
+}
+function togglePswVisibility3() {
+    let passwordInputEditUser = document.getElementById("psw-edit-user");
+    let passwordToggleEditUser = document.querySelector(".psw-edit-user-toggle");
+    if (passwordInputEditUser.type === "password") {
+        passwordInputEditUser.type = "text";
+        passwordToggleEditUser.innerHTML = '<i class = "fa fa-eye" aria-hidden = "true"> </i>';
+    } else {
+        passwordInputEditUser.type = "password";
+        passwordToggleEditUser.innerHTML = '<i class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
     }
 }
 function togglePswVisibility2() {
@@ -772,9 +1441,13 @@ function validateRegisterInputPsw(elem) {
 function validateRegisterInputAddress(elem) {
     let value = elem.value.trim();
     let ok = 1;
+    let regexAdresa = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\d\s',']+$/;
     let errorMessage = document.getElementById("error-address");
     if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (!regexAdresa.test(value)) {
+        errorMessage.innerText = 'Pogrešni karakteri!';
         ok = 0;
     } else {
         errorMessage.innerText = '';
@@ -791,12 +1464,22 @@ function validateRegisterInputPhone(elem) {
     let value = elem.value.trim();
     let ok = 1;
     let errorMessage = document.getElementById("error-phone");
-    let testing = /06[1-6]{1}[0-9]{7}/.test(value);
+    let testing = /^06[1-6]{1}[0-9]{6}$/.test(value);
+    let ok2 = 1;
+    for (let user in users) {
+        if (users[user].telefon === value) {
+            ok2 = 0;
+            break
+        }
+    }
     if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
         ok = 0;
     } else if (testing != true) {
-        errorMessage.innerText = 'Pogrešan br. telefona!';
+        errorMessage.innerText = 'Pogrešan broj telefona!';
+        ok = 0;
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Broj telefona je zauzet!';
         ok = 0;
     } else {
         errorMessage.innerText = '';
@@ -809,49 +1492,8 @@ function validateRegisterInputPhone(elem) {
         return false;
     }
 }
-
-
-var mainFilterLogin;
-function showLogin() {
-    if (popupClicked === 1) {
-        return
-    }
-    popupClicked = 1
-    window.scrollTo(0, 0);
-    let logDiv = document.querySelector(".login-div");
-    logDiv.style.display = "flex";
-    let main = document.querySelector(".main");
-    main.style.opacity = "0.1";
-    mainFilterLogin = main.style.filter;
-    main.style.filter = "blur(4px)";
-
-    let navbar = document.querySelector(".navbar");
-    navbar.style.opacity = "0.1";
-    navbar.style.filter = "blur(4px)";
-    
-    let goUp = document.querySelector(".go-up");
-    goUp.style.opacity = "0";
-    document.body.style.overflow = "hidden";
-}
-function closeLogin() {
-    popupClicked = 0
-    let logDiv = document.querySelector(".login-div");
-    logDiv.style.display = "none";
-    let main = document.querySelector(".main");
-    main.style.filter = mainFilterLogin;
-    main.style.opacity = "1";
-    let navbar = document.querySelector(".navbar");
-    navbar.style.filter = "none";
-    navbar.style.opacity = "1";
-    let goUp = document.querySelector(".go-up");
-    goUp.style.opacity = "1";
-    goUp.style.filter = "none";
-    document.body.style.overflow = "auto";
-}
-
-
+// REGISTER POPUP
 var mainFilterRegister;
-
 function showRegister() {
     if (popupClicked === 1) {
         return
@@ -890,6 +1532,7 @@ function closeRegister() {
 }
 
 
+// GENERISANJE TABELA U ADMIN PANELU
 function deleteUsersTable() {
     let tableUsersBody = document.querySelector(".tabela-korisnici");
     while (tableUsersBody.firstChild) {
@@ -936,17 +1579,19 @@ function createUsersTable() {
         tableUsers.append(tr);
         let user = users[id];
         let td = document.createElement("td")
-        let buttonEdit = document.createElement("button")
+        let div1 = document.createElement("div");
+        let buttonEdit = document.createElement("button");
         buttonEdit.setAttribute("id", (id));
-        buttonEdit.setAttribute("onclick", "editAgencyPopup(this.id)");
+        buttonEdit.setAttribute("onclick", "editUserPopup(this.id)");
         buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
-
         let buttonDelete = document.createElement("button")
         buttonDelete.setAttribute("id", (id));
         buttonDelete.setAttribute("onclick", "doYouWantToDeleteUser(this.id)");
         buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
-        td.append(buttonEdit);
-        td.append(buttonDelete);
+        div1.append(buttonEdit);   
+        div1.append(buttonDelete);  
+        div1.classList.add("edit-delete-buttons");
+        td.append(div1);
         tr.append(td);
         for (i in user) {
             let td = document.createElement("td")
@@ -955,8 +1600,6 @@ function createUsersTable() {
         }
     }       
 }
-
-
 function deleteAgencyTable() {
     let tableAgencyBody = document.querySelector(".tabela-agencije");
     while (tableAgencyBody.firstChild) {
@@ -1113,43 +1756,27 @@ function createDestinationTable() {
 }
 
 
+// OCITAJ POCETNU STRANICU
+function ocitajPocetnu() {
+    window.location.href = "index.html";
+}
+// SCROLL TO TOP DUGME
 function scrollToTop() {
     if (popupClicked === 1) {
         return
     }
-    var position = document.body.scrollTop || document.documentElement.scrollTop;
+    let position = document.body.scrollTop || document.documentElement.scrollTop;
     if (position) {
       window.scrollBy(0, -Math.max(1, Math.floor(position / 10)));
       scrollAnimation = setTimeout("scrollToTop()", 12);
     } else clearTimeout(scrollAnimation);
 }
-
+// MAIN
 function main() {
 
-    document.addEventListener("click", () => {
-        if (popupClicked === 1) {
-            let nav = document.querySelector(".navbar");
-            nav.style.visibility = "hidden";
-            let adminSelect = document.querySelector(".admin-select");
-            adminSelect.style.visibility = "hidden";
-            let footer = document.querySelector(".footer");
-            footer.style.visibility = "hidden";
-            
-        } else {
-            let nav = document.querySelector(".navbar");
-            nav.style.visibility = "";
-            let adminSelect = document.querySelector(".admin-select");
-            adminSelect.style.visibility = "";
-            let footer = document.querySelector(".footer");
-            footer.style.visibility = "";
-        }
-    });
-
-    
     let nav = document.querySelector(".navbar");
     let nava = document.querySelectorAll(".nava");
     if (window.scrollY > 0) {
-        console.log(window.scrollY);
         if (clicked === 0) {
             nav.classList.add("scrolled");
             for (let i = 0; i < nava.length; i++) {
@@ -1263,6 +1890,14 @@ function main() {
     createUsersTable();
     createDestinationTable();
 
+    let footer = document.querySelector(".footer");
+    let navbar = document.querySelector(".navbar");
+    let footerHeight = footer.offsetHeight;
+    let navbarHeight = navbar.offsetHeight;
+    let displayHeight = window.innerHeight;
+    let main = document.querySelector(".main");
+    main.style.minHeight = (displayHeight - footerHeight - navbarHeight) + "px";  
+
     let selectDropdown = document.getElementById("select-dropdown");
     let agencijeTable = document.querySelector(".tabela-agencije");
     let korisniciTable = document.querySelector(".tabela-korisnici");
@@ -1285,16 +1920,24 @@ function main() {
         }
     });
 
+    let logo1 = document.getElementById("logo1");
+    logo1.onclick = ocitajPocetnu;
+
     let loginForm = document.getElementById("login-form");
     loginForm.addEventListener("submit", isLoginValid)
     
     let registerForm = document.getElementById("register-form");
     registerForm.addEventListener("submit", isRegisterValid)
 
+    let editAgencyForm = document.getElementById("edit-agency-form");
+    editAgencyForm.addEventListener("submit", isEditAgencyValid)
 
+    let editUserForm = document.getElementById("edit-user-form");
+    editUserForm.addEventListener("submit", isEditUserValid)
 }
 
 
+// LOAD IZ FIREBASE
 function loadUsers() {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -1305,10 +1948,10 @@ function loadUsers() {
                 for (let id in users) {
                     usersID.push(id);
                 }       
+                main(); 
             } else {
                 window.location.href = "error.html";
-            }  
-            main();      
+            }      
         }
     }
     request.open('GET', firebaseUrl + '/korisnici.json');
@@ -1324,7 +1967,6 @@ function loadUsers2() {
                 for (let id in users) {
                     usersID.push(id);
                 }    
-                //console.log(users)
                 createUsersTable()  
             } else {
                 window.location.href = "error.html";
@@ -1334,7 +1976,6 @@ function loadUsers2() {
     request.open('GET', firebaseUrl + '/korisnici.json');
     request.send();
 }
-
 
 function loadDestinations() {
     let request = new XMLHttpRequest();
@@ -1346,10 +1987,10 @@ function loadDestinations() {
                 for (let id in destinations) {
                     destinationsID.push(id);
                 }
+                loadUsers();
             } else {
                 window.location.href = "error.html";
             }
-            loadUsers();
         }
     }
     request.open('GET', firebaseUrl + '/destinacije.json');
@@ -1374,8 +2015,6 @@ function loadDestinations2() {
     request.send();
 }
 
-
-
 function loadAgencies() {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -1386,10 +2025,10 @@ function loadAgencies() {
                 for (let id in agencies) {
                     agenciesID.push(id);
                 }       
+                loadDestinations();
             } else {
                 window.location.href = "error.html";
             }
-            loadDestinations();
         }
     }
     request.open('GET', firebaseUrl + '/agencije.json');

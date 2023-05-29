@@ -104,6 +104,9 @@ body {
 .logo img{
     width: 130px;
 }
+    #logo1 {
+        cursor: pointer;
+    }
 .navbar.scrolled {
     margin-top: 0px;
     color: rgb(0, 0, 0);
@@ -295,7 +298,7 @@ body {
                 outline: none;
             }
             .login-submit-cancel {
-                margin-top: 10px;
+                margin-top: 15px;
                 display: flex;
                 flex-direction: row;
             }
@@ -448,7 +451,7 @@ body {
                 .register-submit-cancel {
                     display: flex;
                     flex-direction: row;
-                    margin-top: 10px;
+                    margin-top: 20px;
                 }
                     .btn-submit-register {
                         background-color: #0b890b;
@@ -476,7 +479,6 @@ body {
                         opacity: 1;
                     }
 }
-
 
 @media (max-width: 768px) {
     .register-div {
@@ -599,6 +601,7 @@ body {
                         flex-direction: column;
                     }    
                 .register-submit-cancel {
+                    margin-top: 20px;
                     display: flex;
                     flex-direction: row;
                 }
@@ -630,7 +633,6 @@ body {
 }
 
 
-
 .pass-input-view {
     position: relative;
 }
@@ -652,10 +654,22 @@ body {
         outline: none;
         cursor: pointer;
     }
+    .psw-edit-user-toggle {
+        position: absolute;
+        top: 29%;
+        right: 14px;
+        background: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
     .psw-register-toggle i {
         font-size: 16px;
     }
     .psw-login-toggle i {
+        font-size: 16px;
+    }
+    .psw-edit-user-toggle i {
         font-size: 16px;
     }
     .psw-register-toggle:focus i {
@@ -664,7 +678,9 @@ body {
     .psw-login-toggle:focus i {
         color: #007bff;
     }
-
+    .psw-edit-user-toggle:focus i {
+        color: #007bff;
+    }
 
 .error-message {
     color: red;
@@ -919,7 +935,7 @@ body {
                 width: 550px;
                 max-width: 700px;
                 padding: 15px;
-                padding-bottom: 0px;
+                padding-bottom: 10px;
                 padding-right: 25px;
                 padding-left: 25px;
                 z-index: 1010;
@@ -1012,7 +1028,7 @@ body {
                 .edit-agency-submit-cancel {
                     display: flex;
                     flex-direction: row;
-                    margin-top: 10px;
+                    margin-top: 20px;
                 }
                     .btn-submit-edit-agency {
                         background-color: #0b890b;
@@ -1040,7 +1056,6 @@ body {
                         opacity: 1;
                     }
 }
-
 
 @media (max-width: 768px) {
     .edit-agency-div {
@@ -1158,7 +1173,7 @@ body {
                     }
                 .edit-agency-submit-cancel {
                     display: flex;
-                    margin-top: 10px;
+                    margin-top: 20px;
                     flex-direction: row;
                 }
                     .btn-submit-edit-agency {
@@ -1210,7 +1225,7 @@ body {
         background-color: #e8e8e8;
     }
         .edit-agency-div-label {
-            width: 120px;
+            width: 150px;
             display: flex;
             justify-content: flex-start;
             align-items: center;
@@ -1219,7 +1234,7 @@ body {
             padding: 3px 6px 3px 6px;   
         }
         .buttons {
-            width: 100px;
+            width: 60px;
             display: flex;
             flex-direction: row;
             justify-content: space-evenly;
@@ -1232,22 +1247,338 @@ body {
             font-size: 36px;
             background-color: #ffffff;
             border: none;
-            margin-bottom: 15px; 
+            margin-bottom: 20px; 
             cursor: pointer;
         }
         .btn-edit-agency-add-destination:hover {
             opacity: 1;
         }
-
-
+            .edit-agency-btn-exit {
+                font-size: 27px;
+                border: none;
+                opacity: 0.6;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                margin-left: auto;
+                margin-right: 20px;
+                background-color: white;
+                cursor: pointer;
+            }
+            .edit-agency-btn-exit:hover {
+                opacity: 1;
+            }
 
 #p-edit-destination-in-agency {
-    padding-top: 13px;
-    padding-bottom: 10px;
+    padding-top: 15px;
+    padding-bottom: 20px;
     font-size: 20px;
     text-decoration: 0.8px underline rgba(0, 0, 0, 0.979);
     text-underline-offset: 2px;
     text-align: center;
+}
+
+
+
+@media (min-width: 769px) {
+    .edit-user-div {
+        display: flex;
+        justify-content: center;
+        display: none;
+        z-index: 1010;
+        color: black;
+    }
+        #edit-user-popup {
+            position: fixed; 
+            top: 5vh;
+            bottom: 5vh;
+            max-height: 100%;
+            z-index: 1010;
+            overflow: auto;
+        }
+            #edit-user-form {
+                border-radius: 20px;
+                border: 1.5px solid rgb(145, 145, 145);
+                max-height: 100%;
+                overflow: auto;
+                width: 550px;
+                max-width: 700px;
+                padding: 15px;
+                padding-right: 25px;
+                padding-left: 25px;
+                z-index: 1010;
+                background-color: white;
+            }
+                #edit-user-form h1 {
+                    text-align: center;
+                    margin-bottom: 22px;
+                    font-size: 26px;
+                }
+                #edit-user-form label {
+                    font-size: 15px;
+                }
+                #edit-user-form input {
+                    width: 100%;
+                    padding: 5px;
+                    margin-top: 6px;
+                    height: 38px;
+                    margin-bottom: 15px;
+                    border: none;
+                    background: #e8e8e8;
+                }
+                #edit-user-form input:focus {
+                    background-color: #ddd;
+                    outline: none;
+                }
+
+                .edit-user-ime-i-prezime {
+                    display: flex;
+                    flex-direction: row; 
+                    justify-content: center;                    
+                }
+                    .edit-user-ime-input {
+                        margin-right: 7px;
+                        display: flex;
+                        width: 50%;
+                        flex-direction: column;
+                    }
+                    .edit-user-prezime-input {
+                        margin-left: 7px;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                .edit-user-datum-i-email {
+                    display: flex;
+                    flex-direction: row; 
+                    justify-content: center;                         
+                }
+                    .edit-user-datum-input {
+                        margin-right: 7px;
+                        display: flex;
+                        width: 50%;
+                        flex-direction: column;
+                    }
+                    .edit-user-email-input {
+                        margin-left: 7px;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                    }    
+                .edit-user-korisnicko-i-psw {
+                    display: flex;
+                    flex-direction: row; 
+                    justify-content: center;                          
+                }
+                    .edit-user-korisnicko-input {
+                        display: flex;
+                        width: 50%;
+                        margin-right: 7px;
+                        flex-direction: column;
+                    }
+                    .edit-user-psw-input {
+                        margin-left: 7px;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                .edit-user-adresa-i-telefon {
+                    display: flex;
+                    flex-direction: row; 
+                    justify-content: center;                  
+                }
+                    .edit-user-adresa-input {
+                        margin-right: 7px;
+                        display: flex;
+                        width: 50%;
+                        flex-direction: column;
+                    }
+                    .edit-user-telefon-input {
+                        width: 50%;
+                        margin-left: 7px;
+                        display: flex;
+                        flex-direction: column;
+                    }    
+                .edit-user-submit-cancel {
+                    display: flex;
+                    flex-direction: row;
+                    margin-top: 20px;
+                }
+                    .btn-submit-edit-user {
+                        background-color: #0b890b;
+                        color: white;
+                        padding: 16px 20px;
+                        border: none;
+                        cursor: pointer;
+                        width: 50%;
+                        margin-bottom:10px;
+                        opacity: 0.8;
+                        margin-right: 5px;
+                    }
+                    .btn-edit-user-cancel {
+                        background-color: rgb(238, 31, 86);
+                        color: white;
+                        padding: 16px 20px;
+                        border: none;
+                        cursor: pointer;
+                        width: 50%;
+                        margin-bottom:10px;
+                        margin-left: 5px;
+                        opacity: 0.8;
+                    }
+                    #edit-user-form button:hover, .open-button:hover {
+                        opacity: 1;
+                    }
+}
+@media (max-width: 768px) {
+    .edit-user-div {
+        display: flex;
+        justify-content: center;
+        display: none;
+        z-index: 1010;
+        overflow: auto;
+        color: black;
+    }
+        #edit-user-popup {
+            position: fixed; 
+            top: 5vh;
+            bottom: 5vh;
+            max-height: 100%;
+            z-index: 1010;
+            overflow: auto;
+        }
+            #edit-user-form {
+                border-radius: 20px;
+                border: 1.5px solid rgb(145, 145, 145);
+                overflow: auto;
+                max-height: 100%;
+                max-width: 340px;
+                padding: 15px;
+                padding-right: 25px;
+                padding-left: 25px;
+                z-index: 1010;
+                background-color: white;
+            }
+                #edit-user-form h1 {
+                    text-align: center;
+                    margin-bottom: 20px;
+                    font-size: 24px;
+                }
+                #edit-user-form label {
+                    font-size: 14px;
+                }
+                #edit-user-form input {
+                    overflow: auto;
+                    width: 100%;
+                    padding: 7px;
+                    margin-top: 6px;
+                    height: 33px;
+                    margin-bottom: 14px;
+                    border: none;
+                    background: #e8e8e8;
+                }
+                #edit-user-form input:focus {
+                    background-color: #ddd;
+                    outline: none;
+                }
+
+                .edit-user-ime-i-prezime {
+                    display: flex;
+                    flex-direction: row; 
+                    justify-content: center;                    
+                }
+                    .edit-user-ime-input {
+                        margin-right: 7px;
+                        display: flex;
+                        width: 50%;
+                        flex-direction: column;
+                    }
+                    .edit-user-prezime-input {
+                        margin-left: 7px;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                .edit-user-datum-i-email {
+                    display: flex;
+                    flex-direction: row; 
+                    justify-content: center;                         
+                }
+                    .edit-user-datum-input {
+                        margin-right: 7px;
+                        display: flex;
+                        width: 50%;
+                        flex-direction: column;
+                    }
+                    .edit-user-email-input {
+                        margin-left: 7px;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                    }    
+                .edit-user-korisnicko-i-psw {
+                    display: flex;
+                    flex-direction: row; 
+                    justify-content: center;                          
+                }
+                    .edit-user-korisnicko-input {
+                        display: flex;
+                        width: 50%;
+                        margin-right: 7px;
+                        flex-direction: column;
+                    }
+                    .edit-user-psw-input {
+                        margin-left: 7px;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                .edit-user-adresa-i-telefon {
+                    display: flex;
+                    flex-direction: row; 
+                    justify-content: center;                  
+                }
+                    .edit-user-adresa-input {
+                        margin-right: 7px;
+                        display: flex;
+                        width: 50%;
+                        flex-direction: column;
+                    }
+                    .edit-user-telefon-input {
+                        width: 50%;
+                        margin-left: 7px;
+                        display: flex;
+                        flex-direction: column;
+                    }    
+                .edit-user-submit-cancel {
+                    margin-top: 20px;
+                    display: flex;
+                    flex-direction: row;
+                }
+                    .btn-submit-edit-user {
+                        background-color: #0b890b;
+                        color: white;
+                        padding: 16px 20px;
+                        border: none;
+                        cursor: pointer;
+                        width: 50%;
+                        margin-bottom:10px;
+                        opacity: 0.8;
+                        margin-right: 5px;
+                    }
+                    .btn-edit-user-cancel {
+                        background-color: rgb(238, 31, 86);
+                        color: white;
+                        padding: 16px 20px;
+                        border: none;
+                        cursor: pointer;
+                        width: 50%;
+                        margin-bottom:10px;
+                        margin-left: 5px;
+                        opacity: 0.8;
+                    }
+                    #edit-user-form button:hover, .open-button:hover {
+                        opacity: 1;
+                    }
 }
 
 
@@ -1303,3 +1634,4 @@ body {
 
 
   
+

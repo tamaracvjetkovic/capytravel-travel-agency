@@ -147,7 +147,7 @@
     <div class = "login-div"> 
         <div id = "login-popup">
             <form action = "" class = "form-container" id = "login-form">
-                <h1> Login </h1>
+                <h1 style = "padding-top: 5px; padding-bottom: 10px;"> Login </h1>
                 <label for = "korisnicko-login"> <b> Korisničko ime </b> </label>
                 <div class = "error-message" id = "error-login-korisnicko"> </div>
                 <input id = "korisnicko-login" type = "text" placeholder = "Username.." name = "korisnicko-login" required>
@@ -169,7 +169,7 @@
     <div class = "register-div"> 
         <div id = "register-popup">
             <form action = "" id = "register-form">
-                <h1> Sign Up </h1>
+                <h1 style = "padding-top: 10px; padding-bottom: 10px;"> Sign Up </h1>
                 <div class = "register-ime-i-prezime"> 
                     <div class = "register-ime-input"> 
                         <label for = "ime-register"> <b> Ime </b> </label>
@@ -214,12 +214,12 @@
                     <div class = "register-adresa-input">
                         <label for = "adresa-register"> <b> Adresa </b> </label>
                         <div class = "error-message" id = "error-address"> </div>
-                        <input id = "adresa-register" type = "text" placeholder = "Address.." name = "adresa-register" required oninput = "validateRegisterInputAddress(this)">
+                        <input id = "adresa-register" type = "text" placeholder = "Adress.." name = "adresa-register" required oninput = "validateRegisterInputAddress(this)">
                     </div>
                     <div class = "register-telefon-input">
                         <label for = "telefon-register"> <b> Telefon</b> </label>
                         <div class = "error-message" id = "error-phone"> </div>
-                        <input id = "telefon-register" type = "text" name = "telefon-register" placeholder = "06(1-6)1234123" pattern = "06[1-6]{1}[0-9]{7}" required oninput = "validateRegisterInputPhone(this)">
+                        <input id = "telefon-register" type = "text" name = "telefon-register" placeholder = "06(1-6)123123" required oninput = "validateRegisterInputPhone(this)">
                     </div>
                 </div>     
                 <div class = "register-submit-cancel">

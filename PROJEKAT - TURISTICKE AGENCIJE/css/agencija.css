@@ -102,6 +102,9 @@ body {
 .logo img{
     width: 130px;
 }
+    #logo1 {
+        cursor: pointer;
+    }
 .navbar.scrolled {
     margin-top: 0px;
     color: rgb(0, 0, 0);
@@ -247,13 +250,13 @@ body {
     justify-content: center;
     display: none;
     z-index: 1010;
+    color: black;
 }
     #login-popup {
         position: fixed; 
         top: 7vh;
         bottom: 7vh;
         z-index: 1010;
-        color: black;
     }
         #login-form {
             max-width: 280px;
@@ -282,7 +285,7 @@ body {
                 outline: none;
             }
             .login-submit-cancel {
-                margin-top: 10px;
+                margin-top: 15px;
                 display: flex;
                 flex-direction: row;
             }
@@ -435,7 +438,7 @@ body {
                 .register-submit-cancel {
                     display: flex;
                     flex-direction: row;
-                    margin-top: 10px;
+                    margin-top: 20px;
                 }
                     .btn-submit-register {
                         background-color: #0b890b;
@@ -463,7 +466,6 @@ body {
                         opacity: 1;
                     }
 }
-
 
 @media (max-width: 768px) {
     .register-div {
@@ -586,6 +588,7 @@ body {
                         flex-direction: column;
                     }    
                 .register-submit-cancel {
+                    margin-top: 20px;
                     display: flex;
                     flex-direction: row;
                 }
@@ -638,10 +641,22 @@ body {
         outline: none;
         cursor: pointer;
     }
+    .psw-edit-user-toggle {
+        position: absolute;
+        top: 29%;
+        right: 14px;
+        background: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
     .psw-register-toggle i {
         font-size: 16px;
     }
     .psw-login-toggle i {
+        font-size: 16px;
+    }
+    .psw-edit-user-toggle i {
         font-size: 16px;
     }
     .psw-register-toggle:focus i {
@@ -650,7 +665,9 @@ body {
     .psw-login-toggle:focus i {
         color: #007bff;
     }
-
+    .psw-edit-user-toggle:focus i {
+        color: #007bff;
+    }
 
 .error-message {
     color: red;

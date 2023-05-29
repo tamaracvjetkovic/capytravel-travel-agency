@@ -18,39 +18,101 @@ window.addEventListener('load', loadAgencies);
 
 
 
+// LOGIN
 function tryToLogin() {
-    let korisnickoValue = document.getElementById('korisnicko-login');
-    let korisnicko1 = korisnickoValue.value;
-    let pswValue = document.getElementById('psw-login');
-    let psw1 = pswValue.value; 
-    let errorKorisnicko = document.getElementById("error-login-korisnicko");
-    errorKorisnicko.innerText = "";
-    let errorLozinka = document.getElementById("error-login-lozinka");
-    errorLozinka.innerText = "";
-    for (let i in users) { 
-        if (users[i].korisnickoIme === korisnicko1) {
-            if (users[i].lozinka === psw1) {
-                alert("Dobrodošli, " + korisnicko1 + "!");  
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                usersID = [];
+                users = JSON.parse(request.responseText);
+                let korisnickoValue = document.getElementById('korisnicko-login');
+                let korisnicko1 = korisnickoValue.value;
+                let pswValue = document.getElementById('psw-login');
+                let psw1 = pswValue.value; 
+                let errorKorisnicko = document.getElementById("error-login-korisnicko");
                 errorKorisnicko.innerText = "";
+                let errorLozinka = document.getElementById("error-login-lozinka");
                 errorLozinka.innerText = "";
-                let btnClose = document.querySelector(".btn-login-cancel");
-                btnClose.click();
-                location.reload();
-                return;
+                for (let i in users) { 
+                    if (users[i].korisnickoIme === korisnicko1) {
+                        if (users[i].lozinka === psw1) {
+                            alert("Dobrodošli, " + korisnicko1 + "!");  
+                            errorKorisnicko.innerText = "";
+                            errorLozinka.innerText = "";
+                            let btnClose = document.querySelector(".btn-login-cancel");
+                            btnClose.click();
+                            location.reload();
+                            return;
+                        } else {
+                            errorLozinka.innerText = "Pogresna šifra!"; 
+                            return;
+                        }
+                    } 
+                }   
+                errorKorisnicko.innerText = "Ne postoji korisničko ime!";   
             } else {
-                errorLozinka.innerText = "Pogresna šifra!"; 
-                return;
-            }
-        }      
+                window.location.href = "error.html";
+            }   
+            return users;     
+        }
     }
-    errorKorisnicko.innerText = "Ne postoji korisničko ime!";  
+    request.open('GET', firebaseUrl + '/korisnici.json');
+    request.send();
 }   
 function isLoginValid() {
     event.preventDefault();
     tryToLogin();
 }
+// LOGIN POPUP
+var mainFilterLogin;
+function showLogin() {
+    if (popupClicked === 1) {
+        return
+    }
+    popupClicked = 1
+    window.scrollTo(0, 0);
+    let logDiv = document.querySelector(".login-div");
+    logDiv.style.display = "flex";
+    
+    let head = document.querySelector(".head");
+    head.style.opacity = "0.1";
+    head.style.filter = "blur(4px)";
+    
+    let main = document.querySelector(".main");
+    main.style.opacity = "0.1";
+    mainFilterLogin = main.style.filter;
+    main.style.filter = "blur(4px)";
+
+    let navbar = document.querySelector(".navbar");
+    navbar.style.opacity = "0.1";
+    navbar.style.filter = "blur(4px)";
+    
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "0";
+    document.body.style.overflow = "hidden";
+}
+function closeLogin() {
+    popupClicked = 0
+    let logDiv = document.querySelector(".login-div");
+    logDiv.style.display = "none";
+    let head = document.querySelector(".head");
+    head.style.filter = "none";
+    head.style.opacity = "1";
+    let main = document.querySelector(".main");
+    main.style.filter = mainFilterLogin;
+    main.style.opacity = "1";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.filter = "none";
+    navbar.style.opacity = "1";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "1";
+    goUp.style.filter = "none";
+    document.body.style.overflow = "auto";
+}
 
 
+// REGISTER
 function registerNewUser() {
     let ime1 = document.getElementById('ime-register').value;
     let prezime1 = document.getElementById('prezime-register').value;
@@ -60,7 +122,7 @@ function registerNewUser() {
     let psw1 = document.getElementById('psw-register').value;
     let adresa1 = document.getElementById('adresa-register').value;
     let telefon1 = document.getElementById('telefon-register').value;
-    var newUser = {
+    let newUser = {
         adresa: adresa1,
         datumRodjenja: datum1,
         email: email1,
@@ -70,23 +132,22 @@ function registerNewUser() {
         prezime: prezime1,
         telefon: telefon1   
     };
-    var userJson = JSON.stringify(newUser);
-    console.log(userJson);
-    var request = new XMLHttpRequest();
+    let userJson = JSON.stringify(newUser);
+    let request = new XMLHttpRequest();
     request.open('POST', firebaseUrl + '/korisnici.json');
     request.setRequestHeader('Content-Type', 'application/json');
     request.onreadystatechange = function () {
     if (this.readyState == 4) {
         if (this.status == 200) {
-            console.log('Novi korisnik je registrovan!');
         } else {
-            console.error('Greška u registraciji!');
+            window.location.href = "error.html";
         }
     }
     };
     request.send(userJson);
 }
 function isRegisterValid() { 
+    event.preventDefault();
     let okForma = 1;
     let inputIme = document.getElementById("ime-register");
     let isImeValid = validateRegisterInputIme(inputIme);
@@ -129,34 +190,25 @@ function isRegisterValid() {
         okForma = 0;
     }
     if (okForma === 1) {
-        //alert("Registrovani ste!");
-        event.preventDefault();
         registerNewUser();
-        alert("Registracija USPEŠNA!");
         let btnClose = document.querySelector(".btn-register-cancel");
         btnClose.click();
         location.reload();
         return true;
     } else {
         alert("GREŠKA! Popunite pravilno podatke!");
-        event.preventDefault();
         return false;
     }
 }
 function validateRegisterInputIme(elem) {
     let value = elem.value.trim();
     let ok = 1;
-    let ok2 = 1;
-    for (let i = 0; i < value.length; i++) {
-        if ((value.codePointAt(i) < 65) || ((value.codePointAt(i) > 90) && (value.codePointAt(i) < 97)) || value.codePointAt(i) > 122) {
-            ok2 = 0;
-        }
-    }
+    let regexIme = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\s']+$/;
     let errorMessage = document.getElementById("error-ime");
     if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
         ok = 0;
-    } else if (ok2 === 0) {
+    } else if (!regexIme.test(value)) { 
         errorMessage.innerText = 'Pogrešni karakteri!';
         ok = 0;
     } else if (value.length < 2) {
@@ -178,16 +230,12 @@ function validateRegisterInputIme(elem) {
 function validateRegisterInputPrezime(elem) {
     let value = elem.value.trim();
     let ok = 1;
-    for (let i = 0; i < value.length; i++) {
-        if ((value.codePointAt(i) < 65) || ((value.codePointAt(i) > 90) && (value.codePointAt(i) < 97)) || value.codePointAt(i) > 122) {
-            ok = 0;
-        }
-    }
+    let regexPrezime = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\s']+$/;
     let errorMessage = document.getElementById("error-prezime");
-    if (ok === 0) {
+    if (!regexPrezime.test(value)) {
         errorMessage.innerText = 'Pogrešni karakteri!';
         ok = 0;
-    } else if (value === '') {
+    }  else if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
         ok = 0;
     } else if (value.length < 2) {
@@ -245,12 +293,19 @@ function validateRegisterInputDate(elem) {
         return false;
     }
 }
-function validateRegisterInputEmail(elem) {
+function validateRegisterInputEmail(elem) { 
     let value = elem.value.trim();
     let ok = 1;
     let errorMessage = document.getElementById("error-email");
     let atIndex = value.indexOf("@");
     let dotIndex = value.lastIndexOf(".");
+    let ok2 = 1;
+    for (let user in users) {
+        if (users[user].email === value) {
+            ok2 = 0;
+            break
+        }
+    }
     if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
         ok = 0;
@@ -258,7 +313,10 @@ function validateRegisterInputEmail(elem) {
     else if (atIndex < 1 || dotIndex < atIndex + 2 || dotIndex + 2 >= value.length) {
         errorMessage.innerText = 'Pogrešan email!';
         ok = 0;
-    }  else {
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Email je zauzet!';
+        ok = 0;
+    } else {
         errorMessage.innerText = '';
         ok = 1;
     }
@@ -274,8 +332,18 @@ function validateRegisterInputUsername(elem) {
     let ok = 1;
     let errorMessage = document.getElementById("error-username");
     let usernameRegex = /^[a-z][a-z0-9]*$/;
+    let ok2 = 1;
+    for (let user in users) {
+        if (users[user].korisnickoIme === value) {
+            ok2 = 0;
+            break
+        }
+    }
     if (usernameRegex.test(value) != true) {
         errorMessage.innerText = 'Pogrešno korisničko ime!';
+        ok = 0;
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Korisničko ime je zauzeto!';
         ok = 0;
     } else {
         errorMessage.innerText = '';
@@ -288,7 +356,17 @@ function validateRegisterInputUsername(elem) {
         return false;
     }
 }
-
+function togglePswVisibility3() {
+    let passwordInputEditUser = document.getElementById("psw-edit-user");
+    let passwordToggleEditUser = document.querySelector(".psw-edit-user-toggle");
+    if (passwordInputEditUser.type === "password") {
+        passwordInputEditUser.type = "text";
+        passwordToggleEditUser.innerHTML = '<i class = "fa fa-eye" aria-hidden = "true"> </i>';
+    } else {
+        passwordInputEditUser.type = "password";
+        passwordToggleEditUser.innerHTML = '<i class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
+    }
+}
 function togglePswVisibility2() {
     let passwordInputLogin = document.getElementById("psw-login");
     let passwordToggleLogin = document.querySelector(".psw-login-toggle");
@@ -338,11 +416,15 @@ function validateRegisterInputPsw(elem) {
     }
 }
 function validateRegisterInputAddress(elem) {
-    let value = elem.value;
+    let value = elem.value.trim();
     let ok = 1;
+    let regexAdresa = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\d\s',']+$/;
     let errorMessage = document.getElementById("error-address");
     if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (!regexAdresa.test(value)) {
+        errorMessage.innerText = 'Pogrešni karakteri!';
         ok = 0;
     } else {
         errorMessage.innerText = '';
@@ -356,15 +438,25 @@ function validateRegisterInputAddress(elem) {
     }
 }
 function validateRegisterInputPhone(elem) {
-    let value = elem.value;
+    let value = elem.value.trim();
     let ok = 1;
     let errorMessage = document.getElementById("error-phone");
-    let testing = /06[1-6]{1}[0-9]{7}/.test(value);
+    let testing = /^06[1-6]{1}[0-9]{6}$/.test(value);
+    let ok2 = 1;
+    for (let user in users) {
+        if (users[user].telefon === value) {
+            ok2 = 0;
+            break
+        }
+    }
     if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
         ok = 0;
     } else if (testing != true) {
-        errorMessage.innerText = 'Pogrešan br. telefona!';
+        errorMessage.innerText = 'Pogrešan broj telefona!';
+        ok = 0;
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Broj telefona je zauzet!';
         ok = 0;
     } else {
         errorMessage.innerText = '';
@@ -377,61 +469,7 @@ function validateRegisterInputPhone(elem) {
         return false;
     }
 }
-
-
-var mainFilterLogin;
-function showLogin() {
-    if (popupClicked === 1) {
-        return
-    }
-    popupClicked = 1
-    window.scrollTo(0, 0);
-    let logDiv = document.querySelector(".login-div");
-    logDiv.style.display = "flex";
-    let main = document.querySelector(".main");
-    main.style.opacity = "0.1";
-    mainFilterLogin = main.style.filter;
-    main.style.filter = "blur(4px)";
-
-    let navbar = document.querySelector(".navbar");
-    navbar.style.opacity = "0.1";
-    navbar.style.filter = "blur(4px)";
-    
-    let head = document.querySelector(".head");
-    head.style.opacity = "0.5";
-    head.style.filter = "blur(10px)";
-
-    let footer = document.querySelector(".footer");
-    footer.style.opacity = "0.5";
-    footer.style.filter = "blur(10px)";
-
-    let goUp = document.querySelector(".go-up");
-    goUp.style.opacity = "0";
-    document.body.style.overflow = "hidden";
-}
-function closeLogin() {
-    popupClicked = 0;
-    let logDiv = document.querySelector(".login-div");
-    logDiv.style.display = "none";
-    let main = document.querySelector(".main");
-    main.style.filter = mainFilterLogin;
-    main.style.opacity = "1";
-    let navbar = document.querySelector(".navbar");
-    navbar.style.filter = "none";
-    navbar.style.opacity = "1";
-    let head = document.querySelector(".head");
-    head.style.opacity = "1";
-    head.style.filter = "none";
-    let footer = document.querySelector(".footer");
-    footer.style.opacity = "1";
-    footer.style.filter = "none";
-    let goUp = document.querySelector(".go-up");
-    goUp.style.opacity = "1";
-    goUp.style.filter = "none";
-    document.body.style.overflow = "auto";
-}
-
-
+// REGISTER POPUP
 var mainFilterRegister;
 function showRegister() {
     if (popupClicked === 1) {
@@ -441,39 +479,37 @@ function showRegister() {
     window.scrollTo(0, 0);
     let regDiv = document.querySelector(".register-div");
     regDiv.style.display = "flex";
+
+    let head = document.querySelector(".head");
+    head.style.opacity = "0.1";
+    head.style.filter = "blur(4px)";
+
     let main = document.querySelector(".main");
     mainFilterRegister = main.style.filter;
     main.style.opacity = "0.1";
     main.style.filter = "blur(4px)";
+
     let navbar = document.querySelector(".navbar");
     navbar.style.opacity = "0.1";
     navbar.style.filter = "blur(4px)";
-    let head = document.querySelector(".head");
-    head.style.opacity = "0.5";
-    head.style.filter = "blur(10px)";
-    let footer = document.querySelector(".footer");
-    footer.style.opacity = "0.5";
-    footer.style.filter = "blur(10px)";
+    
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
     document.body.style.overflow = "hidden";
 }
 function closeRegister() {
-    popupClicked = 0;
+    popupClicked = 0
     let regDiv = document.querySelector(".register-div");
     regDiv.style.display = "none";
+    let head = document.querySelector(".head");
+    head.style.filter = "none";
+    head.style.opacity = "1";
     let main = document.querySelector(".main");
     main.style.filter = mainFilterRegister;
     main.style.opacity = "1";
     let navbar = document.querySelector(".navbar");
     navbar.style.filter = "none";
     navbar.style.opacity = "1";
-    let head = document.querySelector(".head");
-    head.style.opacity = "1";
-    head.style.filter = "none";
-    let footer = document.querySelector(".footer");
-    footer.style.opacity = "1";
-    footer.style.filter = "none";
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "1";
     goUp.style.filter = "none";
@@ -481,18 +517,7 @@ function closeRegister() {
 }
 
 
-function scrollToTop() {
-    if (popupClicked === 1) {
-        return
-    }
-    var position = document.body.scrollTop || document.documentElement.scrollTop;
-    if (position) {
-      window.scrollBy(0, -Math.max(1, Math.floor(position / 10)));
-      scrollAnimation = setTimeout("scrollToTop()", 12);
-    } else clearTimeout(scrollAnimation);
-}
-
-
+// FUNKCIJE ZA IZGLED
 function appendMainBox(position, agency) {
     let newMainBox = document.createElement('div');
     newMainBox.setAttribute('id', curBox);
@@ -536,8 +561,22 @@ function appendMainBox(position, agency) {
 }
 
 
-
-
+// OCITAJ POCETNU STRANICU
+function ocitajPocetnu() {
+    window.location.href = "index.html";
+}
+// SCROLL TO TOP DUGME
+function scrollToTop() {
+    if (popupClicked === 1) {
+        return
+    }
+    var position = document.body.scrollTop || document.documentElement.scrollTop;
+    if (position) {
+      window.scrollBy(0, -Math.max(1, Math.floor(position / 10)));
+      scrollAnimation = setTimeout("scrollToTop()", 12);
+    } else clearTimeout(scrollAnimation);
+}
+// MAIN
 function main() {
 
     document.addEventListener("click", () => {
@@ -657,6 +696,9 @@ function main() {
         });
     });
 
+    let logo1 = document.getElementById("logo1");
+    logo1.onclick = ocitajPocetnu;
+
     let log = document.getElementById("login-button");
     log.onclick = showLogin;
 
@@ -671,6 +713,7 @@ function main() {
 }
 
 
+// LOAD IZ FIREBASE
 function loadUsers() {
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -680,11 +723,11 @@ function loadUsers() {
                 users = JSON.parse(request.responseText);
                 for (let id in users) {
                     usersID.push(id);
-                }       
+                }   
+                main();     
             } else {
                 window.location.href = "error.html";
-            }  
-            main();      
+            }        
         }
     }
     request.open('GET', firebaseUrl + '/korisnici.json');
@@ -700,11 +743,11 @@ function loadDestinations() {
                 destinations = JSON.parse(request.responseText);
                 for (let id in destinations) {
                     destinationsID.push(id);    
-                }           
+                } 
+                loadUsers();          
             } else {
                 window.location.href = "error.html";
             }
-            loadUsers();
         }
     }
     request.open('GET', firebaseUrl + '/destinacije.json');
@@ -721,10 +764,10 @@ function loadAgencies() {
                 for (let id in agencies) {
                     agenciesID.push(id);
                 }
+                loadDestinations(); 
             } else {
                 window.location.href = "error.html";
-            }
-            loadDestinations(); 
+            }  
         }
     }
     request.open('GET', firebaseUrl + '/agencije.json');

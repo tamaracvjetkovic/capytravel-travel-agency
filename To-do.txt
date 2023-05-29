@@ -1,21 +1,8 @@
 
 
-promijeniti visibility na sve sto se moze kliknuti
-- u svakom 
-
-
-
-
-
 - dodati logo u linku gore
 
-- napraviti stranicu za greske
-
-- staviti drugaciji alert za failed load json
-
 - napraviti valid search
-
-- napraviti kontakt stranicu
 
 - skinuti fa-fa ikonice (da se ocitaju) - pitati za go-up strelicu 
 
@@ -23,11 +10,29 @@ promijeniti visibility na sve sto se moze kliknuti
 
 - disable klik kad na telefonu se otvori navbar
 
-- filter blur i opacity nakon delete user/agency/destination
+
 
 
 
 DONE:
+
+
+// - filter blur i opacity nakon delete user/agency/destination
+
+// staviti error pages na losu konekciju
+
+// izbrisati alerts, console.log()
+
+// dodati na logo da se ocita pocetna
+
+// promijeniti visibility na sve sto se moze kliknuti, u svakom
+
+// padding-top padding-bottom na svakom h1 i buttons (margin-top) na svakom sign up, login
+
+// register i login prekopirati na sve ostale stranice
+
+
+// - napraviti stranicu za greske
 
 //dodati About us
 	//- osmisliti dizajn
@@ -42,31 +47,9 @@ DONE:
 //- ispod destinacije odmah da se ocitaju maks osobe, cijena i prevoz u boxu nekom 
 
 
-
 //U svaki main dodati:
-
-	document.addEventListener("click", () => {
-        if (popupClicked === 1) {
-            let nav = document.querySelector(".navbar");
-            nav.style.visibility = "hidden";
-            let adminSelect = document.querySelector(".admin-select");
-            adminSelect.style.visibility = "hidden";
-            let footer = document.querySelector(".footer");
-            footer.style.visibility = "hidden";
-            
-        } else {
-            let nav = document.querySelector(".navbar");
-            nav.style.visibility = "";
-            let adminSelect = document.querySelector(".admin-select");
-            adminSelect.style.visibility = "";
-            let footer = document.querySelector(".footer");
-            footer.style.visibility = "";
-        }
-    });
-
-
-//var popupClicked = 0;
-za svaku funkciju klika dodati popupClicked = 1
+    var popupClicked = 0;
+    za svaku funkciju klika dodati popupClicked = 1
 
 //za register i login dodati padding i bottom: 5vh;
 

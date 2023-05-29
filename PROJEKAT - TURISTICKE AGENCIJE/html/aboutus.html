@@ -180,91 +180,91 @@
 
 
     <div class = "login-div"> 
-            <div id = "login-popup">
-                <form action = "" class = "form-container" id = "login-form">
-                    <h1> Login </h1>
-                    <label for = "korisnicko-login"> <b> Korisničko ime </b> </label>
-                    <div class = "error-message" id = "error-login-korisnicko"> </div>
-                    <input id = "korisnicko-login" type = "text" placeholder = "Username.." name = "korisnicko-login" required>
-                    <label for = "psw-login"> <b> Lozinka </b> </label>
-                    <div class = "error-message" id = "error-login-lozinka"> </div>
-                    <div class = "pass-input-view">
-                        <input id = "psw-login" type = "password" placeholder = "Password.." name = "psw-login" required>
-                        <button type = "button" class = "psw-login-toggle" onclick = "togglePswVisibility2()">
-                        <i class = "fa fa-eye-slash" aria-hidden = "true"> </i>
-                    </div>
-                    <div class = "login-submit-cancel">
-                        <button type = "submit" class = "btn-submit-login"> Login </button>
-                        <button type = "button" class = "btn-login-cancel" onclick = "closeLogin()"> Close </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        
-        <div class = "register-div"> 
-            <div id = "register-popup">
-                <form action = "" id = "register-form">
-                    <h1> Sign Up </h1>
-                    <div class = "register-ime-i-prezime"> 
-                        <div class = "register-ime-input"> 
-                            <label for = "ime-register"> <b> Ime </b> </label>
-                            <div class = "error-message" id = "error-ime"> </div>
-                            <input id = "ime-register" type = "text" placeholder = "Name.." name = "ime-register" required oninput = "validateRegisterInputIme(this)">
-                        </div>
-                        <div class = "register-prezime-input">
-                            <label for = "prezime-register"> <b> Prezime </b> </label>
-                            <div class = "error-message" id = "error-prezime"> </div>
-                            <input id = "prezime-register" type = "text" placeholder = "Surname.." name = "prezime-register" required oninput = "validateRegisterInputPrezime(this)">
-                        </div>
-                    </div>   
-                    <div class = "register-datum-i-email"> 
-                        <div class = "register-datum-input">
-                            <label for = "datum-register"> <b> Datum rođenja </b> </label>
-                            <div class = "error-message" id = "error-date"> </div>
-                            <input id = "date-register" type = "date" name = "datum-register" required oninput = "validateRegisterInputDate(this)">
-                        </div>
-                        <div class = "register-email-input">
-                            <label for = "email-register"> <b> E-mail </b> </label>
-                            <div class = "error-message" id = "error-email"> </div>
-                            <input id = "email-register" type = "text" placeholder = "E-mail.." name = "email-register" required oninput = "validateRegisterInputEmail(this)">
-                        </div>
-                    </div>
-                    <div class = "register-korisnicko-i-psw"> 
-                        <div class = "register-korisnicko-input">
-                            <label for = "korisnicko-register"> <b> Korisničko ime </b> </label>
-                            <div class = "error-message" id = "error-username"> </div>
-                            <input id = "korisnicko-register" type = "text" placeholder = "Username.." name = "korisnicko-register" required oninput = "validateRegisterInputUsername(this)">
-                        </div>
-                        <div class = "register-psw-input">
-                            <label for = "psw-register"> <b> Lozinka </b> </label>
-                            <div class = "error-message" id = "error-psw"> </div>
-                            <div class = "pass-input-view">
-                                <input id = "psw-register" type = "password" placeholder = "Password.." name = "psw-register" required oninput = "validateRegisterInputPsw(this)">
-                                <button type = "button" class = "psw-register-toggle" onclick = "togglePswVisibility()">
-                                <i class = "fa fa-eye-slash" aria-hidden = "true"> </i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class = "register-adresa-i-telefon"> 
-                        <div class = "register-adresa-input">
-                            <label for = "adresa-register"> <b> Adresa </b> </label>
-                            <div class = "error-message" id = "error-address"> </div>
-                            <input id = "adresa-register" type = "text" placeholder = "Address.." name = "adresa-register" required oninput = "validateRegisterInputAddress(this)">
-                        </div>
-                        <div class = "register-telefon-input">
-                            <label for = "telefon-register"> <b> Telefon</b> </label>
-                            <div class = "error-message" id = "error-phone"> </div>
-                            <input id = "telefon-register" type = "text" name = "telefon-register" placeholder = "06(1-6)1234123" pattern = "06[1-6]{1}[0-9]{7}" required oninput = "validateRegisterInputPhone(this)">
-                        </div>
-                    </div>     
-                    <div class = "register-submit-cancel">
-                        <button type = "submit" class = "btn-submit-register"> Register </button>
-                        <button type = "button" class = "btn-register-cancel" onclick = "closeRegister()"> Close </button>
-                    </div>
-                </form>
-            </div>
+        <div id = "login-popup">
+            <form action = "" class = "form-container" id = "login-form">
+                <h1 style = "padding-top: 5px; padding-bottom: 10px;"> Login </h1>
+                <label for = "korisnicko-login"> <b> Korisničko ime </b> </label>
+                <div class = "error-message" id = "error-login-korisnicko"> </div>
+                <input id = "korisnicko-login" type = "text" placeholder = "Username.." name = "korisnicko-login" required>
+                <label for = "psw-login"> <b> Lozinka </b> </label>
+                <div class = "error-message" id = "error-login-lozinka"> </div>
+                <div class = "pass-input-view">
+                    <input id = "psw-login" type = "password" placeholder = "Password.." name = "psw-login" required>
+                    <button type = "button" class = "psw-login-toggle" onclick = "togglePswVisibility2()">
+                    <i class = "fa fa-eye-slash" aria-hidden = "true"> </i>
+                </div>
+                <div class = "login-submit-cancel">
+                    <button type = "submit" class = "btn-submit-login"> Login </button>
+                    <button type = "button" class = "btn-login-cancel" onclick = "closeLogin()"> Close </button>
+                </div>
+            </form>
         </div>
     </div>
+    
+    <div class = "register-div"> 
+        <div id = "register-popup">
+            <form action = "" id = "register-form">
+                <h1 style = "padding-top: 10px; padding-bottom: 10px;"> Sign Up </h1>
+                <div class = "register-ime-i-prezime"> 
+                    <div class = "register-ime-input"> 
+                        <label for = "ime-register"> <b> Ime </b> </label>
+                        <div class = "error-message" id = "error-ime"> </div>
+                        <input id = "ime-register" type = "text" placeholder = "Name.." name = "ime-register" required oninput = "validateRegisterInputIme(this)">
+                    </div>
+                    <div class = "register-prezime-input">
+                        <label for = "prezime-register"> <b> Prezime </b> </label>
+                        <div class = "error-message" id = "error-prezime"> </div>
+                        <input id = "prezime-register" type = "text" placeholder = "Surname.." name = "prezime-register" required oninput = "validateRegisterInputPrezime(this)">
+                    </div>
+                </div>   
+                <div class = "register-datum-i-email"> 
+                    <div class = "register-datum-input">
+                        <label for = "datum-register"> <b> Datum rođenja </b> </label>
+                        <div class = "error-message" id = "error-date"> </div>
+                        <input id = "date-register" type = "date" name = "datum-register" required oninput = "validateRegisterInputDate(this)">
+                    </div>
+                    <div class = "register-email-input">
+                        <label for = "email-register"> <b> E-mail </b> </label>
+                        <div class = "error-message" id = "error-email"> </div>
+                        <input id = "email-register" type = "text" placeholder = "E-mail.." name = "email-register" required oninput = "validateRegisterInputEmail(this)">
+                    </div>
+                </div>
+                <div class = "register-korisnicko-i-psw"> 
+                    <div class = "register-korisnicko-input">
+                        <label for = "korisnicko-register"> <b> Korisničko ime </b> </label>
+                        <div class = "error-message" id = "error-username"> </div>
+                        <input id = "korisnicko-register" type = "text" placeholder = "Username.." name = "korisnicko-register" required oninput = "validateRegisterInputUsername(this)">
+                    </div>
+                    <div class = "register-psw-input">
+                        <label for = "psw-register"> <b> Lozinka </b> </label>
+                        <div class = "error-message" id = "error-psw"> </div>
+                        <div class = "pass-input-view">
+                            <input id = "psw-register" type = "password" placeholder = "Password.." name = "psw-register" required oninput = "validateRegisterInputPsw(this)">
+                            <button type = "button" class = "psw-register-toggle" onclick = "togglePswVisibility()">
+                            <i class = "fa fa-eye-slash" aria-hidden = "true"> </i>
+                        </div>
+                    </div>
+                </div>
+                <div class = "register-adresa-i-telefon"> 
+                    <div class = "register-adresa-input">
+                        <label for = "adresa-register"> <b> Adresa </b> </label>
+                        <div class = "error-message" id = "error-address"> </div>
+                        <input id = "adresa-register" type = "text" placeholder = "Adress.." name = "adresa-register" required oninput = "validateRegisterInputAddress(this)">
+                    </div>
+                    <div class = "register-telefon-input">
+                        <label for = "telefon-register"> <b> Telefon</b> </label>
+                        <div class = "error-message" id = "error-phone"> </div>
+                        <input id = "telefon-register" type = "text" name = "telefon-register" placeholder = "06(1-6)123123" required oninput = "validateRegisterInputPhone(this)">
+                    </div>
+                </div>     
+                <div class = "register-submit-cancel">
+                    <button type = "submit" class = "btn-submit-register"> Register </button>
+                    <button type = "button" class = "btn-register-cancel" onclick = "closeRegister()"> Close </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
 
     <script type = "text/javascript" src = "../js/aboutus.js"> </script>
 </body>
