@@ -89,7 +89,6 @@ function showToastLogin(korisnicko) {
     let toastPopup = document.getElementById("toast-popup");
     toastPopup.innerHTML = "Dobrodošli, " + korisnicko + "!";
     toast.classList.add("show");
-    //console.log(toast); 
     setTimeout(function(){ toast.classList.remove("show"); location.reload();}, 1000);
 }
 function closeAllForLogin(korisnicko) {
@@ -195,7 +194,6 @@ function showToastRegister(korisnicko) {
     let toastPopup = document.getElementById("toast-popup");
     toastPopup.innerHTML = "Korisnik " + korisnicko + " je uspešno registrovan!";
     toast.classList.add("show");
-    //console.log(toast); 
     setTimeout(function(){ toast.classList.remove("show"); location.reload();}, 1000);
 }
 function closeAllForRegisterUser(korisnicko) {

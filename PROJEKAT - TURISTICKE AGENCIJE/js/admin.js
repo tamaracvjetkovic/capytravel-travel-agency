@@ -30,7 +30,6 @@ function showToastEditUser() {
     let toastPopup = document.getElementById("toast-popup");
     toastPopup.innerHTML = "Korisnik uspešno izmenjen!";
     toast.classList.add("show");
-    //console.log(toast); 
     setTimeout(function(){ toast.classList.remove("show"); location.reload();}, 1000);
 }
 function closeAllForEditUser() {
@@ -756,7 +755,6 @@ function showToastEditAgency() {
     let toastPopup = document.getElementById("toast-popup");
     toastPopup.innerHTML = "Agencija uspešno izmenjena!";
     toast.classList.add("show");
-    //console.log(toast); 
     setTimeout(function(){ toast.classList.remove("show"); location.reload();}, 1000);
 }
 function closeAllForEditAgency() {
@@ -764,10 +762,8 @@ function closeAllForEditAgency() {
     //location.reload();
 }
 function editTheAgency() {
-    console.log(curAgencyToEdit)
     let agencija = agencies[curAgencyToEdit];  
     let ime1 = document.getElementById('ime-edit-agency').value;
-    console.log(ime1);
     let telefon1 = document.getElementById('telefon-edit-agency').value;
     let email1 = document.getElementById('email-edit-agency').value;
     let adresa1 = document.getElementById('adresa-edit-agency').value;
@@ -1384,7 +1380,6 @@ function showToastLogin(korisnicko) {
     let toastPopup = document.getElementById("toast-popup");
     toastPopup.innerHTML = "Dobrodošli, " + korisnicko + "!";
     toast.classList.add("show");
-    //console.log(toast); 
     setTimeout(function(){ toast.classList.remove("show"); location.reload();}, 1000);
 }
 function closeAllForLogin(korisnicko) {
@@ -1494,7 +1489,6 @@ function showToastRegister(korisnicko) {
     let toastPopup = document.getElementById("toast-popup");
     toastPopup.innerHTML = "Korisnik " + korisnicko + " je uspešno registrovan!";
     toast.classList.add("show");
-    //console.log(toast); 
     setTimeout(function(){ toast.classList.remove("show"); location.reload();}, 1000);
 }
 function closeAllForRegisterUser(korisnicko) {

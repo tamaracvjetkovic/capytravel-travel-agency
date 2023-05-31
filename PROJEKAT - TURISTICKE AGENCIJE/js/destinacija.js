@@ -29,7 +29,6 @@ function showToastEditDestination() {
     let toastPopup = document.getElementById("toast-popup");
     toastPopup.innerHTML = "Destinacija uspešno izmenjena!";
     toast.classList.add("show");
-    //console.log(toast); 
     setTimeout(function(){ toast.classList.remove("show"); location.reload();}, 1000);
 }
 function closeAllForEditDestination() {
@@ -59,7 +58,6 @@ function editTheDestination() {
     links = []
     for (let i in links2) {
         if (links2[i].trim() === '') {
-            console.log("Nije")
             continue;
         } else {
             links.push(links2[i]);
@@ -129,8 +127,6 @@ function isEditDestinationValid() {
     }
 
     if (okForma === 1) {
-        //console.log(curDestinationID)
-        //console.log(curDestinationInDestinationID);
         editTheDestination();
         return true;
     } else {
@@ -470,7 +466,6 @@ function showToastLogin(korisnicko) {
     let toastPopup = document.getElementById("toast-popup");
     toastPopup.innerHTML = "Dobrodošli, " + korisnicko + "!";
     toast.classList.add("show");
-    //console.log(toast); 
     setTimeout(function(){ toast.classList.remove("show"); location.reload();}, 1000);
 }
 function closeAllForLogin(korisnicko) {
@@ -579,7 +574,6 @@ function showToastRegister(korisnicko) {
     let toastPopup = document.getElementById("toast-popup");
     toastPopup.innerHTML = "Korisnik " + korisnicko + " je uspešno registrovan!";
     toast.classList.add("show");
-    //console.log(toast); 
     setTimeout(function(){ toast.classList.remove("show"); location.reload();}, 1000);
 }
 function closeAllForRegisterUser(korisnicko) {
