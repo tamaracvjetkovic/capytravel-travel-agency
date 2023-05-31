@@ -1,13 +1,15 @@
 
-- dodati kontakt u O Nama i link u footeru
 
-- napraviti valid search
+
+!!!!!!!!!!! disable klik kad na telefonu se otvori navbar
+
+
 
 - skinuti fa-fa ikonice (da se ocitaju) - pitati za go-up strelicu 
 
 - dodati alt na sve slike
 
-- disable klik kad na telefonu se otvori navbar
+
 
 
 
@@ -15,6 +17,10 @@
 
 DONE:
 
+
+// napraviti valid search
+
+// dodati kontakt u O Nama i link u footeru
 
 // dodati logo u linku gore
 

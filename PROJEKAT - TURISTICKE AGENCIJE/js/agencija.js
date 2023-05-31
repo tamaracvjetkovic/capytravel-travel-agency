@@ -20,23 +20,25 @@ window.addEventListener('load', loadAgencies);
 
 function search() {
     event.preventDefault();
-    console.log(prevozi)
-    console.log(tipovi);
     let searchNaziv = document.getElementById("naziv-search")
     let searchTip = document.getElementById("tip-search")
     let searchPrevoz = document.getElementById("prevoz-search")
     
     let value13 = searchNaziv.value;
     let value12 = value13.trim();
-    let value1 = value12.toLowerCase();
+    let nazivValue = value12.toLowerCase();
     let value23 = searchTip.value;
     let value22 = value23.trim();
-    let value2 = value22.toLowerCase();
+    let tipValue = value22.toLowerCase();
     let value33 = searchPrevoz.value;
     let value32 = value33.trim();
-    let value3 = value32.toLowerCase();
+    let prevozValue = value32.toLowerCase();
     
     let boxes = document.querySelectorAll('.box');
+    boxes.forEach(box => {
+        box.classList.remove("ne");
+        box.classList.remove("da");
+    });
     boxes.forEach(box => {
         let ids2 = box.getAttribute('id');
         let ids = ids2.split("-");
@@ -44,16 +46,107 @@ function search() {
         let destInDestID = Object.keys(destinations[destID])[ids[1]];
         let agencyID = agenciesID[ids[2]];
         
+        let boxy = document.getElementById(ids2);
+        let s = "destination-name-" + ids2;
+        let destName = document.getElementById(s);
+        let s2 = "destination-tip-" + ids2;
+        let destTip = document.getElementById(s2);
+        let s3 = "destination-prevoz-" + ids2;
+        let destPrevoz = document.getElementById(s3);
+
+        if (nazivValue === "" && tipValue === "" && prevozValue === "") {
+            destName.classList.remove("search-name-highlight");
+            destTip.classList.remove("search-tip-highlight");
+            destPrevoz.classList.remove("search-prevoz-highlight");
+            boxy.classList.remove("da");
+            boxy.classList.remove("ne");
+        }
         
+        let textName2 = destName.innerText;
+        let textName = textName2.toLowerCase();
+        if (nazivValue != "") {
+            if (textName.startsWith(nazivValue)) {
+                destName.classList.add("search-name-highlight");
+                boxy.classList.add("da"); 
+                //boxy.classList.remove("ne");
+            } else {
+                destName.classList.remove("search-name-highlight");
+                //boxy.classList.remove("da"); 
+                //boxy.classList.add("ne");
+            }
+        } else {
+            destName.classList.remove("search-name-highlight");
+        }
+        
+        let textTip2 = destTip.innerText;
+        let textTip = textTip2.toLowerCase();
+        if (tipValue != "") {
+            if (textTip.startsWith(tipValue)) {
+                destTip.classList.add("search-tip-highlight");
+                boxy.classList.add("da"); 
+                //boxy.classList.remove("ne");  
+            } else {
+                destTip.classList.remove("search-tip-highlight");
+                //boxy.classList.remove("da"); 
+               //boxy.classList.add("ne");     
+            }
+        } else {
+            destTip.classList.remove("search-tip-highlight");    
+        }
+
+        let textPrevoz2 = destPrevoz.innerText;
+        let textPrevoz = textPrevoz2.toLowerCase();
+        let prevo = "prevoz: " + prevozValue;
+        if (prevozValue != "") {
+            if (textPrevoz.startsWith(prevo)) {
+                destPrevoz.classList.add("search-prevoz-highlight");
+                boxy.classList.add("da"); 
+                //boxy.classList.remove("ne"); 
+            } else {
+                destPrevoz.classList.remove("search-prevoz-highlight");
+               // boxy.classList.remove("da"); 
+                //boxy.classList.add("ne");       
+            }
+        } else {
+            destPrevoz.classList.remove("search-prevoz-highlight");     
+        }
     });
 
+    let br = 0;
+    let num;
+    boxes.forEach(box => {
+        let ids2 = box.getAttribute('id');
+        let ids = ids2.split("-");
+        let destID = destinationsID[ids[0]];
+        num = Object.keys(destinations[destID]).length;
+        let kk = 0;
+        if (box.classList.contains("da")) {
+            kk = 1;
+        }
+        else if (kk != 1) {
+            br++;
+            box.classList.add("ne");
+        } else {
+            ok = 0;
+        }
+    });
+    if (br === num) {
+        boxes.forEach(box => {
+            if (nazivValue != "" || tipValue != "" || prevozValue != "") {
+                box.classList.add("ne");
+                box.classList.remove("da");
+            } else {
+                box.classList.remove("ne");
+                box.classList.remove("da");
+            }
+        });
+    }
 }
 
 
 // LOGIN
 function closeAllForLogin() {
-    let btnClose = document.querySelector(".btn-login-cancel");
-    btnClose.click();
+    closeLogin();
     location.reload();
 }
 function tryToLogin() {
@@ -75,7 +168,8 @@ function tryToLogin() {
                     if (users[i].korisnickoIme === korisnicko1) {
                         if (users[i].lozinka === psw1) {
                             errorKorisnicko.innerText = "";
-                            errorLozinka.innerText = "";    
+                            errorLozinka.innerText = "";
+                            closeAllForLogin();    
                             return;
                         } else {
                             errorLozinka.innerText = "Pogresna šifra!"; 
@@ -155,8 +249,7 @@ function closeLogin() {
 
 // REGISTER
 function closeAllForRegisterUser() {
-    let btnClose = document.querySelector(".btn-register-cancel");
-    btnClose.click();
+    closeRegister();
     location.reload();
 }
 function registerNewUser() {
@@ -574,7 +667,6 @@ function setValuesInSearch() {
     let searchTip = document.getElementById("tip-search")
     let searchPrevoz = document.getElementById("prevoz-search")
     for (let tip of tipovi) {
-        console.log("tip: " + tip);
         let op = document.createElement("option");
         op.value = tip;
         op.innerText = tip;
@@ -583,7 +675,6 @@ function setValuesInSearch() {
         searchTip.appendChild(op);
     }
     for (let prevoz of prevozi) {
-        console.log("prevoz: " + prevoz);
         let op = document.createElement("option");
         op.value = prevoz;
         op.innerText = prevoz;
@@ -594,7 +685,8 @@ function setValuesInSearch() {
 }
 function appendMainBox(position, dest, destination, curAgency) {
     let newMainBox = document.createElement('div');
-    newMainBox.setAttribute('id', (dest + "-" + curBox + "-" + curAgency));
+    let id = dest + "-" + curBox + "-" + curAgency;
+    newMainBox.setAttribute('id', id);
     newMainBox.classList.add("box");
     
     curBox++;
@@ -613,17 +705,23 @@ function appendMainBox(position, dest, destination, curAgency) {
 
     let newDestinationName = document.createElement('p');
     newDestinationName.classList.add("ime-destinacije");
+    let s = "destination-name-" + id;
+    newDestinationName.setAttribute("id", s);
     newDestinationName.innerHTML = destination.naziv;
     newDestinationDesc.appendChild(newDestinationName);
 
     let newDestinationType = document.createElement('p');
     newDestinationType.classList.add("tip-destinacije");
+    let s2 = "destination-tip-" + id;
+    newDestinationType.setAttribute("id", s2);
     newDestinationType.innerHTML = destination.tip;
     newDestinationDesc.appendChild(newDestinationType);
     tipovi.add(destination.tip);
 
     let newDestinationTransport = document.createElement('p');
     newDestinationTransport.classList.add("prevoz-destinacije");
+    let s3 = "destination-prevoz-" + id;
+    newDestinationTransport.setAttribute("id", s3);
     newDestinationTransport.innerHTML = "Prevoz: " + destination.prevoz;
     newDestinationDesc.appendChild(newDestinationTransport);
     prevozi.add(destination.prevoz);

@@ -929,13 +929,13 @@ body {
 .dest-box-info {
     color: rgb(255, 255, 255);
     background-color: rgb(242, 120, 39);
-    font-size: 19px;
+    font-size: 16px;
     text-align: center;
     margin-bottom: 15px;
     display: none;
     padding: 3px;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 15%;
+    margin-right: 15%;
 }
 
 .search-highlight {

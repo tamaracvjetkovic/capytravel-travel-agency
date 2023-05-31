@@ -36,7 +36,7 @@ function search() {
         let agencyID = agenciesID[id];
         let destID = agencies[agencyID].destinacije;
         let destinacije = destinations[destID];
-        console.log("\n")
+    
         if (text.startsWith(value) && (value != "")) {
             agencyName.classList.add("search-highlight");
             boxy.style.display = "flex"; 
@@ -82,8 +82,7 @@ function search() {
 
 // LOGIN
 function closeAllForLogin() {
-    let btnClose = document.querySelector(".btn-login-cancel");
-    btnClose.click();
+    closeLogin();
     location.reload();
 }
 function tryToLogin() {
@@ -106,6 +105,7 @@ function tryToLogin() {
                         if (users[i].lozinka === psw1) {
                             errorKorisnicko.innerText = "";
                             errorLozinka.innerText = "";    
+                            closeAllForLogin();
                             return;
                         } else {
                             errorLozinka.innerText = "Pogresna šifra!"; 
@@ -141,11 +141,11 @@ function showLogin() {
     main.style.opacity = "0.1";
     mainFilterLogin = main.style.filter;
     main.style.filter = "blur(4px)";
-    let adminBody = document.querySelector(".admin-body");
-    adminBody.style.opacity = "0.3";
-    adminBody.style.filter = "blur(4px)";
+    let head = document.querySelector(".head");
+    head.style.opacity = "0.1";
+    head.style.filter = "blur(4px)";
     let navbar = document.querySelector(".navbar");
-    navbar.style.opacity = "0.3";
+    navbar.style.opacity = "0.1";
     navbar.style.filter = "blur(4px)";
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
@@ -164,9 +164,9 @@ function closeLogin() {
     let main = document.querySelector(".main");
     main.style.filter = mainFilterLogin;
     main.style.opacity = "1";
-    let adminBody = document.querySelector(".admin-body");
-    adminBody.style.opacity = "1";
-    adminBody.style.filter = "none";
+    let head = document.querySelector(".head");
+    head.style.opacity = "1";
+    head.style.filter = "none";
     let navbar = document.querySelector(".navbar");
     navbar.style.filter = "none";
     navbar.style.opacity = "1";
@@ -185,8 +185,7 @@ function closeLogin() {
 
 // REGISTER
 function closeAllForRegisterUser() {
-    let btnClose = document.querySelector(".btn-register-cancel");
-    btnClose.click();
+    closeRegister();
     location.reload();
 }
 function registerNewUser() {
@@ -557,11 +556,11 @@ function showRegister() {
     mainFilterRegister = main.style.filter;
     main.style.opacity = "0.1";
     main.style.filter = "blur(4px)";
-    let adminBody = document.querySelector(".admin-body");
-    adminBody.style.opacity = "0.3";
-    adminBody.style.filter = "blur(4px)";
+    let head = document.querySelector(".head");
+    head.style.opacity = "0.1";
+    head.style.filter = "blur(4px)";
     let navbar = document.querySelector(".navbar");
-    navbar.style.opacity = "0.3";
+    navbar.style.opacity = "0.1";
     navbar.style.filter = "blur(4px)";
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
@@ -580,9 +579,9 @@ function closeRegister() {
     let main = document.querySelector(".main");
     main.style.filter = mainFilterRegister;
     main.style.opacity = "1";
-    let adminBody = document.querySelector(".admin-body");
-    adminBody.style.opacity = "1";
-    adminBody.style.filter = "none";
+    let head = document.querySelector(".head");
+    head.style.opacity = "1";
+    head.style.filter = "none";
     let navbar = document.querySelector(".navbar");
     navbar.style.filter = "none";
     navbar.style.opacity = "1";

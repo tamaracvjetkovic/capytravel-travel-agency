@@ -15,8 +15,7 @@ window.addEventListener('load', loadUsers());
 
 // LOGIN
 function closeAllForLogin() {
-    let btnClose = document.querySelector(".btn-login-cancel");
-    btnClose.click();
+    closeLogin();
     location.reload();
 }
 function tryToLogin() {
@@ -39,6 +38,7 @@ function tryToLogin() {
                         if (users[i].lozinka === psw1) {
                             errorKorisnicko.innerText = "";
                             errorLozinka.innerText = "";    
+                            closeAllForLogin();
                             return;
                         } else {
                             errorLozinka.innerText = "Pogresna šifra!"; 
@@ -118,8 +118,7 @@ function closeLogin() {
 
 // REGISTER
 function closeAllForRegisterUser() {
-    let btnClose = document.querySelector(".btn-register-cancel");
-    btnClose.click();
+    closeRegister();
     location.reload();
 }
 function registerNewUser() {

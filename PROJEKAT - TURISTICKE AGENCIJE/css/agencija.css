@@ -761,7 +761,7 @@ body {
         outline: 1px solid rgba(54, 54, 54, 0.726);
     }   
     .searchbar select {
-        padding: 7.4px;
+        padding: 7.2px;
         padding-left: 1px;
         padding-right: 1px;
         width: 140px;
@@ -807,9 +807,9 @@ body {
         outline: 1px solid rgba(54, 54, 54, 0.726);
     }  
     .searchbar button {
-        padding: 8.5px;   
-        padding-left: 5px;
-        padding-right: 5px; 
+        padding: 9px;   
+        padding-left: 13px;
+        padding-right: 13px; 
         border: none;
         background:rgba(142, 142, 142, 0.473);
     }
@@ -1068,6 +1068,45 @@ body {
 }
     
     
+
+.dest-box-info {
+    color: rgb(255, 255, 255);
+    background-color: rgb(242, 120, 39);
+    font-size: 19px;
+    text-align: center;
+    margin-bottom: 15px;
+    display: none;
+    padding: 3px;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.search-name-highlight {
+    padding: 3px;
+    background-color: rgb(255, 238, 51);
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.search-tip-highlight {
+    padding: 3px;
+    background-color: rgb(255, 201, 51);
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.search-prevoz-highlight {
+    padding: 3px;
+    background-color: rgb(255, 143, 51);
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.da {
+    display: flex;
+}
+.ne {
+    display: none;
+}
+
+
     
 .footer {
     display: flex;
