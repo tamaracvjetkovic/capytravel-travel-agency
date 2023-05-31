@@ -37,9 +37,7 @@
         <ul class = "menu">
             <li> <a href = "index.html" class = "nava"> Početna </a> </li>
                 <li> <a href = "aboutus.html" class = "nava"> O nama </a> </li>
-                <!--
                 <li> <a href = "contact.html" class = "nava"> Kontakt  </a> </li>
-                -->
                 <li> <a href = "admin.html" class = "nava">  Admin </a> </li>
                 <li> <p id = "login-button" class = "nava"> Login </p> </li>
                 <li> <p id = "register-button" class = "nava"> Sign Up </p> </li>   
@@ -242,6 +240,67 @@
             </div>
         </div>
     </div>
+
+
+
+    <div class = "edit-destination-div"> 
+        <div id = "edit-destination-popup">
+            <form action = "" id = "edit-destination-form">
+                <h1 style = "padding-top: 10px; padding-bottom: 10px;"> Izmeni destinaciju </h1>
+                <div class = "edit-destination-ime-i-tip"> 
+                    <div class = "edit-destination-ime-input"> 
+                        <label for = "ime-edit-destination"> <b> Naziv </b> </label>
+                        <div class = "error-message" id = "error-destination-ime"> </div>
+                        <input id = "ime-edit-destination" type = "text" placeholder = "Pariz.." name = "ime-edit-destination" required oninput = "validateEditDestinationInputIme(this)">
+                    </div>
+                    <div class = "edit-destination-tip-input">
+                        <label for = "tip-edit-destination"> <b> Tip </b> </label>
+                        <div class = "error-message" id = "error-destination-tip"> </div>
+                        <input id = "tip-edit-destination" type = "text" placeholder = "Letovanje.." name = "tip-edit-destination" required oninput = "validateEditDestinationInputTip(this)">
+                    </div>
+                </div>   
+                <div class = "edit-destination-cena-i-maxOsoba"> 
+                    <div class = "edit-destination-cena-input">
+                        <label for = "cena-edit-destination"> <b> Cena </b> </label>
+                        <div class = "error-message" id = "error-destination-cena"> </div>
+                        <input id = "cena-edit-destination" type = "number" placeholder = "31542.."name = "cena-edit-destination" required oninput = "validateEditDestinationInputCena(this)">
+                    </div>
+                    <div class = "edit-destination-prevoz-input">
+                        <label for = "prevoz-edit-destination"> <b> Prevoz </b> </label>
+                        <div class = "error-message" id = "error-destination-prevoz"> </div>
+                        <input id = "prevoz-edit-destination" placeholder = "avion.." name = "prevoz-edit-destination" required oninput = "validateEditDestinationInputPrevoz(this)">
+                    </div>
+                    <div class = "edit-destination-maxOsoba-input">
+                        <label for = "maxOsoba-edit-destination"> <b> Max osoba </b> </label>
+                        <div class = "error-message" id = "error-destination-maxOsoba"> </div>
+                        <input id = "maxOsoba-edit-destination" type = "number" placeholder = "20.." name = "maxOsoba-edit-destination" required oninput = "validateEditDestinationInputMaxOsoba(this)">
+                    </div>                 
+                </div>
+                <div class = "edit-destination-opis"> 
+                    <div class = "edit-destination-opis-input">
+                        <label for = "opis-edit-destination"> <b> Opis </b> </label>
+                        <div class = "error-message" id = "error-destination-opis"> </div>
+                        <textarea id = "opis-edit-destination" rows = "7" placeholder = "Opis destinacije.." name = "opis-edit-destination" required oninput = "validateEditDestinationInputOpis(this)"></textarea>
+                    </div>
+                </div> 
+                
+                <div class = "edit-destination-slike"> 
+                    <div class = "edit-destination-slike-input">
+                        <label for = "slike-edit-destination"> <b> Slike </b> </label>
+                        <div class = "error-message" id = "error-destination-slike"> </div>
+                        <textarea id = "slike-edit-destination" rows = "7" placeholder = "Slike destinacije.." name = "slike-edit-destination" required oninput = "validateEditDestinationInputSlike(this)"></textarea>
+                    </div>
+                </div>    
+
+                <div class = "edit-destination-submit-cancel">
+                    <button type = "submit" class = "btn-submit-edit-destination"> Edit </button>
+                    <button type = "button" class = "btn-edit-destination-cancel" onclick = "closeEditDestinationPopup()"> Close </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
 
 
     <script type = "text/javascript" src = "../js/destinacija.js"> </script>

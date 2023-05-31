@@ -1,18 +1,15 @@
 
 var firebaseUrl = 'https://novabazawebprojekat-default-rtdb.europe-west1.firebasedatabase.app/';
 
-var agenciesID = [];
-var agencies = {};
-var destinationsID = [];
-var destinations = {};
+var usersID = [];
+var users = {};
 
-var curBox = 0;
 var clicked = 0;
 
 var popupClicked = 0;
 
 
-window.addEventListener('load', loadAgencies);
+window.addEventListener('load', loadUsers());
 
 
 
@@ -81,7 +78,7 @@ function showLogin() {
     head.style.opacity = "0.1";
     head.style.filter = "blur(4px)";
     let navbar = document.querySelector(".navbar");
-    navbar.style.opacity = "0.1";
+    navbar.style.opacity = "0.3";
     navbar.style.filter = "blur(4px)";
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
@@ -497,7 +494,7 @@ function showRegister() {
     head.style.opacity = "0.1";
     head.style.filter = "blur(4px)";
     let navbar = document.querySelector(".navbar");
-    navbar.style.opacity = "0.1";
+    navbar.style.opacity = "0.3";
     navbar.style.filter = "blur(4px)";
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
@@ -535,140 +532,6 @@ function closeRegister() {
 }
 
 
-// FUNKCIJE ZA IZGLED
-function appendMainBox(position, dest, destination, curAgency) {
-    let newMainBox = document.createElement('div');
-    newMainBox.setAttribute('id', (dest + "-" + curBox + "-" + curAgency));
-    newMainBox.classList.add("box");
-    
-    curBox++;
-   
-    let newBoxCard = document.createElement('div');
-    newBoxCard.setAttribute('id', ("card" + dest + "-" + curBox + "-" + curAgency));
-    newBoxCard.classList.add("card");  
-
-    let newDestinationImage = document.createElement('div');
-    newDestinationImage.classList.add("destination-image");
-    newDestinationImage.innerHTML = '<img src = "' + destination.slike[0] + '">';
-
-    let newDestinationDesc = document.createElement('div');
-    newDestinationDesc.style.textDecoration = "none";
-    newDestinationDesc.classList.add("opis-destinacije");
-
-    let newDestinationName = document.createElement('p');
-    newDestinationName.classList.add("ime-destinacije");
-    newDestinationName.innerHTML = destination.naziv;
-    newDestinationDesc.appendChild(newDestinationName);
-
-    let newDestinationType = document.createElement('p');
-    newDestinationType.classList.add("tip-destinacije");
-    newDestinationType.innerHTML = destination.tip;
-    newDestinationDesc.appendChild(newDestinationType);
-
-    let newDestinationTransport = document.createElement('p');
-    newDestinationTransport.classList.add("prevoz-destinacije");
-    newDestinationTransport.innerHTML = "Prevoz: " + destination.prevoz;
-    newDestinationDesc.appendChild(newDestinationTransport);
-
-    let newDestinationMaxPerson = document.createElement('p');
-    newDestinationMaxPerson.classList.add("maks-osoba-destinacije");
-    newDestinationMaxPerson.innerHTML = "Broj mesta: " + destination.maxOsoba;
-    newDestinationDesc.appendChild(newDestinationMaxPerson);
-
-    let newDestinationCost = document.createElement('p');
-    newDestinationCost.classList.add("cena-destinacije");
-    newDestinationCost.innerHTML = "<div style = 'margin-top: -1px;'> <div style = 'font-size: 12px';> Od </div> <b>" + destination.cena + " </div> <div style = 'font-size: 13px'> RSD! </div> </b>";
-
-    
-    newBoxCard.appendChild(newDestinationCost);
-    newBoxCard.appendChild(newDestinationImage);
-    newBoxCard.appendChild(newDestinationDesc);
-
-    newMainBox.appendChild(newBoxCard);
-
-    let upitSaznajVise = document.createElement('div');
-    upitSaznajVise.classList.add("upit-saznaj-vise");
-    newBoxCard.appendChild(upitSaznajVise);
-
-    let posaljiUpitDiv = document.createElement('div');
-    let posaljiUpitForm = document.createElement('form');
-    posaljiUpitForm.setAttribute("action", "form.html");
-    let posaljiUpit = document.createElement('button');
-    posaljiUpit.classList.add("posalji-upit");
-    posaljiUpit.innerHTML = "Pošalji upit";
-    posaljiUpitForm.appendChild(posaljiUpit);
-    posaljiUpitDiv.appendChild(posaljiUpitForm);
-    upitSaznajVise.appendChild(posaljiUpitDiv);
-    
-    let saznajViseForm = document.createElement('div');
-    let saznajVise = document.createElement('button');
-    saznajVise.classList.add("saznaj-vise");
-    saznajVise.innerHTML = "Saznaj više";
-    saznajViseForm.appendChild(saznajVise);
-    upitSaznajVise.appendChild(saznajViseForm);
-
-    let mainBoxes = document.querySelector(position);
-    mainBoxes.appendChild(newMainBox);
-}
-function appendAgencyBody(cur, agency) {
-
-    let newTitle = document.getElementById("header1");
-    newTitle.innerHTML = agency.naziv.toUpperCase();
-    let newHead = document.querySelector(".head");
-    newHead.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.383), rgba(0, 0, 0, 0.338)), url('" + agency.logo + "')";
-
-    document.querySelector(".boxes h1").innerHTML = "Destinacije '" + agency.naziv + "'";
-
-    let documentTitle = document.querySelector("title");
-    documentTitle.innerText = "CapyTravel | " + agency.naziv;
-    
-    let dest = agency.destinacije;
-    let br = 0;
-    for (let id in destinations) {
-        var destination = destinations[id];
-        if (id === dest) {
-            for (let i in destination) {
-                appendMainBox(".boxes", br, destination[i], cur);
-            }
-            const boxes = document.querySelectorAll('.box');
-            boxes.forEach(box => {
-                box.addEventListener('click', () => {
-                const boxId = box.getAttribute('id');
-                window.location.href = `destinacija.html#${boxId}`;
-                });
-            }); 
-        }
-        br++;
-    }
-    //loadDestinations(cur, agency.destinacije);
-
-    let opis2Agencije = document.querySelector(".opis2-agencije-tekstovi");
-    let opis2AgencijeInfo = document.createElement("div");
-    opis2AgencijeInfo.classList.add("opis2-agencije-info");
-    
-    let opis2AgencijeTekst1 = document.createElement("p");
-    let randomProcenat = Math.floor(Math.random() * (35 - 15 + 1)) + 15;
-    opis2AgencijeTekst1.innerHTML = "Agencija <b>'" + agency.naziv + "'</b> je jedna od poznatijih turističkih agencija u Srbiji, koja je osnovana <b>" + agency.godina + ". </b>godine, a u poslednje 3 godine ima čak " + randomProcenat + "% godišnje više putnika o odnosu na druge turističke agencije iz Srbije! <br/> <br/> '" + agency.naziv + "' nudi najbolje destinacije za Vas, te smo tu da Vaše putovanje učinimo putovanjem iz snova!";
-    
-    let opis2AgencijeTekst2 = document.createElement("p");
-    opis2AgencijeTekst2.innerText = "E-mail: " + agency.email;
-    opis2AgencijeTekst2.style.marginTop = "50px";
-    let opis2AgencijeTekst3 = document.createElement("p");
-    opis2AgencijeTekst3.innerText = "Telefon: " + agency.brojTelefona;
-    opis2AgencijeTekst3.style.marginTop = "10px";
-    opis2AgencijeTekst3.style.marginBottom = "40px";
-    let opis2AgencijeTekst4 = document.createElement("p");
-    opis2AgencijeTekst4.innerText = "Lokacija agencije: " + agency.adresa;
-    opis2AgencijeTekst4.style.marginTop = "10px";
-    
-    opis2Agencije.append(opis2AgencijeTekst1);
-    opis2AgencijeInfo.append(opis2AgencijeTekst2);
-    opis2AgencijeInfo.append(opis2AgencijeTekst3);
-    opis2AgencijeInfo.append(opis2AgencijeTekst4);
-    opis2Agencije.append(opis2AgencijeInfo);
-}
-
-
 // OCITAJ POCETNU STRANICU
 function ocitajPocetnu() {
     window.location.href = "index.html";
@@ -687,9 +550,6 @@ function scrollToTop() {
 // MAIN
 function main() {
 
-    let pageId = window.location.hash.substr(1);
-    loadAgency(pageId);
-
     document.addEventListener("click", () => {
         if (popupClicked === 1) {
             let nav = document.querySelector(".navbar");
@@ -705,24 +565,22 @@ function main() {
         }
     });
 
-    // ***** CHANGING NAVBAR WHEN SCROLLED *****
-    document.addEventListener("load", () => {
-        let nav = document.querySelector(".navbar");
-        let nava = document.querySelectorAll(".nava");
-        if (window.scrollY > 0) {
-            if (clicked === 0) {
-                nav.classList.add("scrolled");
-                for (let i = 0; i < nava.length; i++) {
-                    nava[i].classList.add("scrolled");
-                }
-            } 
-            let button1 = document.querySelector(".menu-button");
-            button1.style.setProperty('--button1Color','black');
-            let logo = document.getElementById("logo1");
-            logo.src = "../slike/logo/logo1/png/logo-no-background.png";
-        }
-    });
+    let nav = document.querySelector(".navbar");
+    let nava = document.querySelectorAll(".nava");
+    if (window.scrollY > 0) {
+        if (clicked === 0) {
+            nav.classList.add("scrolled");
+            for (let i = 0; i < nava.length; i++) {
+                nava[i].classList.add("scrolled");
+            }
+        } 
+        let button1 = document.querySelector(".menu-button");
+        button1.style.setProperty('--button1Color','black');
+        let logo = document.getElementById("logo1");
+        logo.src = "../slike/logo/logo1/png/logo-no-background.png";
+    }
 
+    // ***** CHANGING NAVBAR WHEN SCROLLED *****
     document.addEventListener("scroll", () => {
         let nav = document.querySelector(".navbar");
         let nava = document.querySelectorAll(".nava");
@@ -805,14 +663,13 @@ function main() {
     log.onclick = showLogin;
 
     let reg = document.getElementById("register-button");
-    reg.onclick = showRegister; 
-    
+    reg.onclick = showRegister;
+
     let loginForm = document.getElementById("login-form");
     loginForm.addEventListener("submit", isLoginValid)
     
     let registerForm = document.getElementById("register-form");
     registerForm.addEventListener("submit", isRegisterValid)
-
 }
 
 
@@ -827,71 +684,13 @@ function loadUsers() {
                 for (let id in users) {
                     usersID.push(id);
                 }       
-                main();  
+                main();
             } else {
                 window.location.href = "error.html";
-            }       
+            }  
+                  
         }
     }
     request.open('GET', firebaseUrl + '/korisnici.json');
     request.send();
 }
-
-function loadDestinations() {
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                destinationsID = [];
-                destinations = JSON.parse(request.responseText);
-                for (let id in destinations) {
-                    destinationsID.push(id);
-                }
-                loadUsers();
-            } else {
-                window.location.href = "error.html";
-            }  
-        }
-    }
-    request.open('GET', firebaseUrl + '/destinacije.json');
-    request.send();
-}
-
-function loadAgencies() {
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                agenciesID = [];
-                agencies = JSON.parse(request.responseText);
-                for (let id in agencies) {
-                    agenciesID.push(id);
-                }
-                loadDestinations(); 
-            } else {
-                window.location.href = "error.html";
-            }
-        }
-    }
-    request.open('GET', firebaseUrl + '/agencije.json');
-    request.send();
-}
-function loadAgency(cur) {
-    // GET by id    
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if (this.status == 200) {
-                var agency = JSON.parse(request.responseText);
-                appendAgencyBody(cur, agency);
-            } else {
-                window.location.href = "error.html";
-            }
-            
-        }
-    }
-    request.open('GET', firebaseUrl + '/agencije/' + agenciesID[cur] + '.json');
-    request.send();
-}
-
-

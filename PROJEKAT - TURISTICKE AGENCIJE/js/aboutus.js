@@ -1,5 +1,5 @@
 
-var firebaseUrl = 'https://tacaprobabaza-default-rtdb.europe-west1.firebasedatabase.app/';
+var firebaseUrl = 'https://novabazawebprojekat-default-rtdb.europe-west1.firebasedatabase.app/';
 
 var usersID = [];
 var users = {};
@@ -14,6 +14,11 @@ window.addEventListener('load', loadUsers());
 
 
 // LOGIN
+function closeAllForLogin() {
+    let btnClose = document.querySelector(".btn-login-cancel");
+    btnClose.click();
+    location.reload();
+}
 function tryToLogin() {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -32,12 +37,8 @@ function tryToLogin() {
                 for (let i in users) { 
                     if (users[i].korisnickoIme === korisnicko1) {
                         if (users[i].lozinka === psw1) {
-                            alert("Dobrodošli, " + korisnicko1 + "!");  
                             errorKorisnicko.innerText = "";
-                            errorLozinka.innerText = "";
-                            let btnClose = document.querySelector(".btn-login-cancel");
-                            btnClose.click();
-                            location.reload();
+                            errorLozinka.innerText = "";    
                             return;
                         } else {
                             errorLozinka.innerText = "Pogresna šifra!"; 
@@ -59,9 +60,68 @@ function isLoginValid() {
     event.preventDefault();
     tryToLogin();
 }
+// LOGIN POPUP
+var mainFilterLogin;
+function showLogin() {
+    if (popupClicked === 1) {
+        return
+    }
+    popupClicked = 1
+    window.scrollTo(0, 0);
+    let logDiv = document.querySelector(".login-div");
+    logDiv.style.display = "flex";
+    let main = document.querySelector(".main");
+    main.style.opacity = "0.1";
+    mainFilterLogin = main.style.filter;
+    main.style.filter = "blur(4px)";
+    let head = document.querySelector(".head");
+    head.style.opacity = "0.3";
+    head.style.filter = "blur(4px)";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.opacity = "0.3";
+    navbar.style.filter = "blur(4px)";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "0";
+    document.body.style.overflow = "hidden";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "hidden";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "hidden";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "hidden";
+}
+function closeLogin() {
+    popupClicked = 0
+    let logDiv = document.querySelector(".login-div");
+    logDiv.style.display = "none";
+    let main = document.querySelector(".main");
+    main.style.filter = mainFilterLogin;
+    main.style.opacity = "1";
+    let head = document.querySelector(".head");
+    head.style.opacity = "1";
+    head.style.filter = "none";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.filter = "none";
+    navbar.style.opacity = "1";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "1";
+    goUp.style.filter = "none";
+    document.body.style.overflow = "auto";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "visible";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "visible";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "visible";
+}
 
 
 // REGISTER
+function closeAllForRegisterUser() {
+    let btnClose = document.querySelector(".btn-register-cancel");
+    btnClose.click();
+    location.reload();
+}
 function registerNewUser() {
     let ime1 = document.getElementById('ime-register').value;
     let prezime1 = document.getElementById('prezime-register').value;
@@ -88,6 +148,7 @@ function registerNewUser() {
     request.onreadystatechange = function () {
     if (this.readyState == 4) {
         if (this.status == 200) {
+            closeAllForRegisterUser();
         } else {
             window.location.href = "error.html";
         }
@@ -140,12 +201,8 @@ function isRegisterValid() {
     }
     if (okForma === 1) {
         registerNewUser();
-        let btnClose = document.querySelector(".btn-register-cancel");
-        btnClose.click();
-        location.reload();
         return true;
     } else {
-        alert("GREŠKA! Popunite pravilno podatke!");
         return false;
     }
 }
@@ -310,7 +367,7 @@ function togglePswVisibility3() {
     let passwordToggleEditUser = document.querySelector(".psw-edit-user-toggle");
     if (passwordInputEditUser.type === "password") {
         passwordInputEditUser.type = "text";
-        passwordToggleEditUser.innerHTML = '<i class = "fa fa-eye" aria-hidden = "true"> </i>';
+        passwordToggleEditUser.innerHTML = '<i style = "cursor: pointer;" class = "fa fa-eye" aria-hidden = "true"> </i>';
     } else {
         passwordInputEditUser.type = "password";
         passwordToggleEditUser.innerHTML = '<i class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
@@ -321,10 +378,10 @@ function togglePswVisibility2() {
     let passwordToggleLogin = document.querySelector(".psw-login-toggle");
     if (passwordInputLogin.type === "password") {
         passwordInputLogin.type = "text";
-        passwordToggleLogin.innerHTML = '<i class = "fa fa-eye" aria-hidden = "true"> </i>';
+        passwordToggleLogin.innerHTML = '<i style = "cursor: pointer;" class = "fa fa-eye" aria-hidden = "true"> </i>';
     } else {
         passwordInputLogin.type = "password";
-        passwordToggleLogin.innerHTML = '<i class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
+        passwordToggleLogin.innerHTML = '<i style = "cursor: pointer;" class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
     }
 }
 function togglePswVisibility() {
@@ -332,10 +389,10 @@ function togglePswVisibility() {
     let passwordToggle = document.querySelector(".psw-register-toggle");
     if (passwordInput.type === "password") {
         passwordInput.type = "text";
-        passwordToggle.innerHTML = '<i class = "fa fa-eye" aria-hidden = "true"> </i>';
+        passwordToggle.innerHTML = '<i style = "cursor: pointer;" class = "fa fa-eye" aria-hidden = "true"> </i>';
     } else {
         passwordInput.type = "password";
-        passwordToggle.innerHTML = '<i class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
+        passwordToggle.innerHTML = '<i style = "cursor: pointer;" class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
     }
 }
 function validateRegisterInputPsw(elem) {
@@ -418,53 +475,7 @@ function validateRegisterInputPhone(elem) {
         return false;
     }
 }
-
-
-var mainFilterLogin;
-function showLogin() {
-    if (popupClicked === 1) {
-        return
-    }
-    popupClicked = 1
-    window.scrollTo(0, 0);
-    let logDiv = document.querySelector(".login-div");
-    logDiv.style.display = "flex";
-
-    let head = document.querySelector(".head");
-    head.style.opacity = "0.1";
-    head.style.filter = "blur(4px)";
-
-    let main = document.querySelector(".main");
-    main.style.opacity = "0.1";
-    mainFilterLogin = main.style.filter;
-    main.style.filter = "blur(4px)";
-
-    let navbar = document.querySelector(".navbar");
-    navbar.style.opacity = "0.1";
-    navbar.style.filter = "blur(4px)";
-    
-    let goUp = document.querySelector(".go-up");
-    goUp.style.opacity = "0";
-    document.body.style.overflow = "hidden";
-}
-function closeLogin() {
-    popupClicked = 0
-    let logDiv = document.querySelector(".login-div");
-    logDiv.style.display = "none";
-    let head = document.querySelector(".head");
-    head.style.filter = "none";
-    head.style.opacity = "1";
-    let main = document.querySelector(".main");
-    main.style.filter = mainFilterLogin;
-    main.style.opacity = "1";
-    let navbar = document.querySelector(".navbar");
-    navbar.style.filter = "none";
-    navbar.style.opacity = "1";
-    let goUp = document.querySelector(".go-up");
-    goUp.style.opacity = "1";
-    goUp.style.filter = "none";
-    document.body.style.overflow = "auto";
-}
+// REGISTER POPUP
 var mainFilterRegister;
 function showRegister() {
     if (popupClicked === 1) {
@@ -475,33 +486,36 @@ function showRegister() {
     let regDiv = document.querySelector(".register-div");
     regDiv.style.display = "flex";
 
-    let head = document.querySelector(".head");
-    head.style.opacity = "0.1";
-    head.style.filter = "blur(4px)";
-    
     let main = document.querySelector(".main");
     mainFilterRegister = main.style.filter;
     main.style.opacity = "0.1";
     main.style.filter = "blur(4px)";
-
+    let head = document.querySelector(".head");
+    head.style.opacity = "0.3";
+    head.style.filter = "blur(4px)";
     let navbar = document.querySelector(".navbar");
-    navbar.style.opacity = "0.1";
+    navbar.style.opacity = "0.3";
     navbar.style.filter = "blur(4px)";
-    
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
     document.body.style.overflow = "hidden";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "hidden";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "hidden";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "hidden";
 }
 function closeRegister() {
     popupClicked = 0
     let regDiv = document.querySelector(".register-div");
     regDiv.style.display = "none";
-    let head = document.querySelector(".head");
-    head.style.filter = "none";
-    head.style.opacity = "1";
     let main = document.querySelector(".main");
     main.style.filter = mainFilterRegister;
     main.style.opacity = "1";
+    let head = document.querySelector(".head");
+    head.style.opacity = "1";
+    head.style.filter = "none";
     let navbar = document.querySelector(".navbar");
     navbar.style.filter = "none";
     navbar.style.opacity = "1";
@@ -509,6 +523,12 @@ function closeRegister() {
     goUp.style.opacity = "1";
     goUp.style.filter = "none";
     document.body.style.overflow = "auto";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "visible";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "visible";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "visible";
 }
 
 

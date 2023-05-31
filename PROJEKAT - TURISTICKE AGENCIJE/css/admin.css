@@ -663,6 +663,15 @@ body {
         outline: none;
         cursor: pointer;
     }
+    .psw-add-destination-toggle {
+        position: absolute;
+        top: 29%;
+        right: 14px;
+        background: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
     .psw-register-toggle i {
         font-size: 16px;
     }
@@ -672,6 +681,9 @@ body {
     .psw-edit-user-toggle i {
         font-size: 16px;
     }
+    .psw-add-destination-toggle i {
+        font-size: 16px;
+    }
     .psw-register-toggle:focus i {
         color: #007bff;
     }
@@ -679,6 +691,9 @@ body {
         color: #007bff;
     }
     .psw-edit-user-toggle:focus i {
+        color: #007bff;
+    }
+    .psw-add-destination-toggle:focus i {
         color: #007bff;
     }
 
@@ -1580,6 +1595,262 @@ body {
                         opacity: 1;
                     }
 }
+
+
+@media (min-width: 769px) {
+    .add-destination-div {
+        display: flex;
+        justify-content: center;
+        display: none;
+        z-index: 1010;
+        color: black;
+    }
+        #add-destination-popup {
+            position: fixed; 
+            top: 5vh;
+            bottom: 5vh;
+            max-height: 100%;
+            z-index: 1010;
+            overflow: auto;
+        }
+            #add-destination-form {
+                border-radius: 20px;
+                border: 1.5px solid rgb(145, 145, 145);
+                max-height: 100%;
+                overflow: auto;
+                width: 550px;
+                max-width: 700px;
+                padding: 15px;
+                padding-right: 25px;
+                padding-left: 25px;
+                z-index: 1010;
+                background-color: white;
+            }
+                #add-destination-form h1 {
+                    text-align: center;
+                    margin-bottom: 22px;
+                    font-size: 26px;
+                }
+                #add-destination-form label {
+                    font-size: 15px;
+                }
+                #add-destination-form input {
+                    width: 100%;
+                    padding: 5px;
+                    margin-top: 6px;
+                    height: 38px;
+                    margin-bottom: 15px;
+                    border: none;
+                    background: #e8e8e8;
+                }
+                #add-destination-form textarea {
+                    padding: 7px;
+                    margin-top: 6px;
+                    margin-bottom: 15px;
+                    resize: none;
+                    border: none;
+                    background: #e8e8e8;
+                }
+                #add-destination-form input:focus {
+                    background-color: #ddd;
+                    outline: none;
+                }   
+                #add-destination-form textarea:focus {
+                    background-color: #ddd;
+                    outline: none;
+                }      
+                .add-destination-submit-cancel {
+                    display: flex;
+                    flex-direction: row;
+                    margin-top: 20px;
+                }
+                    .btn-submit-add-destination {
+                        background-color: #0b890b;
+                        color: white;
+                        padding: 16px 20px;
+                        border: none;
+                        cursor: pointer;
+                        width: 50%;
+                        margin-bottom:10px;
+                        opacity: 0.8;
+                        margin-right: 5px;
+                    }
+                    .btn-add-destination-cancel {
+                        background-color: rgb(238, 31, 86);
+                        color: white;
+                        padding: 16px 20px;
+                        border: none;
+                        cursor: pointer;
+                        width: 50%;
+                        margin-bottom:10px;
+                        margin-left: 5px;
+                        opacity: 0.8;
+                    }
+                    #add-destination-form button:hover, .open-button:hover {
+                        opacity: 1;
+                    }
+}
+
+
+.add-destination-ime-i-tip {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;                    
+}
+    .add-destination-ime-input {
+        margin-right: 7px;
+        display: flex;
+        width: 50%;
+        flex-direction: column;
+    }
+    .add-destination-tip-input {
+        margin-left: 7px;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+    }
+.add-destination-cena-i-maxOsoba {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;                         
+}
+    .add-destination-cena-input {
+        margin-right: 13px;
+        display: flex;
+        width: 33%;
+        flex-direction: column;
+    }
+    .add-destination-prevoz-input {
+        width: 33%;
+        display: flex;
+        flex-direction: column;
+    } 
+    .add-destination-maxOsoba-input {
+        margin-left: 13px;
+        width: 33%;
+        display: flex;
+        flex-direction: column;
+    }  
+.add-destination-opis {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;                          
+}
+    .add-destination-opis-input {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+    }
+.add-destination-slike {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;                          
+}
+    .add-destination-slike-input {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+    }
+    
+
+@media (max-width: 768px) {
+    .add-destination-div {
+        display: flex;
+        justify-content: center;
+        display: none;
+        z-index: 1010;
+        overflow: auto;
+        color: black;
+    }
+        #add-destination-popup {
+            position: fixed; 
+            top: 5vh;
+            bottom: 5vh;
+            max-height: 100%;
+            z-index: 1010;
+            overflow: auto;
+        }
+            #add-destination-form {
+                border-radius: 20px;
+                border: 1.5px solid rgb(145, 145, 145);
+                overflow: auto;
+                max-height: 100%;
+                max-width: 340px;
+                padding: 15px;
+                padding-right: 25px;
+                padding-left: 25px;
+                z-index: 1010;
+                background-color: white;
+            }
+                #add-destination-form h1 {
+                    text-align: center;
+                    margin-bottom: 20px;
+                    font-size: 24px;
+                }
+                #add-destination-form label {
+                    font-size: 14px;
+                }
+                #add-destination-form input {
+                    overflow: auto;
+                    width: 100%;
+                    padding: 7px;
+                    margin-top: 6px;
+                    height: 33px;
+                    margin-bottom: 14px;
+                    border: none;
+                    background: #e8e8e8;
+                }
+                #add-destination-form textarea {
+                    overflow: auto;
+                    padding: 7px;
+                    margin-top: 6px;
+                    margin-bottom: 14px;
+                    border: none;
+                    background: #e8e8e8;
+                    resize: none;
+                }       
+                #add-destination-form input:focus {
+                    background-color: #ddd;
+                    outline: none;
+                }
+                #add-destination-form textarea:focus {
+                    background-color: #ddd;
+                    outline: none;
+                }   
+                .add-destination-submit-cancel {
+                    margin-top: 20px;
+                    display: flex;
+                    flex-direction: row;
+                }
+                    .btn-submit-add-destination {
+                        background-color: #0b890b;
+                        color: white;
+                        padding: 16px 20px;
+                        border: none;
+                        cursor: pointer;
+                        width: 50%;
+                        margin-bottom:10px;
+                        opacity: 0.8;
+                        margin-right: 5px;
+                    }
+                    .btn-add-destination-cancel {
+                        background-color: rgb(238, 31, 86);
+                        color: white;
+                        padding: 16px 20px;
+                        border: none;
+                        cursor: pointer;
+                        width: 50%;
+                        margin-bottom:10px;
+                        margin-left: 5px;
+                        opacity: 0.8;
+                    }
+                    #add-destination-form button:hover, .open-button:hover {
+                        opacity: 1;
+                    }
+}
+
+    
+
 
 
 

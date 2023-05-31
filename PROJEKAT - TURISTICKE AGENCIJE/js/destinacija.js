@@ -1,12 +1,15 @@
 
-var firebaseUrl = 'https://tacaprobabaza-default-rtdb.europe-west1.firebasedatabase.app/';
+var firebaseUrl = 'https://novabazawebprojekat-default-rtdb.europe-west1.firebasedatabase.app/';
 
 var agenciesID = [];
 var agencies = {};
 var destinationsID = [];
 var destinations = {};
+
+
 var curDestinationInDestinationID;
 var curDestinationInDestination;
+var curDestinationID;
 
 var picturesNum = 0;
 var clicked = 0;
@@ -16,6 +19,371 @@ var popupClicked = 0;
 
 
 window.addEventListener('load', loadAgencies);
+
+
+
+var links = []
+//EDIT DESTINATION
+function closeAllForEditDestination() {
+    closeEditDestinationPopup();
+    location.reload();
+}
+function editTheDestination() {
+    let ime1 = document.getElementById('ime-edit-destination').value;
+    let tip1 = document.getElementById('tip-edit-destination').value;
+    let cena1 = document.getElementById('cena-edit-destination').value;
+    let prevoz1 = document.getElementById('prevoz-edit-destination').value;
+    let maxOsoba1 = document.getElementById('maxOsoba-edit-destination').value;
+    let opis1 = document.getElementById('opis-edit-destination').value;
+    let slike1 = document.getElementById('slike-edit-destination').value;
+    let links2 = [];
+    let s = '';
+    for (let i in slike1) {
+        if (/\s/.test(slike1[i])) {
+            links2.push(s);
+            s = "";
+            continue;
+        }  
+        s += slike1[i];
+    }
+    if (s != "") {
+        links2.push(s)
+    }
+    links = []
+    for (let i in links2) {
+        if (links2[i].trim() === '') {
+            console.log("Nije")
+            continue;
+        } else {
+            links.push(links2[i]);
+        }
+    }
+    let editedDestination = {
+        cena: cena1,
+        maxOsoba: maxOsoba1,
+        naziv: ime1,
+        opis: opis1,
+        prevoz: prevoz1,
+        slike: links,
+        tip: tip1
+    };
+    let destinationJson = JSON.stringify(editedDestination);
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                closeAllForEditDestination();
+            } else {
+                window.location.href = "error.html";
+            }            
+        }
+    }
+    request.open('PUT', firebaseUrl + '/destinacije/' + curDestinationID + "/" + curDestinationInDestinationID + '.json');
+    request.setRequestHeader('Content-Type', 'application/json');
+    request.send(destinationJson);
+}
+function isEditDestinationValid() { 
+    event.preventDefault();
+    let okForma = 1;
+    let inputIme = document.getElementById("ime-edit-destination");
+    let isImeValid = validateEditDestinationInputIme(inputIme);
+    if (isImeValid != true) {
+        okForma = 0;
+    }
+    let inputTip = document.getElementById("tip-edit-destination");
+    let isTipValid = validateEditDestinationInputTip(inputTip);
+    if (isTipValid != true) {
+        okForma = 0;
+    }
+    let inputCena = document.getElementById("cena-edit-destination");
+    let isCenaValid = validateEditDestinationInputCena(inputCena);
+    if (isCenaValid != true) {
+        okForma = 0;
+    }
+    let inputPrevoz = document.getElementById("prevoz-edit-destination");
+    let isPrevozValid = validateEditDestinationInputPrevoz(inputPrevoz);
+    if (isPrevozValid != true) {
+        okForma = 0;
+    }
+    let inputMaxOsoba = document.getElementById("maxOsoba-edit-destination");
+    let isMaxOsobaValid = validateEditDestinationInputMaxOsoba(inputMaxOsoba);
+    if (isMaxOsobaValid != true) {
+        okForma = 0;
+    }
+    let inputOpis = document.getElementById("opis-edit-destination");
+    let isOpisValid = validateEditDestinationInputOpis(inputOpis);
+    if (isOpisValid != true) {
+        okForma = 0;
+    }
+    let inputSlike = document.getElementById("slike-edit-destination");
+    let isSlikeValid = validateEditDestinationInputSlike(inputSlike);
+    if (isSlikeValid != true) {
+        okForma = 0;
+    }
+
+    if (okForma === 1) {
+        //console.log(curDestinationID)
+        //console.log(curDestinationInDestinationID);
+        editTheDestination();
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditDestinationInputSlike(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let errorMessage = document.getElementById("error-destination-slike");
+    let links = [];
+    let s = '';
+    for (let i in value) {
+        if (/\s/.test(value[i])) {
+            links.push(s);
+            s = "";
+            continue;
+        }  
+        s += value[i];
+    }
+    if (s != "") {
+        links.push(s)
+    }
+    let ok2 = 1;
+    let regexSlike = /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/;
+    for (let i in links) {
+        if (!regexSlike.test(links[i])) {
+            ok2 = 0;
+        }
+    }
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (ok2 === 0) {
+        errorMessage.innerText = 'Unos nije link slike!';
+        ok = 0;
+    } else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+    if (ok === 1) {
+        slikeLinks = links;
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditDestinationInputOpis(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let errorMessage = document.getElementById("error-destination-opis");
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditDestinationInputMaxOsoba(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let regexMaxOsoba = /^[1-9]\d*$/;
+    let errorMessage = document.getElementById("error-destination-maxOsoba");
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (!regexMaxOsoba.test(value)) { 
+        errorMessage.innerText = 'Pogrešni karakteri!';
+        ok = 0;
+    } else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditDestinationInputPrevoz(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let regexPrevoz = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\s']+$/;
+    let errorMessage = document.getElementById("error-destination-prevoz");
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (!regexPrevoz.test(value)) { 
+        errorMessage.innerText = 'Pogrešni karakteri!';
+        ok = 0;
+    }  else if (value.length < 2) {
+        errorMessage.innerText = 'Dužina >= 2!';
+        ok = 0;
+    } else if (value.length > 30) {
+        errorMessage.innerText = 'Dužina <= 30!';
+        ok = 0;
+    }  else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditDestinationInputCena(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let regexCena = /^[1-9]\d*(\.\d+)?$/;
+    let errorMessage = document.getElementById("error-destination-cena");
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (!regexCena.test(value)) { 
+        errorMessage.innerText = 'Pogrešni karakteri!';
+        ok = 0;
+    } else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditDestinationInputTip(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let regexTip = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\s']+$/;
+    let errorMessage = document.getElementById("error-destination-tip");
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (!regexTip.test(value)) { 
+        errorMessage.innerText = 'Pogrešni karakteri!';
+        ok = 0;
+    }  else if (value.length < 2) {
+        errorMessage.innerText = 'Dužina >= 2!';
+        ok = 0;
+    } else if (value.length > 30) {
+        errorMessage.innerText = 'Dužina <= 30!';
+        ok = 0;
+    }  else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateEditDestinationInputIme(elem) {
+    let value = elem.value.trim();
+    let ok = 1;
+    let regexIme = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\s']+$/;
+    let errorMessage = document.getElementById("error-destination-ime");
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (!regexIme.test(value)) { 
+        errorMessage.innerText = 'Pogrešni karakteri!';
+        ok = 0;
+    }  else if (value.length < 2) {
+        errorMessage.innerText = 'Dužina naziva >= 2';
+        ok = 0;
+    } else if (value.length > 30) {
+        errorMessage.innerText = 'Dužina naziva <= 30';
+        ok = 0;
+    }  else {
+        errorMessage.innerText = '';
+        ok = 1;
+    }
+    if (ok === 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function closeEditDestinationPopup() {
+    popupClicked = 0;
+    let popup = document.querySelector(".edit-destination-div");
+    popup.style.display = "none";
+    let head = document.querySelector(".head");
+    head.style.opacity = "1";
+    head.style.filter = "none";
+    let main = document.querySelector(".main");
+    main.style.opacity = "1";
+    main.style.filter = "none";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.filter = "none";
+    navbar.style.opacity = "1";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "1";
+    goUp.style.filter = "none";
+    document.body.style.overflow = "auto";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "visible";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "visible";
+}
+function editDestinationPopup() {
+    if (popupClicked === 1) {
+        return
+    }
+    popupClicked = 1
+    window.scrollTo(0, 0);
+    let destinacija = curDestinationInDestination;
+    let popup = document.querySelector(".edit-destination-div");
+    popup.style.display = "flex";
+    let head = document.querySelector(".head");
+    head.style.opacity = "0.1";
+    head.style.filter = "blur(4px)";
+    let main = document.querySelector(".main");
+    main.style.opacity = "0.1";
+    main.style.filter = "blur(4px)";
+    let navbar = document.querySelector(".navbar");
+    navbar.style.opacity = "0.3";
+    navbar.style.filter = "blur(4px)";
+    let goUp = document.querySelector(".go-up");
+    goUp.style.opacity = "0";
+    document.body.style.overflow = "hidden";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "hidden";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "hidden";
+
+    let imeDestinacije = document.getElementById("ime-edit-destination");
+    imeDestinacije.value = destinacija.naziv;
+    let tipDestinacije = document.getElementById("tip-edit-destination");
+    tipDestinacije.value = destinacija.tip;
+    let cenaDestinacije = document.getElementById("cena-edit-destination");
+    cenaDestinacije.value = destinacija.cena;
+    let prevozDestinacije = document.getElementById("prevoz-edit-destination");
+    prevozDestinacije.value = destinacija.prevoz;
+    let maxOsobaDestinacije = document.getElementById("maxOsoba-edit-destination");
+    maxOsobaDestinacije.value = destinacija.maxOsoba;
+    let opisDestinacije = document.getElementById("opis-edit-destination");
+    opisDestinacije.value = destinacija.opis;
+    let s = destinacija.slike;
+    let slikeDestinacije = document.getElementById("slike-edit-destination");
+    slikeDestinacije.value = s.join("\n");  
+
+    let h1 = document.querySelector(".edit-destination-div h1");
+    h1.style.display = "flex";
+    h1.style.justifyContent = "center";
+    h1.style.alignItems = "center";
+    h1.innerHTML = "EDIT - " + destinacija.naziv;
+}
 
 
 
@@ -90,6 +458,11 @@ function doYouWantToDeleteDestination() {
 
 
 // LOGIN
+function closeAllForLogin() {
+    let btnClose = document.querySelector(".btn-login-cancel");
+    btnClose.click();
+    location.reload();
+}
 function tryToLogin() {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -108,12 +481,8 @@ function tryToLogin() {
                 for (let i in users) { 
                     if (users[i].korisnickoIme === korisnicko1) {
                         if (users[i].lozinka === psw1) {
-                            alert("Dobrodošli, " + korisnicko1 + "!");  
                             errorKorisnicko.innerText = "";
-                            errorLozinka.innerText = "";
-                            let btnClose = document.querySelector(".btn-login-cancel");
-                            btnClose.click();
-                            location.reload();
+                            errorLozinka.innerText = "";    
                             return;
                         } else {
                             errorLozinka.innerText = "Pogresna šifra!"; 
@@ -145,34 +514,36 @@ function showLogin() {
     window.scrollTo(0, 0);
     let logDiv = document.querySelector(".login-div");
     logDiv.style.display = "flex";
-
-    let head = document.querySelector(".head");
-    head.style.opacity = "0.1";
-    head.style.filter = "blur(4px)";
-
     let main = document.querySelector(".main");
     main.style.opacity = "0.1";
     mainFilterLogin = main.style.filter;
     main.style.filter = "blur(4px)";
-
+    let head = document.querySelector(".head");
+    head.style.opacity = "0.1";
+    head.style.filter = "blur(4px)";
     let navbar = document.querySelector(".navbar");
-    navbar.style.opacity = "0.1";
+    navbar.style.opacity = "0.3";
     navbar.style.filter = "blur(4px)";
-    
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
     document.body.style.overflow = "hidden";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "hidden";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "hidden";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "hidden";
 }
 function closeLogin() {
     popupClicked = 0
     let logDiv = document.querySelector(".login-div");
     logDiv.style.display = "none";
-    let head = document.querySelector(".head");
-    head.style.filter = "none";
-    head.style.opacity = "1";
     let main = document.querySelector(".main");
     main.style.filter = mainFilterLogin;
     main.style.opacity = "1";
+    let head = document.querySelector(".head");
+    head.style.opacity = "1";
+    head.style.filter = "none";
     let navbar = document.querySelector(".navbar");
     navbar.style.filter = "none";
     navbar.style.opacity = "1";
@@ -180,10 +551,20 @@ function closeLogin() {
     goUp.style.opacity = "1";
     goUp.style.filter = "none";
     document.body.style.overflow = "auto";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "visible";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "visible";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "visible";
 }
 
-
 // REGISTER
+function closeAllForRegisterUser() {
+    let btnClose = document.querySelector(".btn-register-cancel");
+    btnClose.click();
+    location.reload();
+}
 function registerNewUser() {
     let ime1 = document.getElementById('ime-register').value;
     let prezime1 = document.getElementById('prezime-register').value;
@@ -210,6 +591,7 @@ function registerNewUser() {
     request.onreadystatechange = function () {
     if (this.readyState == 4) {
         if (this.status == 200) {
+            closeAllForRegisterUser();
         } else {
             window.location.href = "error.html";
         }
@@ -262,12 +644,8 @@ function isRegisterValid() {
     }
     if (okForma === 1) {
         registerNewUser();
-        let btnClose = document.querySelector(".btn-register-cancel");
-        btnClose.click();
-        location.reload();
         return true;
     } else {
-        alert("GREŠKA! Popunite pravilno podatke!");
         return false;
     }
 }
@@ -432,7 +810,7 @@ function togglePswVisibility3() {
     let passwordToggleEditUser = document.querySelector(".psw-edit-user-toggle");
     if (passwordInputEditUser.type === "password") {
         passwordInputEditUser.type = "text";
-        passwordToggleEditUser.innerHTML = '<i class = "fa fa-eye" aria-hidden = "true"> </i>';
+        passwordToggleEditUser.innerHTML = '<i style = "cursor: pointer;" class = "fa fa-eye" aria-hidden = "true"> </i>';
     } else {
         passwordInputEditUser.type = "password";
         passwordToggleEditUser.innerHTML = '<i class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
@@ -443,10 +821,10 @@ function togglePswVisibility2() {
     let passwordToggleLogin = document.querySelector(".psw-login-toggle");
     if (passwordInputLogin.type === "password") {
         passwordInputLogin.type = "text";
-        passwordToggleLogin.innerHTML = '<i class = "fa fa-eye" aria-hidden = "true"> </i>';
+        passwordToggleLogin.innerHTML = '<i style = "cursor: pointer;" class = "fa fa-eye" aria-hidden = "true"> </i>';
     } else {
         passwordInputLogin.type = "password";
-        passwordToggleLogin.innerHTML = '<i class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
+        passwordToggleLogin.innerHTML = '<i style = "cursor: pointer;" class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
     }
 }
 function togglePswVisibility() {
@@ -454,10 +832,10 @@ function togglePswVisibility() {
     let passwordToggle = document.querySelector(".psw-register-toggle");
     if (passwordInput.type === "password") {
         passwordInput.type = "text";
-        passwordToggle.innerHTML = '<i class = "fa fa-eye" aria-hidden = "true"> </i>';
+        passwordToggle.innerHTML = '<i style = "cursor: pointer;" class = "fa fa-eye" aria-hidden = "true"> </i>';
     } else {
         passwordInput.type = "password";
-        passwordToggle.innerHTML = '<i class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
+        passwordToggle.innerHTML = '<i style = "cursor: pointer;" class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
     }
 }
 function validateRegisterInputPsw(elem) {
@@ -551,33 +929,36 @@ function showRegister() {
     let regDiv = document.querySelector(".register-div");
     regDiv.style.display = "flex";
 
-    let head = document.querySelector(".head");
-    head.style.opacity = "0.1";
-    head.style.filter = "blur(4px)";
-
     let main = document.querySelector(".main");
     mainFilterRegister = main.style.filter;
     main.style.opacity = "0.1";
     main.style.filter = "blur(4px)";
-
+    let head = document.querySelector(".head");
+    head.style.opacity = "0.1";
+    head.style.filter = "blur(4px)";
     let navbar = document.querySelector(".navbar");
-    navbar.style.opacity = "0.1";
+    navbar.style.opacity = "0.3";
     navbar.style.filter = "blur(4px)";
-    
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
     document.body.style.overflow = "hidden";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "hidden";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "hidden";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "hidden";
 }
 function closeRegister() {
     popupClicked = 0
     let regDiv = document.querySelector(".register-div");
     regDiv.style.display = "none";
-    let head = document.querySelector(".head");
-    head.style.filter = "none";
-    head.style.opacity = "1";
     let main = document.querySelector(".main");
     main.style.filter = mainFilterRegister;
     main.style.opacity = "1";
+    let head = document.querySelector(".head");
+    head.style.opacity = "1";
+    head.style.filter = "none";
     let navbar = document.querySelector(".navbar");
     navbar.style.filter = "none";
     navbar.style.opacity = "1";
@@ -585,6 +966,12 @@ function closeRegister() {
     goUp.style.opacity = "1";
     goUp.style.filter = "none";
     document.body.style.overflow = "auto";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "visible";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "visible";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "visible";
 }
 
 
@@ -791,6 +1178,8 @@ function main() {
     let id3 = parseInt(pageId[2]);
 
     let destID = destinationsID[id1]
+    curDestinationID = destID
+
     let dest = destinations[destID]
     let cnt = 0
     let destInDestID = "";
@@ -911,6 +1300,8 @@ function main() {
     let registerForm = document.getElementById("register-form");
     registerForm.addEventListener("submit", isRegisterValid)
 
+    let editForm = document.getElementById("edit-destination-form");
+    editForm.addEventListener("submit", isEditDestinationValid)
 
     appendDestinationBody(agency, destInDest);
 
@@ -918,7 +1309,7 @@ function main() {
     let buttonDelete = document.getElementById("button-delete-destination");
     buttonEdit.style.display = "inline-block";
     buttonEdit.innerHTML = '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>';
-    buttonEdit.setAttribute("onclick", "editDestination()");
+    buttonEdit.setAttribute("onclick", "editDestinationPopup()");
     buttonDelete.style.display = "inline-block";
     buttonDelete.setAttribute("onclick", "doYouWantToDeleteDestination()");
     buttonDelete.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';

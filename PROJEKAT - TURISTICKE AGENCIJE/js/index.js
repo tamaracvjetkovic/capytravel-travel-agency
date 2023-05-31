@@ -1,5 +1,5 @@
 
-var firebaseUrl = 'https://tacaprobabaza-default-rtdb.europe-west1.firebasedatabase.app/';
+var firebaseUrl = 'https://novabazawebprojekat-default-rtdb.europe-west1.firebasedatabase.app/';
 
 var agenciesID = [];
 var agencies = {};
@@ -18,7 +18,74 @@ window.addEventListener('load', loadAgencies);
 
 
 
+
+function search() {
+    event.preventDefault();
+    let searchInput = document.getElementById("search-input")
+    let value3 = searchInput.value;
+    let value2 = value3.trim();
+    let value = value2.toLowerCase();
+    let boxes = document.querySelectorAll('.box');
+    boxes.forEach(box => {
+        let id = box.getAttribute('id');
+        let s = "agency-name-" + id;
+        let agencyName = document.getElementById(s);
+        let text2 = agencyName.innerText;
+        let text = text2.toLowerCase();
+        let boxy = document.getElementById(id);
+        let agencyID = agenciesID[id];
+        let destID = agencies[agencyID].destinacije;
+        let destinacije = destinations[destID];
+        console.log("\n")
+        if (text.startsWith(value) && (value != "")) {
+            agencyName.classList.add("search-highlight");
+            boxy.style.display = "flex"; 
+        } else if (value === "") {
+            agencyName.classList.remove("search-highlight");
+            boxy.style.display = "flex"; 
+        } else {
+            boxy.style.display = "none"; 
+            agencyName.classList.remove("search-highlight");
+        }
+        let ok2 = 0;
+        let nazivs = "";
+        for (let key in destinacije) {
+            let naziv3 = destinacije[key].naziv;
+            let naziv2 = naziv3.trim();
+            let naziv = naziv2.toLowerCase();
+            if (naziv.startsWith(value) && (value != "")) {
+                ok2++;
+                if (nazivs === "") {
+                    nazivs += naziv2;
+                } else {
+                    nazivs += (", " + naziv2);
+                }
+                //boxy.style.border = "2px solid red";
+            } 
+        }
+        if (ok2 > 0) {
+            let info = document.getElementById("dest-box-info-" + id);
+            info.style.display = "block";
+            if (ok2 > 1) {
+                info.innerText = "Destinacije: " + nazivs;
+            } else {
+                info.innerText = "Destinacija: " + nazivs;
+            }  
+            boxy.style.display = "flex"; 
+        } else {
+            let info = document.getElementById("dest-box-info-" + id);
+            info.style.display = "none";
+        }
+    });
+}
+
+
 // LOGIN
+function closeAllForLogin() {
+    let btnClose = document.querySelector(".btn-login-cancel");
+    btnClose.click();
+    location.reload();
+}
 function tryToLogin() {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
@@ -37,12 +104,8 @@ function tryToLogin() {
                 for (let i in users) { 
                     if (users[i].korisnickoIme === korisnicko1) {
                         if (users[i].lozinka === psw1) {
-                            alert("Dobrodošli, " + korisnicko1 + "!");  
                             errorKorisnicko.innerText = "";
-                            errorLozinka.innerText = "";
-                            let btnClose = document.querySelector(".btn-login-cancel");
-                            btnClose.click();
-                            location.reload();
+                            errorLozinka.innerText = "";    
                             return;
                         } else {
                             errorLozinka.innerText = "Pogresna šifra!"; 
@@ -74,34 +137,36 @@ function showLogin() {
     window.scrollTo(0, 0);
     let logDiv = document.querySelector(".login-div");
     logDiv.style.display = "flex";
-    
-    let head = document.querySelector(".head");
-    head.style.opacity = "0.1";
-    head.style.filter = "blur(4px)";
-    
     let main = document.querySelector(".main");
     main.style.opacity = "0.1";
     mainFilterLogin = main.style.filter;
     main.style.filter = "blur(4px)";
-
+    let adminBody = document.querySelector(".admin-body");
+    adminBody.style.opacity = "0.3";
+    adminBody.style.filter = "blur(4px)";
     let navbar = document.querySelector(".navbar");
-    navbar.style.opacity = "0.1";
+    navbar.style.opacity = "0.3";
     navbar.style.filter = "blur(4px)";
-    
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
     document.body.style.overflow = "hidden";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "hidden";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "hidden";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "hidden";
 }
 function closeLogin() {
     popupClicked = 0
     let logDiv = document.querySelector(".login-div");
     logDiv.style.display = "none";
-    let head = document.querySelector(".head");
-    head.style.filter = "none";
-    head.style.opacity = "1";
     let main = document.querySelector(".main");
     main.style.filter = mainFilterLogin;
     main.style.opacity = "1";
+    let adminBody = document.querySelector(".admin-body");
+    adminBody.style.opacity = "1";
+    adminBody.style.filter = "none";
     let navbar = document.querySelector(".navbar");
     navbar.style.filter = "none";
     navbar.style.opacity = "1";
@@ -109,10 +174,21 @@ function closeLogin() {
     goUp.style.opacity = "1";
     goUp.style.filter = "none";
     document.body.style.overflow = "auto";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "visible";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "visible";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "visible";
 }
 
 
 // REGISTER
+function closeAllForRegisterUser() {
+    let btnClose = document.querySelector(".btn-register-cancel");
+    btnClose.click();
+    location.reload();
+}
 function registerNewUser() {
     let ime1 = document.getElementById('ime-register').value;
     let prezime1 = document.getElementById('prezime-register').value;
@@ -139,6 +215,7 @@ function registerNewUser() {
     request.onreadystatechange = function () {
     if (this.readyState == 4) {
         if (this.status == 200) {
+            closeAllForRegisterUser();
         } else {
             window.location.href = "error.html";
         }
@@ -191,12 +268,8 @@ function isRegisterValid() {
     }
     if (okForma === 1) {
         registerNewUser();
-        let btnClose = document.querySelector(".btn-register-cancel");
-        btnClose.click();
-        location.reload();
         return true;
     } else {
-        alert("GREŠKA! Popunite pravilno podatke!");
         return false;
     }
 }
@@ -361,7 +434,7 @@ function togglePswVisibility3() {
     let passwordToggleEditUser = document.querySelector(".psw-edit-user-toggle");
     if (passwordInputEditUser.type === "password") {
         passwordInputEditUser.type = "text";
-        passwordToggleEditUser.innerHTML = '<i class = "fa fa-eye" aria-hidden = "true"> </i>';
+        passwordToggleEditUser.innerHTML = '<i style = "cursor: pointer;" class = "fa fa-eye" aria-hidden = "true"> </i>';
     } else {
         passwordInputEditUser.type = "password";
         passwordToggleEditUser.innerHTML = '<i class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
@@ -372,10 +445,10 @@ function togglePswVisibility2() {
     let passwordToggleLogin = document.querySelector(".psw-login-toggle");
     if (passwordInputLogin.type === "password") {
         passwordInputLogin.type = "text";
-        passwordToggleLogin.innerHTML = '<i class = "fa fa-eye" aria-hidden = "true"> </i>';
+        passwordToggleLogin.innerHTML = '<i style = "cursor: pointer;" class = "fa fa-eye" aria-hidden = "true"> </i>';
     } else {
         passwordInputLogin.type = "password";
-        passwordToggleLogin.innerHTML = '<i class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
+        passwordToggleLogin.innerHTML = '<i style = "cursor: pointer;" class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
     }
 }
 function togglePswVisibility() {
@@ -383,10 +456,10 @@ function togglePswVisibility() {
     let passwordToggle = document.querySelector(".psw-register-toggle");
     if (passwordInput.type === "password") {
         passwordInput.type = "text";
-        passwordToggle.innerHTML = '<i class = "fa fa-eye" aria-hidden = "true"> </i>';
+        passwordToggle.innerHTML = '<i style = "cursor: pointer;" class = "fa fa-eye" aria-hidden = "true"> </i>';
     } else {
         passwordInput.type = "password";
-        passwordToggle.innerHTML = '<i class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
+        passwordToggle.innerHTML = '<i style = "cursor: pointer;" class = "fa fa-eye-slash" aria-hidden = "true"> </i>';
     }
 }
 function validateRegisterInputPsw(elem) {
@@ -480,33 +553,36 @@ function showRegister() {
     let regDiv = document.querySelector(".register-div");
     regDiv.style.display = "flex";
 
-    let head = document.querySelector(".head");
-    head.style.opacity = "0.1";
-    head.style.filter = "blur(4px)";
-
     let main = document.querySelector(".main");
     mainFilterRegister = main.style.filter;
     main.style.opacity = "0.1";
     main.style.filter = "blur(4px)";
-
+    let adminBody = document.querySelector(".admin-body");
+    adminBody.style.opacity = "0.3";
+    adminBody.style.filter = "blur(4px)";
     let navbar = document.querySelector(".navbar");
-    navbar.style.opacity = "0.1";
+    navbar.style.opacity = "0.3";
     navbar.style.filter = "blur(4px)";
-    
     let goUp = document.querySelector(".go-up");
     goUp.style.opacity = "0";
     document.body.style.overflow = "hidden";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "hidden";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "hidden";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "hidden";
 }
 function closeRegister() {
     popupClicked = 0
     let regDiv = document.querySelector(".register-div");
     regDiv.style.display = "none";
-    let head = document.querySelector(".head");
-    head.style.filter = "none";
-    head.style.opacity = "1";
     let main = document.querySelector(".main");
     main.style.filter = mainFilterRegister;
     main.style.opacity = "1";
+    let adminBody = document.querySelector(".admin-body");
+    adminBody.style.opacity = "1";
+    adminBody.style.filter = "none";
     let navbar = document.querySelector(".navbar");
     navbar.style.filter = "none";
     navbar.style.opacity = "1";
@@ -514,6 +590,12 @@ function closeRegister() {
     goUp.style.opacity = "1";
     goUp.style.filter = "none";
     document.body.style.overflow = "auto";
+    let nav = document.querySelector(".navbar");
+    nav.style.visibility = "visible";
+    let adminSelect = document.querySelector(".admin-select");
+    adminSelect.style.visibility = "visible";
+    let footer = document.querySelector(".footer");
+    footer.style.visibility = "visible";
 }
 
 
@@ -537,6 +619,8 @@ function appendMainBox(position, agency) {
 
     let newAgencyName = document.createElement('p');
     newAgencyName.classList.add("ime-agencije");
+    let s = "agency-name-" + (curBox - 1);
+    newAgencyName.setAttribute("id", s);
     newAgencyName.innerHTML = agency.naziv;
     newAgencyDesc.appendChild(newAgencyName);
     let newAgencyAdress = document.createElement('p');
@@ -555,9 +639,15 @@ function appendMainBox(position, agency) {
     newBoxCard.appendChild(newAgencyImage);
     newBoxCard.appendChild(newAgencyDesc);
 
+    let destBoxInfo = document.createElement("div");
+    destBoxInfo.classList.add("dest-box-info");
+    destBoxInfo.setAttribute("id", "dest-box-info-" + (curBox - 1));
+    newBoxCard.appendChild(destBoxInfo);
+
     newMainBox.appendChild(newBoxCard);
     let mainBoxes = document.querySelector(position);
     mainBoxes.appendChild(newMainBox);
+    
 }
 
 
@@ -688,7 +778,7 @@ function main() {
         var agency = agencies[id];
         appendMainBox(".boxes", agency);
     }
-    const boxes = document.querySelectorAll('.box');
+    let boxes = document.querySelectorAll('.box');
     boxes.forEach(box => {
         box.addEventListener('click', () => {
         const boxId = box.getAttribute('id');
@@ -710,6 +800,9 @@ function main() {
     
     let registerForm = document.getElementById("register-form");
     registerForm.addEventListener("submit", isRegisterValid)
+
+    let searchForm = document.getElementById("search-form");
+    searchForm.addEventListener("submit", search)
 }
 
 

@@ -1,8 +1,6 @@
 
 - dodati kontakt u O Nama i link u footeru
 
-- dodati logo u linku gore
-
 - napraviti valid search
 
 - skinuti fa-fa ikonice (da se ocitaju) - pitati za go-up strelicu 
@@ -18,7 +16,9 @@
 DONE:
 
 
-// - filter blur i opacity nakon delete user/agency/destination
+// dodati logo u linku gore
+
+// filter blur i opacity nakon delete user/agency/destination
 
 // staviti error pages na losu konekciju
 

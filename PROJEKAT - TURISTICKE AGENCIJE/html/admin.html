@@ -37,9 +37,7 @@
         <ul class = "menu">
             <li> <a href = "index.html" class = "nava"> Početna </a> </li>
                 <li> <a href = "aboutus.html" class = "nava"> O nama </a> </li>
-                <!--
                 <li> <a href = "contact.html" class = "nava"> Kontakt  </a> </li>
-                -->
                 <li> <a href = "admin.html" class = "nava">  Admin </a> </li>
                 <li> <p id = "login-button" class = "nava"> Login </p> </li>
                 <li> <p id = "register-button" class = "nava"> Sign Up </p> </li>
@@ -337,6 +335,63 @@
     </div>
 
 
+
+    <div class = "add-destination-div"> 
+        <div id = "add-destination-popup">
+            <form action = "" id = "add-destination-form">
+                <h1 style = "padding-top: 10px; padding-bottom: 10px;"> Dodaj destinaciju </h1>
+                <div class = "add-destination-ime-i-tip"> 
+                    <div class = "add-destination-ime-input"> 
+                        <label for = "ime-add-destination"> <b> Naziv </b> </label>
+                        <div class = "error-message" id = "error-destination-ime"> </div>
+                        <input id = "ime-add-destination" type = "text" placeholder = "Pariz.." name = "ime-add-destination" required oninput = "validateAddDestinationInputIme(this)">
+                    </div>
+                    <div class = "add-destination-tip-input">
+                        <label for = "tip-add-destination"> <b> Tip </b> </label>
+                        <div class = "error-message" id = "error-destination-tip"> </div>
+                        <input id = "tip-add-destination" type = "text" placeholder = "Letovanje.." name = "tip-add-destination" required oninput = "validateAddDestinationInputTip(this)">
+                    </div>
+                </div>   
+                <div class = "add-destination-cena-i-maxOsoba"> 
+                    <div class = "add-destination-cena-input">
+                        <label for = "cena-add-destination"> <b> Cena </b> </label>
+                        <div class = "error-message" id = "error-destination-cena"> </div>
+                        <input id = "cena-add-destination" type = "number" placeholder = "31542.."name = "cena-add-destination" required oninput = "validateAddDestinationInputCena(this)">
+                    </div>
+                    <div class = "add-destination-prevoz-input">
+                        <label for = "prevoz-add-destination"> <b> Prevoz </b> </label>
+                        <div class = "error-message" id = "error-destination-prevoz"> </div>
+                        <input id = "prevoz-add-destination" placeholder = "avion.." name = "prevoz-add-destination" required oninput = "validateAddDestinationInputPrevoz(this)">
+                    </div>
+                    <div class = "add-destination-maxOsoba-input">
+                        <label for = "maxOsoba-add-destination"> <b> Max osoba </b> </label>
+                        <div class = "error-message" id = "error-destination-maxOsoba"> </div>
+                        <input id = "maxOsoba-add-destination" type = "number" placeholder = "20.." name = "maxOsoba-add-destination" required oninput = "validateAddDestinationInputMaxOsoba(this)">
+                    </div>                 
+                </div>
+                <div class = "add-destination-opis"> 
+                    <div class = "add-destination-opis-input">
+                        <label for = "opis-add-destination"> <b> Opis </b> </label>
+                        <div class = "error-message" id = "error-destination-opis"> </div>
+                        <textarea id = "opis-add-destination" rows = "7" placeholder = "Opis destinacije.." name = "opis-add-destination" required oninput = "validateAddDestinationInputOpis(this)"></textarea>
+                    </div>
+                </div> 
+                
+                <div class = "add-destination-slike"> 
+                    <div class = "add-destination-slike-input">
+                        <label for = "slike-add-destination"> <b> Slike </b> </label>
+                        <div class = "error-message" id = "error-destination-slike"> </div>
+                        <textarea id = "slike-add-destination" rows = "7" placeholder = "Slike destinacije.." name = "slike-add-destination" required oninput = "validateAddDestinationInputSlike(this)"></textarea>
+                    </div>
+                </div>    
+
+                <div class = "add-destination-submit-cancel">
+                    <button type = "submit" class = "btn-submit-add-destination"> Add </button>
+                    <button type = "button" class = "btn-add-destination-cancel" onclick = "closeEditAgencyAddDestinationPopup()"> Close </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
 
     
