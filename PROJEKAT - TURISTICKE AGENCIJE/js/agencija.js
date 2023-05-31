@@ -23,7 +23,7 @@ function search() {
     let searchNaziv = document.getElementById("naziv-search")
     let searchTip = document.getElementById("tip-search")
     let searchPrevoz = document.getElementById("prevoz-search")
-    
+
     let value13 = searchNaziv.value;
     let value12 = value13.trim();
     let nazivValue = value12.toLowerCase();
@@ -33,19 +33,16 @@ function search() {
     let value33 = searchPrevoz.value;
     let value32 = value33.trim();
     let prevozValue = value32.toLowerCase();
-    
+
     let boxes = document.querySelectorAll('.box');
-    boxes.forEach(box => {
-        box.classList.remove("ne");
-        box.classList.remove("da");
-    });
+
     boxes.forEach(box => {
         let ids2 = box.getAttribute('id');
         let ids = ids2.split("-");
         let destID = destinationsID[ids[0]];
-        let destInDestID = Object.keys(destinations[destID])[ids[1]];
-        let agencyID = agenciesID[ids[2]];
-        
+
+        box.classList.remove("ne");
+        box.classList.remove("da");
         let boxy = document.getElementById(ids2);
         let s = "destination-name-" + ids2;
         let destName = document.getElementById(s);
@@ -53,94 +50,162 @@ function search() {
         let destTip = document.getElementById(s2);
         let s3 = "destination-prevoz-" + ids2;
         let destPrevoz = document.getElementById(s3);
+        destName.classList.remove("search-name-highlight");
+        destTip.classList.remove("search-tip-highlight");
+        destPrevoz.classList.remove("search-prevoz-highlight");
 
         if (nazivValue === "" && tipValue === "" && prevozValue === "") {
             destName.classList.remove("search-name-highlight");
             destTip.classList.remove("search-tip-highlight");
             destPrevoz.classList.remove("search-prevoz-highlight");
-            boxy.classList.remove("da");
-            boxy.classList.remove("ne");
-        }
-        
-        let textName2 = destName.innerText;
-        let textName = textName2.toLowerCase();
-        if (nazivValue != "") {
+            boxy.classList.add("da");
+        } 
+        if (nazivValue != "" && tipValue === "" && prevozValue === "") {
+            let textName2 = destName.innerText;
+            let textName = textName2.toLowerCase();
             if (textName.startsWith(nazivValue)) {
                 destName.classList.add("search-name-highlight");
                 boxy.classList.add("da"); 
-                //boxy.classList.remove("ne");
             } else {
                 destName.classList.remove("search-name-highlight");
-                //boxy.classList.remove("da"); 
-                //boxy.classList.add("ne");
+                boxy.classList.remove("da"); 
             }
-        } else {
-            destName.classList.remove("search-name-highlight");
         }
-        
-        let textTip2 = destTip.innerText;
-        let textTip = textTip2.toLowerCase();
-        if (tipValue != "") {
+        if (nazivValue != "" && tipValue != "" && prevozValue === "") {
+            let textName2 = destName.innerText;
+            let textName = textName2.toLowerCase();
+            let textTip2 = destTip.innerText;
+            let textTip = textTip2.toLowerCase();
+            if (textName.startsWith(nazivValue)) {
+                if (textTip.startsWith(tipValue)) {
+                    destName.classList.add("search-name-highlight");
+                    destTip.classList.add("search-tip-highlight");
+                    boxy.classList.add("da");  
+                } else {
+                    destName.classList.remove("search-name-highlight");
+                    destTip.classList.remove("search-tip-highlight");
+                    boxy.classList.remove("da");   
+                }    
+            } else {
+                destName.classList.remove("search-name-highlight");
+                destTip.classList.remove("search-tip-highlight");
+                boxy.classList.remove("da"); 
+            }
+        }
+
+        if (nazivValue != "" && tipValue === "" && prevozValue != "") {
+            let textName2 = destName.innerText;
+            let textName = textName2.toLowerCase();
+            let textPrevoz2 = destPrevoz.innerText;
+            let textPrevoz = textPrevoz2.toLowerCase();
+            let prevo = "prevoz: " + prevozValue;
+            if (textName.startsWith(nazivValue)) {
+                if (textPrevoz.startsWith(prevo)) {
+                    destName.classList.add("search-name-highlight");
+                    destPrevoz.classList.add("search-prevoz-highlight");
+                    boxy.classList.add("da");  
+                } else {
+                    destName.classList.remove("search-name-highlight");
+                    destPrevoz.classList.remove("search-prevoz-highlight");
+                    boxy.classList.remove("da");   
+                }    
+            } else {
+                destName.classList.remove("search-name-highlight");
+                destPrevoz.classList.remove("search-prevoz-highlight");
+                boxy.classList.remove("da"); 
+            }
+        }
+
+        if (nazivValue === "" && tipValue != "" && prevozValue === "") {
+            let textTip2 = destTip.innerText;
+            let textTip = textTip2.toLowerCase();
             if (textTip.startsWith(tipValue)) {
                 destTip.classList.add("search-tip-highlight");
-                boxy.classList.add("da"); 
-                //boxy.classList.remove("ne");  
+                boxy.classList.add("da");   
             } else {
                 destTip.classList.remove("search-tip-highlight");
-                //boxy.classList.remove("da"); 
-               //boxy.classList.add("ne");     
+                boxy.classList.remove("da");   
             }
-        } else {
-            destTip.classList.remove("search-tip-highlight");    
         }
 
-        let textPrevoz2 = destPrevoz.innerText;
-        let textPrevoz = textPrevoz2.toLowerCase();
-        let prevo = "prevoz: " + prevozValue;
-        if (prevozValue != "") {
+        if (nazivValue === "" && tipValue != "" && prevozValue != "") {
+            let textTip2 = destTip.innerText;
+            let textTip = textTip2.toLowerCase();
+            let textPrevoz2 = destPrevoz.innerText;
+            let textPrevoz = textPrevoz2.toLowerCase();
+            let prevo = "prevoz: " + prevozValue;
+            if (textTip.startsWith(tipValue)) {
+                if (textPrevoz.startsWith(prevo)) {
+                    destTip.classList.add("search-tip-highlight");
+                    destPrevoz.classList.add("search-prevoz-highlight");
+                    boxy.classList.add("da");  
+                } else {
+                    destTip.classList.remove("search-tip-highlight");
+                    destPrevoz.classList.remove("search-prevoz-highlight");
+                    boxy.classList.remove("da");   
+                }    
+            } else {
+                destTip.classList.remove("search-tip-highlight");
+                destPrevoz.classList.remove("search-prevoz-highlight");
+                boxy.classList.remove("da"); 
+            }
+        }
+
+        if (nazivValue === "" && tipValue === "" && prevozValue != "") {
+            let textPrevoz2 = destPrevoz.innerText;
+            let textPrevoz = textPrevoz2.toLowerCase();
+            let prevo = "prevoz: " + prevozValue;
             if (textPrevoz.startsWith(prevo)) {
                 destPrevoz.classList.add("search-prevoz-highlight");
-                boxy.classList.add("da"); 
-                //boxy.classList.remove("ne"); 
+                boxy.classList.add("da");
             } else {
                 destPrevoz.classList.remove("search-prevoz-highlight");
-               // boxy.classList.remove("da"); 
-                //boxy.classList.add("ne");       
+                boxy.classList.remove("da");   
             }
-        } else {
-            destPrevoz.classList.remove("search-prevoz-highlight");     
+        }
+
+        if (nazivValue != "" && tipValue != "" && prevozValue != "") {
+            let textName2 = destName.innerText;
+            let textName = textName2.toLowerCase();
+            let textTip2 = destTip.innerText;
+            let textTip = textTip2.toLowerCase();
+            let textPrevoz2 = destPrevoz.innerText;
+            let textPrevoz = textPrevoz2.toLowerCase();
+            let prevo = "prevoz: " + prevozValue;
+            if (textName.startsWith(nazivValue)) {
+                if (textTip.startsWith(tipValue)) {
+                    if (textPrevoz.startsWith(prevo)) {
+                        destName.classList.add("search-name-highlight");
+                        destTip.classList.add("search-tip-highlight");
+                        destPrevoz.classList.add("search-prevoz-highlight");
+                        boxy.classList.add("da");  
+                    } else {
+                        destName.classList.remove("search-name-highlight");
+                        destTip.classList.remove("search-tip-highlight");
+                        destPrevoz.classList.remove("search-prevoz-highlight");
+                        boxy.classList.remove("da");   
+                    }    
+                } else {
+                    destName.classList.remove("search-name-highlight");
+                    destTip.classList.remove("search-tip-highlight");
+                    destPrevoz.classList.remove("search-prevoz-highlight");
+                    boxy.classList.remove("da"); 
+                }
+            } else {
+                destName.classList.remove("search-name-highlight");
+                destTip.classList.remove("search-tip-highlight");
+                destPrevoz.classList.remove("search-prevoz-highlight");
+                boxy.classList.remove("da"); 
+            }
         }
     });
 
-    let br = 0;
-    let num;
     boxes.forEach(box => {
-        let ids2 = box.getAttribute('id');
-        let ids = ids2.split("-");
-        let destID = destinationsID[ids[0]];
-        num = Object.keys(destinations[destID]).length;
-        let kk = 0;
-        if (box.classList.contains("da")) {
-            kk = 1;
-        }
-        else if (kk != 1) {
-            br++;
-            box.classList.add("ne");
+        if (box.classList.contains("da")) {     
         } else {
-            ok = 0;
-        }
+            box.classList.add("ne");
+        } 
     });
-    if (br === num) {
-        boxes.forEach(box => {
-            if (nazivValue != "" || tipValue != "" || prevozValue != "") {
-                box.classList.add("ne");
-                box.classList.remove("da");
-            } else {
-                box.classList.remove("ne");
-                box.classList.remove("da");
-            }
-        });
-    }
 }
 
 
