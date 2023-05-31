@@ -10,10 +10,44 @@ var curBox = 0;
 var clicked = 0;
 
 var popupClicked = 0;
+var prevozi = new Set();
+var tipovi = new Set();
 
 
 window.addEventListener('load', loadAgencies);
 
+
+
+function search() {
+    event.preventDefault();
+    console.log(prevozi)
+    console.log(tipovi);
+    let searchNaziv = document.getElementById("naziv-search")
+    let searchTip = document.getElementById("tip-search")
+    let searchPrevoz = document.getElementById("prevoz-search")
+    
+    let value13 = searchNaziv.value;
+    let value12 = value13.trim();
+    let value1 = value12.toLowerCase();
+    let value23 = searchTip.value;
+    let value22 = value23.trim();
+    let value2 = value22.toLowerCase();
+    let value33 = searchPrevoz.value;
+    let value32 = value33.trim();
+    let value3 = value32.toLowerCase();
+    
+    let boxes = document.querySelectorAll('.box');
+    boxes.forEach(box => {
+        let ids2 = box.getAttribute('id');
+        let ids = ids2.split("-");
+        let destID = destinationsID[ids[0]];
+        let destInDestID = Object.keys(destinations[destID])[ids[1]];
+        let agencyID = agenciesID[ids[2]];
+        
+        
+    });
+
+}
 
 
 // LOGIN
@@ -536,6 +570,28 @@ function closeRegister() {
 
 
 // FUNKCIJE ZA IZGLED
+function setValuesInSearch() {
+    let searchTip = document.getElementById("tip-search")
+    let searchPrevoz = document.getElementById("prevoz-search")
+    for (let tip of tipovi) {
+        console.log("tip: " + tip);
+        let op = document.createElement("option");
+        op.value = tip;
+        op.innerText = tip;
+        op.name = tip;
+        op.id = tip;
+        searchTip.appendChild(op);
+    }
+    for (let prevoz of prevozi) {
+        console.log("prevoz: " + prevoz);
+        let op = document.createElement("option");
+        op.value = prevoz;
+        op.innerText = prevoz;
+        op.name = prevoz;
+        op.id = prevoz;
+        searchPrevoz.appendChild(op);
+    }
+}
 function appendMainBox(position, dest, destination, curAgency) {
     let newMainBox = document.createElement('div');
     newMainBox.setAttribute('id', (dest + "-" + curBox + "-" + curAgency));
@@ -564,11 +620,13 @@ function appendMainBox(position, dest, destination, curAgency) {
     newDestinationType.classList.add("tip-destinacije");
     newDestinationType.innerHTML = destination.tip;
     newDestinationDesc.appendChild(newDestinationType);
+    tipovi.add(destination.tip);
 
     let newDestinationTransport = document.createElement('p');
     newDestinationTransport.classList.add("prevoz-destinacije");
     newDestinationTransport.innerHTML = "Prevoz: " + destination.prevoz;
     newDestinationDesc.appendChild(newDestinationTransport);
+    prevozi.add(destination.prevoz);
 
     let newDestinationMaxPerson = document.createElement('p');
     newDestinationMaxPerson.classList.add("maks-osoba-destinacije");
@@ -611,7 +669,6 @@ function appendMainBox(position, dest, destination, curAgency) {
     mainBoxes.appendChild(newMainBox);
 }
 function appendAgencyBody(cur, agency) {
-
     let newTitle = document.getElementById("header1");
     newTitle.innerHTML = agency.naziv.toUpperCase();
     let newHead = document.querySelector(".head");
@@ -640,8 +697,6 @@ function appendAgencyBody(cur, agency) {
         }
         br++;
     }
-    //loadDestinations(cur, agency.destinacije);
-
     let opis2Agencije = document.querySelector(".opis2-agencije-tekstovi");
     let opis2AgencijeInfo = document.createElement("div");
     opis2AgencijeInfo.classList.add("opis2-agencije-info");
@@ -797,7 +852,6 @@ function main() {
             }
         }
     }
-
     let logo1 = document.getElementById("logo1");
     logo1.onclick = ocitajPocetnu;
 
@@ -812,6 +866,9 @@ function main() {
     
     let registerForm = document.getElementById("register-form");
     registerForm.addEventListener("submit", isRegisterValid)
+
+    let searchForm = document.getElementById("search-form");
+    searchForm.addEventListener("submit", search)
 
 }
 
@@ -876,14 +933,14 @@ function loadAgencies() {
     request.open('GET', firebaseUrl + '/agencije.json');
     request.send();
 }
-function loadAgency(cur) {
-    // GET by id    
+function loadAgency(cur) { 
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (this.readyState == 4) {
             if (this.status == 200) {
                 var agency = JSON.parse(request.responseText);
                 appendAgencyBody(cur, agency);
+                setValuesInSearch()
             } else {
                 window.location.href = "error.html";
             }

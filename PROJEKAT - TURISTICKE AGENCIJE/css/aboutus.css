@@ -710,7 +710,6 @@ body {
         #header1 {
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
             font-size: 9vw;
-            transition: 450ms;
             color: white;
         }
         /*
@@ -720,7 +719,7 @@ body {
         @media (min-width: 1025px) {
             #header1 {
                 margin-bottom: 5px;
-                transition: 450ms;    
+ 
             }
         }
         @media (max-width: 950px) {

@@ -730,119 +730,95 @@ body {
                     font-size: 12vw;
                 }
             }
-        .pretraga-main {
-            width: 95vw;
-        }
-        .searchbar {
-            margin-left: 10px;
-            margin-right: 10px;
-            margin-bottom: 25px;
-            display: flex;
-            margin-top: 45px;
-            align-items: center;
-        }
-        .search2 {
-            display: flex;
-        }
-        .searchbar p {
-            /*padding: 8px;
-            padding-left: 10px;
-            padding-right: 10px;
-            width: 50vw;
-            border: solid black 1px;*/
-            color: black;
-            margin-right: 17px;
-        }
-        .searchbar input {
-            padding: 6px;
-            padding-left: 2px;
-            padding-right: 2px;
-            width: 20vw;
-            border: solid rgba(0, 0, 0, 0.514) 1px;
-        }
-        .searchbar select {
-            padding: 6px;
-            padding-left: 2px;
-            padding-right: 2px;
-            width: 20vw;
-            border: solid rgba(0, 0, 0, 0.514) 1px;
-        }
-        .searchbar input:focus {
-            outline: 1px solid rgba(54, 54, 54, 0.726);
-        }
-        .searchbar button {
-            padding: 8px;   
-            padding-left: 13px;
-            padding-right: 13px; 
-            margin-left: 0; 
-            margin-right: 15px; 
-            border: none;
-            background:rgba(142, 142, 142, 0.473);
-        }
-        .searchbar button:hover {
-            background:rgba(146, 146, 146, 0.806);
-        }
-        @media (max-width: 768px) {
-            .searchbar {
-                margin-top: 35px;  
-                flex-direction: column;   
-                align-items: center;
-                margin: 10px;
-                padding: 10px;
-            }
-            .searchbar p {
-                margin-bottom: 10px;
-            }
 
-            .searchbar input {
-                width: 50vw;
-            }
-            .searchbar select {
-                padding: 6px;
-                padding-left: 10px;
-                padding-right: 10px;
-                width: 50vw;
-                border: solid rgba(0, 0, 0, 0.514) 1px;
-            }
-        }
-        @media (max-width: 570px) {
-            .searchbar {
-                margin-top: 35px;  
-                flex-direction: row;   
-                align-items: center;
-                
-            }
-            .searchbar p {
-                margin-bottom: 10px;
-            }
-            .searchbar input {
-                width: 15vw;
-            }
-            .searchbar select {
-                padding: 6px;
-                padding-left: 10px;
-                padding-right: 10px;
-                width: 15vw;
-                border: solid rgba(0, 0, 0, 0.514) 1px;
-            }
-        }
+
+.pretraga-main {
+    width: 95vw;
+}
+    .searchbar {
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 15px;
+        display: flex;
+        margin-top: 30px;
+        align-items: center;
+    }        
         .search {
             display: flex;
             flex-direction: column;
-            flex: 30%;
-            align-items: center;
-            margin: 1px;
+            margin: 0px;
         }
-            .search label {
-                margin: 4px;
-            }
-        .search:nth-child(3) {
-            margin-right: 0;
+    .searchbar input {
+        padding: 8px;
+        padding-left: 7px;
+        padding-right: 7px;
+        width: 29vw;
+        border: solid rgba(0, 0, 0, 0.514) 1px;
+        border-right: none;
+    }
+    .searchbar input:focus {
+        border: solid rgba(0, 0, 0, 0.514) 1px;
+        outline: 1px solid rgba(54, 54, 54, 0.726);
+    }   
+    .searchbar select {
+        padding: 7.4px;
+        padding-left: 1px;
+        padding-right: 1px;
+        width: 140px;
+        border: solid rgba(0, 0, 0, 0.514) 1px;
+        border-right: none;
+    }
+    @media (max-width: 756px) {
+        .searchbar select {
+            width: 120px;
         }
-        .search:nth-child(4) {
-            margin-left: 9px;
+    }
+    @media (max-width: 600px) {
+        .searchbar select {
+            width: 100px;
         }
-    
+    }
+    @media (max-width: 500px) {
+        .searchbar select {
+            width: 80px;
+        }
+    }
+    @media (max-width: 400px) {
+        .searchbar input {
+            width: 24vw;
+        }
+        .searchbar select {
+            width: 70px;
+        }
+    }
+    @media (max-width: 300px) {
+        .searchbar input {
+            width: 23vw;
+        }
+        .searchbar label {
+            font-size: 12px;
+        }
+        .searchbar select {
+            width: 55px;
+        }
+    }
+    .searchbar select:focus {
+        border: solid rgba(0, 0, 0, 0.514) 1px;
+        outline: 1px solid rgba(54, 54, 54, 0.726);
+    }  
+    .searchbar button {
+        padding: 8.5px;   
+        padding-left: 5px;
+        padding-right: 5px; 
+        border: none;
+        background:rgba(142, 142, 142, 0.473);
+    }
+    .searchbar button:hover {
+        background:rgba(146, 146, 146, 0.806);
+    }
+
+
+
 .opis-agencije-main {
     width: 92vw;
     padding-top: 50px;

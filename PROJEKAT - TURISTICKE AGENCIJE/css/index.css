@@ -312,14 +312,12 @@ body {
             padding: 8px;
             padding-left: 10px;
             padding-right: 10px;
-            width: 35vw;
+            width: 33vw;
             border: solid rgba(0, 0, 0, 0.514) 1px;
         }
         .searchbar input:focus {
             outline: 1px solid rgba(54, 54, 54, 0.726);
         }
-        
-
         .searchbar button {
             padding: 8px;   
             padding-left: 13px;
@@ -366,7 +364,7 @@ body {
                 margin-bottom: 10px;
             }
             .searchbar input {
-                width: 60vw;
+                width: 55vw;
             }
         }
 
