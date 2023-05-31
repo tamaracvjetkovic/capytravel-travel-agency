@@ -18,7 +18,7 @@ window.addEventListener('load', loadAgencies);
 
 
 
-
+// SEARCH
 function search() {
     event.preventDefault();
     let searchInput = document.getElementById("search-input")
@@ -80,10 +80,20 @@ function search() {
 }
 
 
+
+
+
 // LOGIN
-function closeAllForLogin() {
-    closeLogin();
-    location.reload();
+function showToastLogin(korisnicko) {
+    let toast = document.querySelector(".toast-div");
+    let toastPopup = document.getElementById("toast-popup");
+    toastPopup.innerHTML = "Dobrodošli, " + korisnicko + "!";
+    toast.classList.add("show");
+    //console.log(toast); 
+    setTimeout(function(){ toast.classList.remove("show"); location.reload();}, 1000);
+}
+function closeAllForLogin(korisnicko) {
+    showToastLogin(korisnicko);    
 }
 function tryToLogin() {
     let request = new XMLHttpRequest();
@@ -105,7 +115,7 @@ function tryToLogin() {
                         if (users[i].lozinka === psw1) {
                             errorKorisnicko.innerText = "";
                             errorLozinka.innerText = "";    
-                            closeAllForLogin();
+                            closeAllForLogin(korisnicko1);
                             return;
                         } else {
                             errorLozinka.innerText = "Pogresna šifra!"; 
@@ -152,8 +162,6 @@ function showLogin() {
     document.body.style.overflow = "hidden";
     let nav = document.querySelector(".navbar");
     nav.style.visibility = "hidden";
-    let adminSelect = document.querySelector(".admin-select");
-    adminSelect.style.visibility = "hidden";
     let footer = document.querySelector(".footer");
     footer.style.visibility = "hidden";
 }
@@ -176,17 +184,22 @@ function closeLogin() {
     document.body.style.overflow = "auto";
     let nav = document.querySelector(".navbar");
     nav.style.visibility = "visible";
-    let adminSelect = document.querySelector(".admin-select");
-    adminSelect.style.visibility = "visible";
     let footer = document.querySelector(".footer");
     footer.style.visibility = "visible";
 }
 
 
 // REGISTER
-function closeAllForRegisterUser() {
-    closeRegister();
-    location.reload();
+function showToastRegister(korisnicko) {
+    let toast = document.querySelector(".toast-div");
+    let toastPopup = document.getElementById("toast-popup");
+    toastPopup.innerHTML = "Korisnik " + korisnicko + " je uspešno registrovan!";
+    toast.classList.add("show");
+    //console.log(toast); 
+    setTimeout(function(){ toast.classList.remove("show"); location.reload();}, 1000);
+}
+function closeAllForRegisterUser(korisnicko) {
+    showToastRegister(korisnicko);
 }
 function registerNewUser() {
     let ime1 = document.getElementById('ime-register').value;
@@ -214,7 +227,7 @@ function registerNewUser() {
     request.onreadystatechange = function () {
     if (this.readyState == 4) {
         if (this.status == 200) {
-            closeAllForRegisterUser();
+            closeAllForRegisterUser(korisnicko1);
         } else {
             window.location.href = "error.html";
         }
@@ -567,8 +580,6 @@ function showRegister() {
     document.body.style.overflow = "hidden";
     let nav = document.querySelector(".navbar");
     nav.style.visibility = "hidden";
-    let adminSelect = document.querySelector(".admin-select");
-    adminSelect.style.visibility = "hidden";
     let footer = document.querySelector(".footer");
     footer.style.visibility = "hidden";
 }
@@ -591,8 +602,6 @@ function closeRegister() {
     document.body.style.overflow = "auto";
     let nav = document.querySelector(".navbar");
     nav.style.visibility = "visible";
-    let adminSelect = document.querySelector(".admin-select");
-    adminSelect.style.visibility = "visible";
     let footer = document.querySelector(".footer");
     footer.style.visibility = "visible";
 }
@@ -801,7 +810,7 @@ function main() {
     registerForm.addEventListener("submit", isRegisterValid)
 
     let searchForm = document.getElementById("search-form");
-    searchForm.addEventListener("submit", search)
+    searchForm.addEventListener("submit", search) 
 }
 
 

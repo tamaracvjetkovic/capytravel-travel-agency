@@ -25,9 +25,16 @@ window.addEventListener('load', loadAgencies);
 
 
 // EDIT USER
+function showToastEditUser() {
+    let toast = document.querySelector(".toast-div");
+    let toastPopup = document.getElementById("toast-popup");
+    toastPopup.innerHTML = "Korisnik uspešno izmenjen!";
+    toast.classList.add("show");
+    //console.log(toast); 
+    setTimeout(function(){ toast.classList.remove("show"); location.reload();}, 1000);
+}
 function closeAllForEditUser() {
-    closeEditUserPopup();
-    location.reload();
+    showToastEditUser();
 }
 function editTheUser() {
     //let user = users[curUserToEdit];  
@@ -742,10 +749,19 @@ function editAgencyAddDestinationPopup() {
     let editAgencyPopup = document.querySelector(".edit-agency-div");
     editAgencyPopup.style.display = "none";
 }
-    
+ 
+
+function showToastEditAgency() {
+    let toast = document.querySelector(".toast-div");
+    let toastPopup = document.getElementById("toast-popup");
+    toastPopup.innerHTML = "Agencija uspešno izmenjena!";
+    toast.classList.add("show");
+    //console.log(toast); 
+    setTimeout(function(){ toast.classList.remove("show"); location.reload();}, 1000);
+}
 function closeAllForEditAgency() {
-    closeEditAgencyPopup();
-    location.reload();
+    showToastEditAgency();
+    //location.reload();
 }
 function editTheAgency() {
     console.log(curAgencyToEdit)
@@ -1363,9 +1379,16 @@ function doYouWantToDeleteUser(userID) {
 
 
 // LOGIN
-function closeAllForLogin() {
-    closeLogin();
-    location.reload();
+function showToastLogin(korisnicko) {
+    let toast = document.querySelector(".toast-div");
+    let toastPopup = document.getElementById("toast-popup");
+    toastPopup.innerHTML = "Dobrodošli, " + korisnicko + "!";
+    toast.classList.add("show");
+    //console.log(toast); 
+    setTimeout(function(){ toast.classList.remove("show"); location.reload();}, 1000);
+}
+function closeAllForLogin(korisnicko) {
+    showToastLogin(korisnicko);    
 }
 function tryToLogin() {
     let request = new XMLHttpRequest();
@@ -1387,7 +1410,7 @@ function tryToLogin() {
                         if (users[i].lozinka === psw1) {
                             errorKorisnicko.innerText = "";
                             errorLozinka.innerText = "";    
-                            closeAllForLogin();
+                            closeAllForLogin(korisnicko1);
                             return;
                         } else {
                             errorLozinka.innerText = "Pogresna šifra!"; 
@@ -1466,9 +1489,16 @@ function closeLogin() {
 
 
 // REGISTER
-function closeAllForRegisterUser() {
-    closeRegister();
-    location.reload();
+function showToastRegister(korisnicko) {
+    let toast = document.querySelector(".toast-div");
+    let toastPopup = document.getElementById("toast-popup");
+    toastPopup.innerHTML = "Korisnik " + korisnicko + " je uspešno registrovan!";
+    toast.classList.add("show");
+    //console.log(toast); 
+    setTimeout(function(){ toast.classList.remove("show"); location.reload();}, 1000);
+}
+function closeAllForRegisterUser(korisnicko) {
+    showToastRegister(korisnicko);
 }
 function registerNewUser() {
     let ime1 = document.getElementById('ime-register').value;
@@ -1496,7 +1526,7 @@ function registerNewUser() {
     request.onreadystatechange = function () {
     if (this.readyState == 4) {
         if (this.status == 200) {
-            closeAllForRegisterUser();
+            closeAllForRegisterUser(korisnicko1);
         } else {
             window.location.href = "error.html";
         }
