@@ -451,7 +451,7 @@ body {
                 .register-submit-cancel {
                     display: flex;
                     flex-direction: row;
-                    margin-top: 20px;
+                    margin-top: 15px;
                 }
                     .btn-submit-register {
                         background-color: #0b890b;
@@ -491,8 +491,8 @@ body {
     }
         #register-popup {
             position: fixed; 
-            top: 5vh;
-            bottom: 5vh;
+            top: 4vh;
+            bottom: 4vh;
             max-height: 100%;
             z-index: 1010;
             overflow: auto;
@@ -601,7 +601,7 @@ body {
                         flex-direction: column;
                     }    
                 .register-submit-cancel {
-                    margin-top: 20px;
+                    margin-top: 15px;
                     display: flex;
                     flex-direction: row;
                 }
@@ -937,8 +937,8 @@ body {
     }
         #edit-agency-popup {
             position: fixed; 
-            top: 5vh;
-            bottom: 5vh;
+            top: 4vh;
+            bottom: 4vh;
             max-height: 100%;
             z-index: 1010;
             overflow: auto;

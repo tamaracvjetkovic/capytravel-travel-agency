@@ -101,11 +101,11 @@
                 <h1 style = "padding-top: 5px; padding-bottom: 10px;"> Login </h1>
                 <label for = "korisnicko-login"> <b> Korisničko ime </b> </label>
                 <div class = "error-message" id = "error-login-korisnicko"> </div>
-                <input id = "korisnicko-login" type = "text" placeholder = "Username.." name = "korisnicko-login" required>
+                <input id = "korisnicko-login" type = "text" placeholder = "Username.." name = "korisnicko-login">
                 <label for = "psw-login"> <b> Lozinka </b> </label>
                 <div class = "error-message" id = "error-login-lozinka"> </div>
                 <div class = "pass-input-view">
-                    <input id = "psw-login" type = "password" placeholder = "Password.." name = "psw-login" required>
+                    <input id = "psw-login" type = "password" placeholder = "Password.." name = "psw-login">
                     <button type = "button" class = "psw-login-toggle" onclick = "togglePswVisibility2()">
                     <i class = "fa fa-eye-slash" aria-hidden = "true"> </i>
                 </div>
@@ -120,42 +120,42 @@
     <div class = "register-div"> 
         <div id = "register-popup">
             <form action = "" id = "register-form">
-                <h1 style = "padding-top: 10px; padding-bottom: 10px;"> Sign Up </h1>
+                <h1> Sign Up </h1>
                 <div class = "register-ime-i-prezime"> 
                     <div class = "register-ime-input"> 
                         <label for = "ime-register"> <b> Ime </b> </label>
                         <div class = "error-message" id = "error-ime"> </div>
-                        <input id = "ime-register" type = "text" placeholder = "Name.." name = "ime-register" required oninput = "validateRegisterInputIme(this)">
+                        <input id = "ime-register" type = "text" placeholder = "Name.." name = "ime-register" oninput = "validateRegisterInputIme(this)">
                     </div>
                     <div class = "register-prezime-input">
                         <label for = "prezime-register"> <b> Prezime </b> </label>
                         <div class = "error-message" id = "error-prezime"> </div>
-                        <input id = "prezime-register" type = "text" placeholder = "Surname.." name = "prezime-register" required oninput = "validateRegisterInputPrezime(this)">
+                        <input id = "prezime-register" type = "text" placeholder = "Surname.." name = "prezime-register" oninput = "validateRegisterInputPrezime(this)">
                     </div>
                 </div>   
                 <div class = "register-datum-i-email"> 
                     <div class = "register-datum-input">
                         <label for = "datum-register"> <b> Datum rođenja </b> </label>
                         <div class = "error-message" id = "error-date"> </div>
-                        <input id = "date-register" type = "date" name = "datum-register" required oninput = "validateRegisterInputDate(this)">
+                        <input id = "date-register" type = "date" name = "datum-register" oninput = "validateRegisterInputDate(this)">
                     </div>
                     <div class = "register-email-input">
                         <label for = "email-register"> <b> E-mail </b> </label>
                         <div class = "error-message" id = "error-email"> </div>
-                        <input id = "email-register" type = "text" placeholder = "E-mail.." name = "email-register" required oninput = "validateRegisterInputEmail(this)">
+                        <input id = "email-register" type = "text" placeholder = "proba@gmail.com" name = "email-register" oninput = "validateRegisterInputEmail(this)">
                     </div>
                 </div>
                 <div class = "register-korisnicko-i-psw"> 
                     <div class = "register-korisnicko-input">
                         <label for = "korisnicko-register"> <b> Korisničko ime </b> </label>
                         <div class = "error-message" id = "error-username"> </div>
-                        <input id = "korisnicko-register" type = "text" placeholder = "Username.." name = "korisnicko-register" required oninput = "validateRegisterInputUsername(this)">
+                        <input id = "korisnicko-register" type = "text" placeholder = "Username.." name = "korisnicko-register" oninput = "validateRegisterInputUsername(this)">
                     </div>
                     <div class = "register-psw-input">
                         <label for = "psw-register"> <b> Lozinka </b> </label>
                         <div class = "error-message" id = "error-psw"> </div>
                         <div class = "pass-input-view">
-                            <input id = "psw-register" type = "password" placeholder = "Password.." name = "psw-register" required oninput = "validateRegisterInputPsw(this)">
+                            <input id = "psw-register" type = "password" placeholder = "Password.." name = "psw-register" oninput = "validateRegisterInputPsw(this)">
                             <button type = "button" class = "psw-register-toggle" onclick = "togglePswVisibility()">
                             <i class = "fa fa-eye-slash" aria-hidden = "true"> </i>
                         </div>
@@ -165,12 +165,12 @@
                     <div class = "register-adresa-input">
                         <label for = "adresa-register"> <b> Adresa </b> </label>
                         <div class = "error-message" id = "error-address"> </div>
-                        <input id = "adresa-register" type = "text" placeholder = "Adress.." name = "adresa-register" required oninput = "validateRegisterInputAddress(this)">
+                        <input id = "adresa-register" type = "text" placeholder = "Adress.." name = "adresa-register" oninput = "validateRegisterInputAddress(this)">
                     </div>
                     <div class = "register-telefon-input">
                         <label for = "telefon-register"> <b> Telefon</b> </label>
                         <div class = "error-message" id = "error-phone"> </div>
-                        <input id = "telefon-register" type = "text" name = "telefon-register" placeholder = "06(1-6)123123" required oninput = "validateRegisterInputPhone(this)">
+                        <input id = "telefon-register" type = "text" name = "telefon-register" placeholder = "06(1-6)123123" oninput = "validateRegisterInputPhone(this)">
                     </div>
                 </div>     
                 <div class = "register-submit-cancel">
@@ -223,24 +223,24 @@
                     <div class = "edit-agency-ime-input"> 
                         <label for = "ime-edit-agency"> <b> Naziv </b> </label>
                         <div class = "error-message" id = "error-agency-ime"> </div>
-                        <input value = "" id = "ime-edit-agency" type = "text" placeholder = "Name.." name = "ime-edit-agency" required oninput = "validateEditAgencyInputIme(this)">
+                        <input value = "" id = "ime-edit-agency" type = "text" placeholder = "Name.." name = "ime-edit-agency" oninput = "validateEditAgencyInputIme(this)">
                     </div>
                     <div class = "edit-agency-telefon-input">
                         <label for = "telefon-edit-agency"> <b> Telefon</b> </label>
                         <div class = "error-message" id = "error-agency-phone"> </div>
-                        <input id = "telefon-edit-agency" type = "text" name = "telefon-edit-agency" placeholder = "012/1234-123456" required oninput = "validateEditAgencyInputPhone(this)">
+                        <input id = "telefon-edit-agency" type = "text" name = "telefon-edit-agency" placeholder = "012/1234-123456" oninput = "validateEditAgencyInputPhone(this)">
                     </div>
                 </div>   
                 <div class = "edit-agency-email-i-adresa"> 
                     <div class = "edit-agency-email-input">
                         <label for = "email-edit-agency"> <b> E-mail </b> </label>
                         <div class = "error-message" id = "error-agency-email"> </div>
-                        <input id = "email-edit-agency" type = "text" placeholder = "E-mail.." name = "email-edit-agency" required oninput = "validateEditAgencyInputEmail(this)">
+                        <input id = "email-edit-agency" type = "text" placeholder = "E-mail.." name = "email-edit-agency" oninput = "validateEditAgencyInputEmail(this)">
                     </div>
                     <div class = "edit-agency-adresa-input">
                         <label for = "adresa-edit-agency"> <b> Adresa </b> </label>
                         <div class = "error-message" id = "error-agency-address"> </div>
-                        <input id = "adresa-edit-agency" type = "text" placeholder = "Address.." name = "adresa-edit-agency" required oninput = "validateEditAgencyInputAddress(this)">
+                        <input id = "adresa-edit-agency" type = "text" placeholder = "Address.." name = "adresa-edit-agency" oninput = "validateEditAgencyInputAddress(this)">
                     </div>
                     
                 </div>
@@ -248,12 +248,12 @@
                     <div class = "edit-agency-logo-input">
                         <label for = "logo-edit-agency"> <b> Logo </b> </label>
                         <div class = "error-message" id = "error-agency-logo"> </div>
-                        <input id = "logo-edit-agency" type = "text" placeholder = "https://i.imgur.com/jsFrKCn.jpeg" name = "logo-edit-agency" required oninput = "validateEditAgencyInputLogo(this)">
+                        <input id = "logo-edit-agency" type = "text" placeholder = "https://i.imgur.com/jsFrKCn.jpeg" name = "logo-edit-agency" oninput = "validateEditAgencyInputLogo(this)">
                     </div>
                     <div class = "edit-agency-godina-input">
                         <label for = "godina-edit-agency"> <b> Godina osnivanja </b> </label>
                         <div class = "error-message" id = "error-agency-godina"> </div>
-                        <input id = "godina-edit-agency" type = "number" placeholder = "Year.." name = "godina-edit-agency" required oninput = "validateEditAgencyInputGodina(this)">  
+                        <input id = "godina-edit-agency" type = "number" placeholder = "Year.." name = "godina-edit-agency" oninput = "validateEditAgencyInputGodina(this)">  
                     </div>
                 </div>
                 <div class = "edit-agency-submit-cancel">
@@ -278,37 +278,37 @@
                     <div class = "edit-user-ime-input"> 
                         <label for = "ime-edit-user"> <b> Ime </b> </label>
                         <div class = "error-message" id = "error-user-ime"> </div>
-                        <input id = "ime-edit-user" type = "text" placeholder = "Name.." name = "ime-edit-user" required oninput = "validateEditUserInputIme(this)">
+                        <input id = "ime-edit-user" type = "text" placeholder = "Name.." name = "ime-edit-user" oninput = "validateEditUserInputIme(this)">
                     </div>
                     <div class = "edit-user-prezime-input">
                         <label for = "prezime-edit-user"> <b> Prezime </b> </label>
                         <div class = "error-message" id = "error-user-prezime"> </div>
-                        <input id = "prezime-edit-user" type = "text" placeholder = "Surname.." name = "prezime-edit-user" required oninput = "validateEditUserInputPrezime(this)">
+                        <input id = "prezime-edit-user" type = "text" placeholder = "Surname.." name = "prezime-edit-user" oninput = "validateEditUserInputPrezime(this)">
                     </div>
                 </div>   
                 <div class = "edit-user-datum-i-email"> 
                     <div class = "edit-user-datum-input">
                         <label for = "datum-edit-user"> <b> Datum rođenja </b> </label>
                         <div class = "error-message" id = "error-user-date"> </div>
-                        <input id = "date-edit-user" type = "date" name = "datum-edit-user" required oninput = "validateEditUserInputDate(this)">
+                        <input id = "date-edit-user" type = "date" name = "datum-edit-user" oninput = "validateEditUserInputDate(this)">
                     </div>
                     <div class = "edit-user-email-input">
                         <label for = "email-edit-user"> <b> E-mail </b> </label>
                         <div class = "error-message" id = "error-user-email"> </div>
-                        <input id = "email-edit-user" type = "text" placeholder = "E-mail.." name = "email-edit-user" required oninput = "validateEditUserInputEmail(this)">
+                        <input id = "email-edit-user" type = "text" placeholder = "E-mail.." name = "email-edit-user" oninput = "validateEditUserInputEmail(this)">
                     </div>
                 </div>
                 <div class = "edit-user-korisnicko-i-psw"> 
                     <div class = "edit-user-korisnicko-input">
                         <label for = "korisnicko-edit-user"> <b> Korisničko ime </b> </label>
                         <div class = "error-message" id = "error-user-username"> </div>
-                        <input id = "korisnicko-edit-user" type = "text" placeholder = "Username.." name = "korisnicko-edit-user" required oninput = "validateEditUserInputUsername(this)">
+                        <input id = "korisnicko-edit-user" type = "text" placeholder = "Username.." name = "korisnicko-edit-user" oninput = "validateEditUserInputUsername(this)">
                     </div>
                     <div class = "edit-user-psw-input">
                         <label for = "psw-edit-user"> <b> Lozinka </b> </label>
                         <div class = "error-message" id = "error-user-psw"> </div>
                         <div class = "pass-input-view">
-                            <input id = "psw-edit-user" type = "password" placeholder = "Password.." name = "psw-edit-user" required oninput = "validateEditUserInputPsw(this)">
+                            <input id = "psw-edit-user" type = "password" placeholder = "Password.." name = "psw-edit-user" oninput = "validateEditUserInputPsw(this)">
                             <button type = "button" class = "psw-edit-user-toggle" onclick = "togglePswVisibility3 ()">
                             <i class = "fa fa-eye-slash" aria-hidden = "true"> </i>
                         </div>
@@ -318,12 +318,12 @@
                     <div class = "edit-user-adresa-input">
                         <label for = "adresa-edit-user"> <b> Adresa </b> </label>
                         <div class = "error-message" id = "error-user-address"> </div>
-                        <input id = "adresa-edit-user" type = "text" placeholder = "Adress.." name = "adresa-edit-user" required oninput = "validateEditUserInputAddress(this)">
+                        <input id = "adresa-edit-user" type = "text" placeholder = "Adress.." name = "adresa-edit-user" oninput = "validateEditUserInputAddress(this)">
                     </div>
                     <div class = "edit-user-telefon-input">
                         <label for = "telefon-edit-user"> <b> Telefon </b> </label>
                         <div class = "error-message" id = "error-user-phone"> </div>
-                        <input id = "telefon-edit-user" type = "text" name = "telefon-edit-user" placeholder = "06(1-6)1234123" required oninput = "validateEditUserInputPhone(this)">
+                        <input id = "telefon-edit-user" type = "text" name = "telefon-edit-user" placeholder = "06(1-6)1234123" oninput = "validateEditUserInputPhone(this)">
                     </div>
                 </div>     
                 <div class = "edit-user-submit-cancel">
@@ -344,36 +344,36 @@
                     <div class = "add-destination-ime-input"> 
                         <label for = "ime-add-destination"> <b> Naziv </b> </label>
                         <div class = "error-message" id = "error-destination-ime"> </div>
-                        <input id = "ime-add-destination" type = "text" placeholder = "Pariz.." name = "ime-add-destination" required oninput = "validateAddDestinationInputIme(this)">
+                        <input id = "ime-add-destination" type = "text" placeholder = "Pariz.." name = "ime-add-destination" oninput = "validateAddDestinationInputIme(this)">
                     </div>
                     <div class = "add-destination-tip-input">
                         <label for = "tip-add-destination"> <b> Tip </b> </label>
                         <div class = "error-message" id = "error-destination-tip"> </div>
-                        <input id = "tip-add-destination" type = "text" placeholder = "Letovanje.." name = "tip-add-destination" required oninput = "validateAddDestinationInputTip(this)">
+                        <input id = "tip-add-destination" type = "text" placeholder = "Letovanje.." name = "tip-add-destination" oninput = "validateAddDestinationInputTip(this)">
                     </div>
                 </div>   
                 <div class = "add-destination-cena-i-maxOsoba"> 
                     <div class = "add-destination-cena-input">
                         <label for = "cena-add-destination"> <b> Cena </b> </label>
                         <div class = "error-message" id = "error-destination-cena"> </div>
-                        <input id = "cena-add-destination" type = "number" placeholder = "31542.."name = "cena-add-destination" required oninput = "validateAddDestinationInputCena(this)">
+                        <input id = "cena-add-destination" type = "number" placeholder = "31542.."name = "cena-add-destination" oninput = "validateAddDestinationInputCena(this)">
                     </div>
                     <div class = "add-destination-prevoz-input">
                         <label for = "prevoz-add-destination"> <b> Prevoz </b> </label>
                         <div class = "error-message" id = "error-destination-prevoz"> </div>
-                        <input id = "prevoz-add-destination" placeholder = "avion.." name = "prevoz-add-destination" required oninput = "validateAddDestinationInputPrevoz(this)">
+                        <input id = "prevoz-add-destination" placeholder = "avion.." name = "prevoz-add-destination" oninput = "validateAddDestinationInputPrevoz(this)">
                     </div>
                     <div class = "add-destination-maxOsoba-input">
                         <label for = "maxOsoba-add-destination"> <b> Max osoba </b> </label>
                         <div class = "error-message" id = "error-destination-maxOsoba"> </div>
-                        <input id = "maxOsoba-add-destination" type = "number" placeholder = "20.." name = "maxOsoba-add-destination" required oninput = "validateAddDestinationInputMaxOsoba(this)">
+                        <input id = "maxOsoba-add-destination" type = "number" placeholder = "20.." name = "maxOsoba-add-destination" oninput = "validateAddDestinationInputMaxOsoba(this)">
                     </div>                 
                 </div>
                 <div class = "add-destination-opis"> 
                     <div class = "add-destination-opis-input">
                         <label for = "opis-add-destination"> <b> Opis </b> </label>
                         <div class = "error-message" id = "error-destination-opis"> </div>
-                        <textarea id = "opis-add-destination" rows = "7" placeholder = "Opis destinacije.." name = "opis-add-destination" required oninput = "validateAddDestinationInputOpis(this)"></textarea>
+                        <textarea id = "opis-add-destination" rows = "7" placeholder = "Opis destinacije.." name = "opis-add-destination" oninput = "validateAddDestinationInputOpis(this)"></textarea>
                     </div>
                 </div> 
                 
@@ -381,7 +381,7 @@
                     <div class = "add-destination-slike-input">
                         <label for = "slike-add-destination"> <b> Slike </b> </label>
                         <div class = "error-message" id = "error-destination-slike"> </div>
-                        <textarea id = "slike-add-destination" rows = "7" placeholder = "Slike destinacije.." name = "slike-add-destination" required oninput = "validateAddDestinationInputSlike(this)"></textarea>
+                        <textarea id = "slike-add-destination" rows = "7" placeholder = "Slike destinacije.." name = "slike-add-destination" oninput = "validateAddDestinationInputSlike(this)"></textarea>
                     </div>
                 </div>    
 

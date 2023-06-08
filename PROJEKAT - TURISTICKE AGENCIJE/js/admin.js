@@ -146,7 +146,7 @@ function validateEditUserInputDate(elem) {
         ok = 0;
     }
      else if (currentDate < date1) {
-        errorMessage.innerText = 'Pogrešan datum!';
+        errorMessage.innerText = 'Datum je u budućnosti!';
         ok = 0;
     }
     else if (currentDate.getFullYear() - date1.getFullYear() > 110) {
@@ -1610,11 +1610,11 @@ function validateRegisterInputPrezime(elem) {
     let ok = 1;
     let regexPrezime = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\s']+$/;
     let errorMessage = document.getElementById("error-prezime");
-    if (!regexPrezime.test(value)) {
-        errorMessage.innerText = 'Pogrešni karakteri!';
-        ok = 0;
-    }  else if (value === '') {
+    if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (!regexPrezime.test(value)) {
+        errorMessage.innerText = 'Pogrešni karakteri!';
         ok = 0;
     } else if (value.length < 2) {
         errorMessage.innerText = 'Dužina prezimena >= 2';
@@ -1645,20 +1645,16 @@ function validateRegisterInputDate(elem) {
     if (value === '') {
         errorMessage.innerText = 'Polje je prazno!';
         ok = 0;
-    }
-    else if (dateRegex.test(value) != true) {
+    } else if (dateRegex.test(value) != true) {
         errorMessage.innerText = 'Pogrešan datum!';
         ok = 0;
-    }
-    else if (isNaN(date1.getTime())) {
+    } else if (isNaN(date1.getTime())) {
         errorMessage.innerText = 'Pogrešan datum!';
         ok = 0;
-    }
-     else if (currentDate < date1) {
+    } else if (currentDate < date1) {
         errorMessage.innerText = 'Pogrešan datum!';
         ok = 0;
-    }
-    else if (currentDate.getFullYear() - date1.getFullYear() > 110) {
+    } else if (currentDate.getFullYear() - date1.getFullYear() > 110) {
         errorMessage.innerText = 'Pogrešan datum!';
         ok = 0;
     } else {
@@ -1717,8 +1713,11 @@ function validateRegisterInputUsername(elem) {
             break
         }
     }
-    if (usernameRegex.test(value) != true) {
-        errorMessage.innerText = 'Pogrešno korisničko ime!';
+    if (value === '') {
+        errorMessage.innerText = 'Polje je prazno!';
+        ok = 0;
+    } else if (usernameRegex.test(value) != true) {
+        errorMessage.innerText = 'Pogrešni karakteri!';
         ok = 0;
     } else if (ok2 === 0) {
         errorMessage.innerText = 'Korisničko ime je zauzeto!';
@@ -1831,7 +1830,7 @@ function validateRegisterInputPhone(elem) {
         errorMessage.innerText = 'Polje je prazno!';
         ok = 0;
     } else if (testing != true) {
-        errorMessage.innerText = 'Pogrešan broj telefona!';
+        errorMessage.innerText = 'Pogrešni karakteri!';
         ok = 0;
     } else if (ok2 === 0) {
         errorMessage.innerText = 'Broj telefona je zauzet!';
