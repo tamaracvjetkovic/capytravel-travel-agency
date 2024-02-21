@@ -1,46 +1,60 @@
-# WD-SV-48-2022
-
-CapyTravel
-
+AUTHOR: Tamara Cvjetković
+# 
 
 
-# Naziv projekta
-CapyTravel: veb-sajt za turističke agencije.
+# Name of the project
+CapyTravel: website for tourist agencies.
+# 
 
 
-# INFORMACIJE O STUDENTU
-- Tamara Cvjetković
-- br. indeksa: sv48-2022
-- FTN, SIIT, Novi Sad
-- cvjetkovic.sv48.2022@uns.ac.rs | c.tamara02@gmail.com
+# INFORMATIONS ABOUT THE AUTHOR
+- NAME: Tamara Cvjetković
+- STUDENT INDEX: sv48-2022
+- FACULTY: Faculty of Technical Science, Novi Sad
+- STUDIES: Software Engineering and Information Technologies 
+- ACADEMIC DEGREE: Bachelor with Honours in Software Engineering
+  
+- CONTACT: c.tamara02@gmail.com || cvjetkovic.sv48.2022@uns.ac.rs
+- PHONE: +38165 4468 114 (Serbia) || +38766 868 639 (BiH)
+# 
 
 
-# Opis projekta
-PROJEKAT IZ PREDMETA "Web Dizajn", FTN SIIT, 2. semestar, Novi Sad, 2023.
-CapyTravel je veb-sajt namenjen za turističke agencije. Cilj projekta je primeniti stečeno znanje iz web dizajna i kreirati veb stranicu sa estetski prihvatljivim dizajnom, koja pruža profesionalan izgled i funkcionalnost, uz implementirane CRUD operacije nad korisnicima sistema, turističkim agencijama i njihovim destinacijama.
-# Za razvoj web stranice korišćeni su:
+# Project description
+Project from subject named "Web Design"
+FTN SIIT, 2nd semester, Novi Sad, 2023.
+
+CapyTravel is a website for tourist agencies. The goal of the project was to apply the acquired knowledge in web design and create a website with an aesthetically acceptable design, which provides a professional look and functionality, with implemented CRUD operations on system users, travel agencies and their destinations.
+# 
+
+
+# For the development of the application, the following tools were utilized:
 - HTML
 - CSS
-- JAVASCRIPT
+- Javascript
+# 
 
 
-# Funkcionalnosti
-Sajt nudi prikaz i pretragu agencija i njihovih destinacija, podržava funckionalnost registracije korisnika, kao i dodavanje, izmenu i brisanje agencija, destinacija i korisnika. Sajt takođe podržava pretragu agencija na glavnoj stranici po imenu i destinacijama, te pretragu destinacija u svakoj agenciji po nazivu, tipu ili prevozu.
-
-
-# Način pokretanja
-Za pokretanje veb-sajta potrebno je da se, nakon skidanja foldera "wd-sv-48-2022" na Gitu, dvoklikom pokrene index.html, koji se nalazi na sledećoj putanji:
-wd-sv-48-2022\PROJEKAT - TURISTICKE AGENCIJE\html\index.html'
-Izbor pregledača je prepušten korisniku.
-
-
-# Uputstva za korišćenje
-REGISTRACIJA - korisnik se može registrovati unosom ispravnih podataka.
-LOGIN - korisnik se može prijaviti na veb-sajt unosom svog korisničkog imena i odgovarajuće lozinke (login nema implementirane funkcionalnosti - svi korisnici imaju isti prikaz veb-sajta, kao i pristup Admin panelu).
-PRETRAGA - korisnik može pretražiti agencije po imenu i destinacijama, i destinacije po imenu, tipu ili prevozu.
-ADMIN PANEL - korisnik može da prikaže, doda, izmeni ili obriše pojedinačnu agenciju, destinaciju ili korisnika.
-
-
-# Izgled
+# Visual design:
 ![Screenshot](screenshot1.png)
 ![Screenshot](screenshot2.png)
+# 
+
+
+# Functionalities:
+The website offers the display and search of travel agencies and their destinations, supporting user registration functionality as well as the ability to add, edit, and delete agencies, destinations, and users. The site also supports searching for agencies on the main page by name and destinations, as well as searching for destinations within each agency based on name, type, or transportation.
+#
+
+
+# How to start the application:
+After downloading the "wd-sv-48-2022" folder from Git, double-click on the index.html file located at the following path:
+wd-sv-48-2022\PROJECT - TRAVEL AGENCIES\html\index.html'
+The choice of the browser is left to the user.
+#
+
+
+# How to use
+REGISTRATION - users can register by entering correct informations.
+LOGIN - users can log into the website by entering their username and corresponding password (login functionality is not implemented - all users have the same website display and access to the Admin panel).
+SEARCH - users can search for agencies by name and destinations, as well as destinations by name, type, or transportation.
+ADMIN PANEL - users can display, add, edit, or delete individual agencies, destinations, or users.
+#
