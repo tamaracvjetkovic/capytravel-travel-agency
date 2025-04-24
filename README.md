@@ -21,6 +21,14 @@ Date: June, 2023.
 
 ---
 
+# How does it work? ❓
+- displays the travel agencies and their destinations,
+- enables a search option,
+- supports CRUD operations on agencies, destinations, and users,
+- utilizes Firebase to simulate a backend
+
+---
+
 # Visual design:
 ![Screenshot](screenshot1.png)
 ![Screenshot](screenshot2.png)
@@ -37,7 +45,7 @@ To use this website, follow the next steps:
 
 # Examples 💡
 
-The website displays the travel agencies and their destinations, with the search option provided. CRUD operations are supported, such as: user registration, add, edit, and delete agencies, destinations, and users.
+The website displays the travel agencies and their destinations, with a search option provided. CRUD operations are supported, such as: user registration, add, edit, and delete agencies, destinations, and users.
 
 - REGISTRATION
   - users can register by entering correct informations.
