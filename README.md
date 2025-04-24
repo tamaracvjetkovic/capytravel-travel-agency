@@ -1,6 +1,6 @@
 # CapyTravel 🌍 ₍ᐢ-(ｪ)-ᐢ₎
 
-An responsive website for managing tourist agencies.
+A responsive website for managing tourist agencies.
 
 ---
 
