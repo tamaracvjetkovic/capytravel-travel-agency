@@ -15,6 +15,7 @@ Technologies used:
 - ``HTML``
 - ``Pure CSS``
 - ``JavaScript``
+- ``Firebase``
 #
 Date: June, 2023.
 
