@@ -4,7 +4,7 @@ A responsive website for managing tourist agencies.
 
 ---
 
-This was an university project for the course "Web Design", taken in the 2nd semester of the Software Engineering and Information Technologies program.
+This was a university project for the course "Web Design", taken in the 2nd semester of the Software Engineering and Information Technologies program.
 
 The ``goal`` of the project was to:
 - apply the acquired knowledge in web design,
