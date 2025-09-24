@@ -56,3 +56,4 @@ The website displays the travel agencies and their destinations, with a search o
   - users can search for agencies by name and destinations, as well as destinations by name, type, or transportation.
 - ADMIN PANEL
   - users can display, add, edit, or delete individual agencies, destinations, or users.
+
