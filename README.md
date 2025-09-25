@@ -38,7 +38,7 @@ Date: June, 2023.
 # Using the Website ⚙️
 
 To use this website, follow the next steps:
-1) clone this repo,
+1) clone this repo, 
 2) double-click on the index.html file (location: wd-sv-48-2022\PROJECT - TRAVEL AGENCIES\html\index.html)
 
 ---
